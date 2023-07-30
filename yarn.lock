@@ -3204,10 +3204,10 @@
     "motion" "10.15.5"
     "qrcode" "1.5.1"
 
-"@web3yak/web3domain@^1.0.12":
-  "integrity" "sha512-6nqCGb4zsOjnZM1aJLxcE40FH3CtfUmDOZs0LBtUnfpCW4x77C8l/05jximt37DkEBRcJH6Onke8PfrJGCT8gA=="
-  "resolved" "https://registry.npmjs.org/@web3yak/web3domain/-/web3domain-1.0.12.tgz"
-  "version" "1.0.12"
+"@web3yak/web3domain@^1.0.13":
+  "integrity" "sha512-X9bkFPrX+IckSt3H/nimE4H4OjFEy5LWFx27BfEshYIF4cxiw5ybjOww5/FDAeothn+dSQ5mCatYXKcUr8ERew=="
+  "resolved" "https://registry.npmjs.org/@web3yak/web3domain/-/web3domain-1.0.13.tgz"
+  "version" "1.0.13"
   dependencies:
     "@truffle/hdwallet-provider" "^2.1.4"
     "@unstoppabledomains/resolution" "^8.3.3"

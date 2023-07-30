@@ -97,7 +97,7 @@ export default function SignExample() {
           maxH={"80vh"}
         >
           <Container
-            maxW={"3xl"}
+            maxW={"5xl"}
             alignItems={"center"}
             justifyContent={"center"}
           >
