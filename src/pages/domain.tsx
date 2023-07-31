@@ -23,12 +23,13 @@ var w3d = require("@web3yak/web3domain");
 
 export default function SignExample1() {
   const { isConnected, connector, address } = useAccount();
-  const { chain } = useNetwork()
+  const { chain } = useNetwork();
   const [domainAddr, setDomainAddr] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+   
     const settings = {
       matic_rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/K_A1JxpxF8dGzjk6MT5AhMYqXJj4zryx",
       eth_rpc_url: "https://eth-mainnet.g.alchemy.com/v2/3xuizzW1DmQMU6Nvo0bmp297MG7BjOKl",
