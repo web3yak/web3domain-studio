@@ -28,6 +28,9 @@ export default function DomainList() {
 
   useEffect(() => {
 
+    setIsLoading(true); // Set isLoading to true whenever the effect runs
+
+
     const fetchData = () => {
 
       const settings = {
