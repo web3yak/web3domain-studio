@@ -28,7 +28,6 @@ export default function DomainList() {
 
   useEffect(() => {
 
-
     const fetchData = () => {
 
       const settings = {
@@ -43,7 +42,7 @@ export default function DomainList() {
 
       let provider = ''
       if (chain) {
-        if (chain.network == 'filecoin-mainnet') {
+        if (chain?.network === 'filecoin-mainnet') {
           provider = 'fvm';
           console.log(provider);
         }
@@ -102,7 +101,7 @@ export default function DomainList() {
               <div>
                 <NextSeo title="My Domain list" />
                 <Heading as="h2" fontSize="2xl" my={4}>
-                  My Domain list
+                  My Domain list @ {chain?.name ?? "Unknown Chain"}
                 </Heading>
 
 
@@ -119,7 +118,9 @@ export default function DomainList() {
                     {error ? (
                       <p>Error: {error}</p>
                     ) : (
-
+                      domainAddr.length === 0 ? ( // Check if the domainAddr array is empty
+                      <p>No Record Found</p> // Display the message when the array is empty
+                    ) : (
                       <SimpleGrid
                         bg='gray.50'
                         columns={{ sm: 2, md: 4 }}
@@ -139,6 +140,7 @@ export default function DomainList() {
                         ))}
 
                       </SimpleGrid>
+                    )
                     )}
                   </>
                 )}
