@@ -12,46 +12,47 @@ import {
   useColorModeValue,
   SimpleGrid
 } from "@chakra-ui/react";
-import { verifyMessage } from "ethers/lib/utils";
-import { SignMessageArgs } from "@wagmi/core";
 import { NextSeo } from "next-seo";
 import Link from 'next/link';
-import abiFile from "../web3domain.json";
 var w3d = require("@web3yak/web3domain");
 
 //https://blog.0x3.studio/a-very-simple-to-offer-a-connect-wallet-option-for-your-website-thanks-to-rainbowkit/
 
-export default function SignExample1() {
+export default function DomainList() {
   const { isConnected, connector, address } = useAccount();
   const { chain } = useNetwork();
-  const [domainAddr, setDomainAddr] = useState(null);
-  const [error, setError] = useState('');
+  const [domainAddr, setDomainAddr] = useState([]);
+  const [error, setError] =  useState(''); // Specify the type for error state
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-   
-    const settings = {
-      matic_rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/K_A1JxpxF8dGzjk6MT5AhMYqXJj4zryx",
-      eth_rpc_url: "https://eth-mainnet.g.alchemy.com/v2/3xuizzW1DmQMU6Nvo0bmp297MG7BjOKl",
-      fvm_rpc_url: "https://api.node.glif.io/rpc/v1"
-    };
-    
+
+const fetchData = () => {
+
+  const settings = {
+    matic_rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/K_A1JxpxF8dGzjk6MT5AhMYqXJj4zryx",
+    eth_rpc_url: "https://eth-mainnet.g.alchemy.com/v2/3xuizzW1DmQMU6Nvo0bmp297MG7BjOKl",
+    fvm_rpc_url: "https://api.node.glif.io/rpc/v1"
+  };
+  const resolve = new w3d.Web3Domain(settings);
+
   
     
-    const resolve = new w3d.Web3Domain(settings);
-    if (address) {
-     
-      let provider = ''
+
+  let provider = ''
+  if(chain)
+  {
 if(chain.network == 'filecoin-mainnet')
 {
-  provider='fvm';
-}
-
+provider='fvm';
 console.log(provider);
+}
+  }
+
+  if (address) {
     resolve
-      .getDomainList(address,provider)
-      .then((w3d) => {
-        setDomainAddr(w3d);
+      .getDomainList(address, provider)
+      .then(data => { 
+        setDomainAddr(data);
       })
       .catch((err) => {
         setError(err.message);
@@ -59,8 +60,16 @@ console.log(provider);
       .finally(() => {
         setIsLoading(false);
       });
-    }   
-  }, [address]);
+  }
+
+}
+
+
+  useEffect(() => {
+   
+    fetchData();
+
+    }, [address, chain]);
 
   if (isConnected) {
     return (
@@ -94,7 +103,7 @@ console.log(provider);
               <div>
                 <NextSeo title="My Domain list" />
                 <Heading as="h2" fontSize="2xl" my={4}>
-                  My Domain list @ {chain.name}
+                  My Domain list
                 </Heading>
       
 
@@ -122,7 +131,7 @@ console.log(provider);
   color='gray.400'
 >
         
-                {domainAddr.map((item, index) => (
+                {domainAddr.map((item,index) => (
 
 <Box boxShadow='lg' p='6' rounded='md' bg='white' key={index}>
 
