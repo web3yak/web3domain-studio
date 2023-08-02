@@ -8,6 +8,7 @@ import {
   Container,
   Flex,
   SkeletonText,
+  Skeleton,
   CardHeader,
   Heading,
   Stack,
@@ -22,7 +23,7 @@ import {
 
 export default function Info() {
   const router = useRouter();
-  const { domain } = router.query;
+  const { info } = router.query;
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const [domainAddr, setDomainAddr] = useState(null);
   const [error, setError] = useState('');
@@ -40,8 +41,9 @@ export default function Info() {
     };
 
     const resolve = new w3d.Web3Domain(settings);
-
-    const url = "https://w3d.name/api/v1/index.php?domain="+domain;
+    if (info) {
+    const url = "https://w3d.name/api/v1/index.php?domain="+info;
+    console.log(url);
     const fetchData = async () => {
       try {
           const response = await fetch(url);
@@ -55,8 +57,8 @@ export default function Info() {
 
   fetchData();
 
-    if (domain) {
-      resolve.getAddress(domain, "ETH")
+
+      resolve.getAddress(info, "ETH")
         .then(address => {
           setDomainAddr(address);
           setIsLoading(false);
@@ -66,7 +68,7 @@ export default function Info() {
           setIsLoading(false);
         });
     }
-  }, [domain]);
+  }, [info]);
 
   return (
 
@@ -82,7 +84,7 @@ export default function Info() {
           textAlign="center"
           alignContent={"center"}
           borderRadius="lg"
-          p={{ base: 5, lg: 16 }}
+          p={{ base: 5, lg: 2 }}
           bgSize={"lg"}
           maxH={"80vh"}
         >
@@ -94,16 +96,14 @@ export default function Info() {
             <Stack
               as={Box}
               textAlign={"center"}
-              spacing={{ base: 8, md: 14 }}
+              spacing={{ base: 8, md: 5 }}
               py={{ base: 20, md: 36 }}
             >
-
-      Checking info {domain}
 
 {isLoading ? (
   <Box padding='6' boxShadow='lg' bg='white'>
   <SkeletonCircle size='10' />
-  <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+  <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='3' />
 </Box>
 ) : (
   <>
@@ -111,6 +111,7 @@ export default function Info() {
       <p>Error: {error}</p>
     ) : (
       <p>
+
        {domainAddr !== null ? <Link href={`/address/${domainAddr}`}>{domainAddr}</Link>  : ""}
     
         {domainAddr !== null ? 
@@ -120,12 +121,13 @@ export default function Info() {
   overflow='hidden'
   variant='outline'
 >
-  <Image
-    objectFit='cover'
-    maxW={{ base: '100%', sm: '200px' }}
-    src={jsonData?.image}
-    alt='Caffe Latte'
-  />
+
+<Image
+          
+            maxW={{ base: '100%', sm: '200px' }}
+            src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+            alt={jsonData?.name}
+          />
 
   <Stack>
     <CardBody>
@@ -138,7 +140,7 @@ export default function Info() {
 
     <CardFooter>
       <Button variant='solid' colorScheme='blue'>
-        Buy Latte
+       Visit
       </Button>
     </CardFooter>
   </Stack>
@@ -147,7 +149,7 @@ export default function Info() {
     
     <Card align='center'>
   <CardHeader>
-    <Heading size='md'>{domain}</Heading>
+    <Heading size='md'>{info}</Heading>
   </CardHeader>
   <CardBody>
     <Text>Not available</Text>
