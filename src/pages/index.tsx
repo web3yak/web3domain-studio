@@ -49,8 +49,6 @@ const Home: NextPage = () => {
     setShowBox(false); // Hide Box when input field is clicked
   };
 
-
-
   const fetchData = (param: string) => {
     setValue(param);
     setShowBox(true); // Show Box when value is updated after 5 seconds of inactivity

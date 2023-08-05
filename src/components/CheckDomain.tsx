@@ -34,9 +34,9 @@ export function CheckDomain(props: Props) {
   useEffect(() => {
     setIsLoading(true); // Set isLoading to true whenever the effect runs
     const settings = {
-      matic_rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/K_A1JxpxF8dGzjk6MT5AhMYqXJj4zryx",
-      eth_rpc_url: "https://eth-mainnet.g.alchemy.com/v2/3xuizzW1DmQMU6Nvo0bmp297MG7BjOKl",
-      fvm_rpc_url: "https://api.node.glif.io/rpc/v1"
+      matic_rpc_url: process.env.NEXT_PUBLIC_MATIC ,
+      eth_rpc_url: process.env.NEXT_PUBLIC_ETH ,
+      fvm_rpc_url: process.env.NEXT_PUBLIC_FILECOIN
     };
     const resolve = new w3d.Web3Domain(settings);
     async function makeRequest() {
@@ -80,7 +80,7 @@ export function CheckDomain(props: Props) {
           speed='0.65s'
           emptyColor='gray.200'
           color='blue.500'
-          size='m'
+          size='md'
         />
       ) : (
 
