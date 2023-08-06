@@ -1,5 +1,5 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { polygon, filecoin } from '@wagmi/chains'
+import { polygon, filecoin, polygonMumbai } from '@wagmi/chains'
 
 export const SITE_NAME = 'Web3Domain Studio'
 export const SITE_DESCRIPTION = 'Web3 Domain Provider'
@@ -15,8 +15,8 @@ export const SOCIAL_GITHUB = 'web3yak'
 export const SOCIAL_LINKEDIN = 'web3yak'
 export const SOCIAL_DISCORD = 'web3yak'
 
-export const INFURA_KEY = '817597f04d6941649c41255a1b10e815'
-export const NETWORKS = [polygon, filecoin ]
+export const INFURA_KEY = '3ff237d4c4d14dc8b3b480b271251407'
+export const NETWORKS = [polygon, filecoin, polygonMumbai ]
 
 export const DOMAIN = 'yak' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '1' //price should be equal to contract or higher 

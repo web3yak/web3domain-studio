@@ -1,5 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+  useContractRead
+} from 'wagmi';
+import abiFile from '../../abiFile.json';
 var w3d = require("@web3yak/web3domain");
 import Link from 'next/link';
 import {
@@ -29,10 +36,31 @@ export default function Info() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
+  const CONTRACT_ADDRESS = '0xaa3906f986e0cd86e64c1e30ce500c1de1ef46ad';
+
+
+  var claim_id = '11111';
+  var claim_name = 'xxxx.yak';
+  var claim_url ='http://yahoo.com';
+  var claim_transfer_to = '0x8D714B10B719c65B878F2Ed1436A964E11fA3271';
+  var amount = "1";
+ // var domain_claim = await claim(claim_id, claim_name, claim_url, claim_transfer_to, amount);
+
+ const contractConfig = {
+  addressOrName: CONTRACT_ADDRESS,
+  contractInterface: abiFile.abi,
+};
+
+const { data: tokenURI } = useContractRead({
+  ...contractConfig,
+  functionName: 'commonTokenURI',
+}); // calling the 'commonTokenURI' function in our contract
+
+
   useEffect(() => {
 
     setIsLoading(true); // Set isLoading to true whenever the effect runs
-
+    console.log({ tokenURI });
 
     const settings = {
       matic_rpc_url: process.env.NEXT_PUBLIC_MATIC ,
@@ -41,6 +69,11 @@ export default function Info() {
     };
 
     const resolve = new w3d.Web3Domain(settings);
+
+   // console.log(resolve.SmartContractAddress); //Polygon Mainnet contract address
+   // console.log(resolve.fvm_SmartContractAddress);  //Filecoin 
+
+
     if (info) {
     const url = "https://w3d.name/api/v1/index.php?domain="+info;
     console.log(url);
@@ -155,7 +188,11 @@ export default function Info() {
     <Text>Not available</Text>
   </CardBody>
   <CardFooter>
-    <Button colorScheme='blue'>Register</Button>
+      <div>
+.....
+    </div>
+
+
   </CardFooter>
 </Card>
     
