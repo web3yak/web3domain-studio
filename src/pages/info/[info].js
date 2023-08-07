@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 import {
-  usePrepareContractWrite,
+  useAccount,
+  useContractRead,
   useContractWrite,
+  usePrepareContractWrite,
   useWaitForTransaction,
-  useContractRead
 } from 'wagmi';
 import abiFile from '../../abiFile.json';
 var w3d = require("@web3yak/web3domain");
@@ -36,8 +37,42 @@ export default function Info() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const CONTRACT_ADDRESS = '0xaa3906f986e0cd86e64c1e30ce500c1de1ef46ad';
+  const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0';
+  /*
+  const contractConfig = {
+    addressOrName: CONTRACT_ADDRESS,
+    contractInterface: abiFile.abi,
+  };
+ // console.log(abiFile.abi);
 
+  const { data: isAllow } = useContractRead({
+    ...contractConfig,
+    functionName: 'totalSupply'
+  }); // calling the 'commonTokenURI' function in our contract
+
+  */
+
+  const { data1 } = useContractRead({
+    address: '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0',
+    abi: [
+      {
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+    ],
+    functionName: 'totalSupply',
+  });
+  
+  console.log(data1 );
 
   var claim_id = '11111';
   var claim_name = 'xxxx.yak';
@@ -46,21 +81,14 @@ export default function Info() {
   var amount = "1";
  // var domain_claim = await claim(claim_id, claim_name, claim_url, claim_transfer_to, amount);
 
- const contractConfig = {
-  addressOrName: CONTRACT_ADDRESS,
-  contractInterface: abiFile.abi,
-};
-
-const { data: tokenURI } = useContractRead({
-  ...contractConfig,
-  functionName: 'commonTokenURI',
-}); // calling the 'commonTokenURI' function in our contract
 
 
   useEffect(() => {
 
     setIsLoading(true); // Set isLoading to true whenever the effect runs
-    console.log({ tokenURI });
+
+    //console.log({ isAllow });
+    console.log({ data1 })
 
     const settings = {
       matic_rpc_url: process.env.NEXT_PUBLIC_MATIC ,
@@ -101,7 +129,7 @@ const { data: tokenURI } = useContractRead({
           setIsLoading(false);
         });
     }
-  }, [info]);
+  }, [info,data1]);
 
   return (
 

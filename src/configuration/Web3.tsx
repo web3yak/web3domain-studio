@@ -3,8 +3,9 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { ReactNode } from 'react'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { NETWORKS, INFURA_KEY, SITE_NAME } from '../configuration/Config'
+//import { infuraProvider } from 'wagmi/providers/infura'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { NETWORKS, INFURA_KEY, SITE_NAME, ALCHEMY_KEY } from '../configuration/Config'
 import React from 'react'
 
 
@@ -12,7 +13,7 @@ interface Props {
   children: ReactNode
 }
 
-const { chains, provider } = configureChains(NETWORKS, [infuraProvider({ apiKey: INFURA_KEY }), publicProvider()])
+const { chains, provider } = configureChains(NETWORKS, [alchemyProvider({ apiKey: ALCHEMY_KEY }), publicProvider()])
 
 const { connectors } = getDefaultWallets({
   appName: SITE_NAME,

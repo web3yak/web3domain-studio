@@ -16,6 +16,7 @@ export const SOCIAL_LINKEDIN = 'web3yak'
 export const SOCIAL_DISCORD = 'web3yak'
 
 export const INFURA_KEY = '3ff237d4c4d14dc8b3b480b271251407'
+export const ALCHEMY_KEY = process.env.REACT_APP_NEXT_PUBLIC_ALCHEMY_KEY;
 export const NETWORKS = [polygon, filecoin, polygonMumbai ]
 
 export const DOMAIN = 'yak' //primary domain name without dot (.)
