@@ -59,7 +59,7 @@ const {
   functionName: 'claim',
   args: [claim_id, claim_name, claim_url, claim_transfer_to],
   overrides: {
-    value: ethers.utils.parseEther("1")
+    value: ethers.utils.parseEther(DOMAIN_PRICE_ETH)
   }
 })
 const { data, error, isError, write } = useContractWrite(config)
@@ -85,7 +85,13 @@ const { isLoading, isSuccess } = useWaitForTransaction({
 
   return (
 <>
-Hello {domain}
+Domain from URL: {domain}
+<br/>
+Claim ID{claim_id}
+<br/>
+Claim name: {claim_name}
+<br/>
+Transfer to: {claim_transfer_to}
 <hr>
 </hr>
 
