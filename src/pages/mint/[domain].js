@@ -29,32 +29,24 @@ import {
   Text
 } from "@chakra-ui/react";
 import abiFile from '../../abiFile.json';
+import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN } from '../../configuration/Config'
+
+
+const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0';
+const uniqueId =  Math.round(Date.now() * Math.random()).toString();
+var claim_id = '';
+var claim_name = '';
+var claim_url ='http://yahoo.com';
+var claim_transfer_to = '';
+var amount = DOMAIN_PRICE_ETH;
+
 
 export default function Info() {
+  const { address, connector, isConnected } = useAccount()
   const router = useRouter();
   const { domain } = router.query;
 
-
-  const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0';
-
-  var claim_id = '1111155543667';
-  var claim_name = 'xxxxyyyyyyy.yak';
-  var claim_url ='http://yahoo.com';
-  var claim_transfer_to = '0x8D714B10B719c65B878F2Ed1436A964E11fA3271';
-  var amount = "1";
  // var domain_claim = await claim(claim_id, claim_name, claim_url, claim_transfer_to, amount);
-
-
-
- const {
-  data: balanceOf,
-} = useContractRead({
-  address: CONTRACT_ADDRESS,
-  abi: abiFile.abi,
-  functionName: "balanceOf",
-  args: ['0x8D714B10B719c65B878F2Ed1436A964E11fA3271'],
-  watch: true,
-});
 
 
 const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -69,10 +61,17 @@ const { data, isLoading, isSuccess, write } = useContractWrite({
 
 
   useEffect(() => {
+    claim_name = domain;
+    claim_id = uniqueId;
+    claim_transfer_to = address;
 
-    console.log('balance of '+balanceOf);
+    console.log(DOMAIN_PRICE_ETH);
+    console.log(claim_name);
+   console.log(claim_id);
+   console.log(claim_transfer_to);
 
-  }, [balanceOf]);
+
+  }, [domain]);
 
   return (
 <>
