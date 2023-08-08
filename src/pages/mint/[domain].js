@@ -49,7 +49,11 @@ export default function Info() {
  // var domain_claim = await claim(claim_id, claim_name, claim_url, claim_transfer_to, amount);
 
 
-const { data, isLoading, isSuccess, write } = useContractWrite({
+const {
+  config,
+  error: prepareError,
+  isError: isPrepareError,
+} = usePrepareContractWrite({
   address: CONTRACT_ADDRESS,
   abi: abiFile.abi,
   functionName: 'claim',
@@ -58,6 +62,12 @@ const { data, isLoading, isSuccess, write } = useContractWrite({
     value: ethers.utils.parseEther("1")
   }
 })
+const { data, error, isError, write } = useContractWrite(config)
+
+const { isLoading, isSuccess } = useWaitForTransaction({
+  hash: data?.hash,
+})
+
 
 
   useEffect(() => {
@@ -79,16 +89,20 @@ Hello {domain}
 <hr>
 </hr>
 
-<button
-        disabled={!write}
-        onClick={() =>
-          write()
-        }
-      >
-        Claim
+      <button disabled={!write || isLoading}  onClick={() => write()}>
+        {isLoading ? 'Minting...' : 'Mint'}
       </button>
-      {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+      {(isPrepareError || isError) && (
+        <div>Error: {(prepareError || error)?.message}</div>
+      )}
 </>
 
   );
