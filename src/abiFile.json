@@ -215,25 +215,7 @@
         "stateMutability": "payable",
         "type": "function"
       },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "_addr",
-            "type": "address"
-          }
-        ],
-        "name": "getReverse",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
+
       {
         "inputs": [
           {
@@ -251,19 +233,6 @@
           }
         ],
         "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          }
-        ],
-        "name": "setReverse",
-        "outputs": [],
-        "stateMutability": "payable",
         "type": "function"
       },
       {
