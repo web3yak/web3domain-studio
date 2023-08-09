@@ -123,7 +123,7 @@ export default function Info() {
         <div>
           Successfully minted your NFT!
           <div>
-            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+            <a href={`https://polygonscan.com/tx/${data?.hash}`}>Etherscan</a>
           </div>
         </div>
       )}
