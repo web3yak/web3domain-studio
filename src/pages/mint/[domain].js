@@ -40,15 +40,17 @@ export default function Info() {
   const { address, connector, isConnected } = useAccount()
   const router = useRouter();
   const { domain } = router.query;
+
+  const [domainName, setDomainName] = useState(domain);
   
   const uniqueId = Math.round(Date.now() * Math.random()).toString();
   const claim_id = '8888888';
-  const claim_name = 'wedddb3.yak';
+  const claim_name = domain;
   const claim_url = 'http://yahoo.com';
   const claim_transfer_to = '0x8D714B10B719c65B878F2Ed1436A964E11fA3271';
   const amount = DOMAIN_PRICE_ETH;
 
-  const [domainName, setDomainName] = useState('');
+
 
 
 
@@ -78,7 +80,7 @@ export default function Info() {
   const handleMint = async () => {
 
     console.log("hello " + domain);
-    claim_name = domain;
+    setDomainName = domain;
     claim_id = uniqueId;
     claim_transfer_to = address;
 
@@ -106,9 +108,9 @@ export default function Info() {
     <>
       Domain from URL: {domain}
       <br />
-      Claim ID{claim_id}
+      Claim ID {claim_id}
       <br />
-      Claim name: {claim_name}
+      Claim name: {claim_name} = {domainName}
       <br />
       Transfer to: {claim_transfer_to}
       <hr>
