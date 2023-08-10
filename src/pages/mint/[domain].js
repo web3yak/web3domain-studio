@@ -37,13 +37,16 @@ const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0';
 
 
 export default function Info() {
+  const uniqueId = Math.round(Date.now() * Math.random()).toString();
   const { address, connector, isConnected } = useAccount()
   const router = useRouter();
   const { domain } = router.query;
 
-  const [domainName, setDomainName] = useState(domain);
-  
-  const uniqueId = Math.round(Date.now() * Math.random()).toString();
+  const [domainName, setDomainName] = useState('theinitialdomaintest.yak');
+  const [claimId, setClaimId] = useState(uniqueId); // Using claimId state instead of claim_id variable
+  const [claimTransferTo, setClaimTransferTo] = useState('0x8D714B10B719c65B878F2Ed1436A964E11fA3271');
+
+
   const claim_id = '8888888';
   const claim_name = domain;
   const claim_url = 'http://yahoo.com';
@@ -65,7 +68,7 @@ export default function Info() {
     address: CONTRACT_ADDRESS,
     abi: abiFile.abi,
     functionName: 'claim',
-    args: [claim_id, claim_name, claim_url, claim_transfer_to],
+    args: [claimId, domainName, claim_url, claimTransferTo],
     overrides: {
       value: ethers.utils.parseEther(DOMAIN_PRICE_ETH)
     }
@@ -80,9 +83,9 @@ export default function Info() {
   const handleMint = async () => {
 
     console.log("hello " + domain);
-    setDomainName = domain;
-    claim_id = uniqueId;
-    claim_transfer_to = address;
+    setDomainName(domain);
+    setClaimId(uniqueId); // Update claimId state
+    setClaimTransferTo(address); // Update claimTransferTo state
 
     if (!isPrepareError) {
       write();
@@ -108,11 +111,11 @@ export default function Info() {
     <>
       Domain from URL: {domain}
       <br />
-      Claim ID {claim_id}
+      Claim ID {claim_id} = {claimId}
       <br />
       Claim name: {claim_name} = {domainName}
       <br />
-      Transfer to: {claim_transfer_to}
+      Transfer to: {claim_transfer_to} = {claimTransferTo}
       <hr>
       </hr>
 
