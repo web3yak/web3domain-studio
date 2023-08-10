@@ -32,7 +32,8 @@ import abiFile from '../../abiFile.json';
 import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN } from '../../configuration/Config'
 
 
-const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0';
+//const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0'; //Polygon
+const CONTRACT_ADDRESS = '0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902'; // Mumbai
 
 
 
