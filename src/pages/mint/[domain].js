@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ethers } from 'ethers';
-import { parseEther } from 'viem'
+import { useDomainValidation } from '../../hooks/validate';
 import {
   useAccount,
   useContractRead,
@@ -38,6 +38,9 @@ const CONTRACT_ADDRESS = '0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902'; // Mumbai
 
 
 export default function Info() {
+
+  const { isValid, validateDomain } = useDomainValidation(); // Use the correct variable names
+
   const uniqueId = Math.round(Date.now() * Math.random()).toString();
   const { address, connector, isConnected } = useAccount()
   const router = useRouter();
@@ -55,7 +58,9 @@ export default function Info() {
   const amount = DOMAIN_PRICE_ETH;
 
 
-
+  const handleValidation = (domaintest) => {
+    validateDomain(domaintest); // Call the validation function here
+  };
 
 
   // var domain_claim = await claim(claim_id, claim_name, claim_url, claim_transfer_to, amount);
@@ -82,17 +87,23 @@ export default function Info() {
 
 
   const handleMint = async () => {
-
     console.log("hello " + domain);
-    setDomainName(domain);
-    setClaimId(uniqueId); // Update claimId state
-    setClaimTransferTo(address); // Update claimTransferTo state
+      handleValidation(domain);
+    if (isValid) {
 
-    if (!isPrepareError) {
-      write();
+      setDomainName(domain);
+      setClaimId(uniqueId); // Update claimId state
+      setClaimTransferTo(address); // Update claimTransferTo state
+
+      if (!isPrepareError) {
+        write();
+      }
+      else {
+        console.log("prepare error not working");
+      }
     }
     else {
-      console.log("prepare error not working");
+      console.log("Invalid Domain Name " + domain);
     }
 
   }
@@ -104,7 +115,7 @@ export default function Info() {
     console.log(claim_name);
     console.log(claim_id);
     console.log(claim_transfer_to);
-
+  
 
   }, [domain, address]);
 
