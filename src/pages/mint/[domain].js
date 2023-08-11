@@ -2,7 +2,9 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ethers } from 'ethers';
+import { generateJson, getIpfsCid } from '../../hooks/ipfs';
 import { useDomainValidation } from '../../hooks/validate';
+
 import {
   useAccount,
   useContractRead,
@@ -111,11 +113,22 @@ export default function Info() {
 
   useEffect(() => {
 
-    console.log(DOMAIN_PRICE_ETH);
-    console.log(claim_name);
-    console.log(claim_id);
-    console.log(claim_transfer_to);
-  
+    async function fetchData() {
+      const array = [1, 2, 3];
+      const name = 'example';
+      console.log('fetch data running');
+      const success = await generateJson(array, name);
+      if (success) {
+        const ipfsCid = await getIpfsCid(name);
+        console.log('IPFS CID:', ipfsCid);
+      }
+      else
+      {
+        console.log("Error receiving ipfs cid");
+      }
+
+    }
+    fetchData();
 
   }, [domain, address]);
 
