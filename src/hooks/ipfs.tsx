@@ -6,14 +6,23 @@ export async function generateJson(rawjson: any[], name: string): Promise<boolea
   try {
     const url = `https://w3d.name/api/v1/json.php`;
     //const url = 'http://localhost/blockchain/w3d_json_api/v1/json.php';
+
+    console.log(JSON.stringify({ rawjson, name }));
+
+
+
     const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json', // Add this line
+  },
       body: JSON.stringify({ rawjson, name }),
     });
     console.log(rawjson);
+    console.log(response);
+    const responseText = await response.text(); // Or use response.json() if the response is JSON
+console.log(responseText);
     return response.ok;
   } catch (error) {
     console.error('Error generating JSON:', error);
