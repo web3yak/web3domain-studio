@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 export async function generateJson(rawjson: any[], name: string): Promise<boolean> {
   try {
-    //const url = `https://w3d.name/api/v1/json.php`;
-    const url = 'http://localhost/blockchain/w3d_json_api/v1/json.php';
+    const url = `https://w3d.name/api/v1/json.php`;
+    //const url = 'http://localhost/blockchain/w3d_json_api/v1/json.php';
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -13,7 +13,7 @@ export async function generateJson(rawjson: any[], name: string): Promise<boolea
       },
       body: JSON.stringify({ rawjson, name }),
     });
-    console.log(response);
+    console.log(rawjson);
     return response.ok;
   } catch (error) {
     console.error('Error generating JSON:', error);
@@ -23,8 +23,8 @@ export async function generateJson(rawjson: any[], name: string): Promise<boolea
 
 export async function getIpfsCid(name: string): Promise<string | null> {
   try {
-    //const url = `https://w3d.name/api/json/${name}_cid.txt`;
-    const url = `http://localhost/blockchain/w3d_json_api/json/${name}_cid.txt`;
+    const url = `https://w3d.name/api/json/${name}_cid.txt`;
+  //  const url = `http://localhost/blockchain/w3d_json_api/json/${name}_cid.txt`;
 
     const response = await fetch(url);
     if (response.ok) {

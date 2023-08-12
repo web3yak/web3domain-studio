@@ -114,10 +114,10 @@ export default function Info() {
   useEffect(() => {
 
     async function fetchData() {
-      const array = [1, 2, 3];
+      const jsonData = {"name":"abc.test","description":"W3D Reseller"};
       const name = 'example';
-      console.log('fetch data running');
-      const success = await generateJson(array, name);
+      console.log('fetch data running...');
+      const success = await generateJson(jsonData, name);
       if (success) {
         const ipfsCid = await getIpfsCid(name);
         console.log('IPFS CID:', ipfsCid);
