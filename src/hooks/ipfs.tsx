@@ -2,48 +2,23 @@
 
 import { useState } from 'react';
 
-export async function generateJson(rawjson: any[], name: string): Promise<boolean> {
+export async function generateJson(rawjson: any[], name: string): Promise<object | null> {
   try {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(rawjson)); // Append JSON data
+    formData.append('name', name); // Append name string
+
     const url = `https://w3d.name/api/v1/json.php`;
-    //const url = 'http://localhost/blockchain/w3d_json_api/v1/json.php';
-
-    console.log(JSON.stringify({ rawjson, name }));
-
-
-
     const response = await fetch(url, {
       method: 'POST',
-    headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json', // Add this line
-  },
-      body: JSON.stringify({ rawjson, name }),
+      body: formData, // Use the FormData object
     });
-    console.log(rawjson);
-    console.log(response);
-    const responseText = await response.text(); // Or use response.json() if the response is JSON
-console.log(responseText);
-    return response.ok;
+
+ 
+   // console.log(response.ok);
+    return response;
   } catch (error) {
     console.error('Error generating JSON:', error);
-    return false;
-  }
-}
-
-export async function getIpfsCid(name: string): Promise<string | null> {
-  try {
-    const url = `https://w3d.name/api/json/${name}_cid.txt`;
-  //  const url = `http://localhost/blockchain/w3d_json_api/json/${name}_cid.txt`;
-
-    const response = await fetch(url);
-    if (response.ok) {
-      const content = await response.text();
-      return content;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching IPFS CID:', error);
     return null;
   }
 }
