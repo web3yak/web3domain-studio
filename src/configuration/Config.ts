@@ -23,3 +23,4 @@ export const DOMAIN = 'yak' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '1' //price should be equal to contract or higher 
 export const DOMAIN_IMAGE_URL = 'https://ipfs.io/ipfs/bafkreia56vpemgrsnpyisbwfwwb44ktfk2uu4rgbwn65wflbx7e6qgx5eu' //Image path starts with ipfs:// or https://
 export const DOMAIN_NETWORK_CHAIN = 'polygon' //network name where primary domain is minted
+export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'

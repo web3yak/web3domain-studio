@@ -18,7 +18,7 @@ interface Props {
   domain: string
 }
 
-const delay = ms => new Promise(
+const delay = (ms: number | undefined) => new Promise(
   resolve => setTimeout(resolve, ms)
 );
 
@@ -45,7 +45,7 @@ export function CheckDomain(props: Props) {
       await delay(3000);
 
       resolve.getAddress(props.domain, "ETH")
-        .then(address => {
+        .then((address: React.SetStateAction<string>) => {
           setDomainAddr(address);
           setError(''); // Clear any previous errors if successful
           setIsLoading(false); // Request completed
@@ -88,13 +88,13 @@ export function CheckDomain(props: Props) {
           {domainAddr != null ?
 
             <div>
-              <Badge><Link href={`/info/${props.domain}`}>WhoIs</Link></Badge>
+              <Badge><Link href={`/domain/info/${props.domain}`}>WhoIs</Link></Badge>
             </div>
 
             : 
             
             <div>
-            <Badge colorScheme='green'><Link href={`/info/${props.domain}`}>Mint ✔</Link></Badge>
+            <Badge colorScheme='green'><Link href={`/domain/info/${props.domain}`}>Mint ✔</Link></Badge>
           </div>
             
             

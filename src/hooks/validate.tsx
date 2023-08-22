@@ -13,15 +13,43 @@ function isValidDomainName(domainName: string): boolean {
 }
 
 export function useDomainValidation() {
-  const [isValid, setIsValid] = useState(true);
+  const [isValidDomain, setIsValidDomain] = useState(true);
 
   const validateDomain = (domainName: string) => {
     const isValidDomain = isValidDomainName(domainName);
-    setIsValid(isValidDomain);
+    setIsValidDomain(isValidDomain);
   };
 
   return {
-    isValid,
+    isValidDomain,
     validateDomain,
   };
 }
+
+// hooks/validate.tsx
+export function useURLValidation() {
+  const validateURL = (param: string) => {
+    if(param != null)
+    {
+    const input = param.toLowerCase(); // Convert input to lowercase
+    
+    if (input.trim() === '') {
+      // Reset validation if input is empty or starts with 'http'
+      return true;
+    }
+    try {
+      new URL(input);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+  else
+  {
+    return true;
+  }
+  };
+
+  return { validateURL };
+}
+

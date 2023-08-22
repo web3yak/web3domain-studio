@@ -72,8 +72,7 @@ export default function DomainList() {
 
   }, [address, chain]);
 
-  if (isConnected) {
-    return (
+  return (
       <Flex
         align="center"
         justify="center"
@@ -138,7 +137,7 @@ export default function DomainList() {
 
                           <Box boxShadow='lg' p='6' rounded='md' bg='white' key={index}>
 
-                            <Link href={`/info/${item[1]}`}>{item[1]}</Link>
+                            <Link href={`/domain/info/${item[1]}`}>{item[1]}</Link>
                           </Box>
                         ))}
 
@@ -158,8 +157,6 @@ export default function DomainList() {
           </Container>
         </Box>
       </Flex>
-    );
-  }
-
-  return <div>Connect your wallet first to sign a message.</div>;
+    
+    )
 }

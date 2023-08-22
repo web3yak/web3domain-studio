@@ -56,9 +56,7 @@ const Home: NextPage = () => {
     console.log(param);
   };
 
-  if (isConnected) {
-    return (
-
+  return (
 
       <Flex
         align="center"
@@ -142,23 +140,8 @@ const Home: NextPage = () => {
         </Box>
       </Flex>
 
-    );
-  }
-  else {
-    return (
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <h1 className={styles.title}>
-            Web3Domain Search
-          </h1>
-          <p className={styles.description}>
-            Connect your wallet and start playing around
-          </p>
+)
 
-        </main>
-      </div>
-    )
-  }
 };
 
 export default Home;
