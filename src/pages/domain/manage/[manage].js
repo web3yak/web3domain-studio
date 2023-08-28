@@ -37,6 +37,9 @@ import {
   CircularProgress,
   Divider,
   Kbd ,
+  FormHelperText,
+  Switch ,
+  useBoolean 
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import {
@@ -104,7 +107,11 @@ export default function Manage() {
   const [fil, setFil] = useState("");
   const [sol, setSol] = useState("");
 
-
+  const [web3Url, setWeb3Url] = useState("");
+  const [web2Url, setWeb2Url] = useState("");
+  const [webUrl, setWebUrl] = useState('');
+  const [newUrl, setNewUrl] = useState('');
+const [flag, setFlag] = useBoolean();
 
   const { validateURL } = useURLValidation();
   const handleURLChange = (event) => {
@@ -197,14 +204,25 @@ export default function Manage() {
           },
         },
         9: { type: "notes", value: notes },
-        50: { type: "web_url", value: "" },
-        51: { type: "web3_url", value: url },
+        50: { type: "web_url", value: web2Url },
+        51: { type: "web3_url", value: newUrl },
       },
     };
     console.log(array);
 
     setJsonDataNew(array);
   };
+
+  const handleFlagChange = () => {
+    if (!flag) {
+      setNewUrl(web3Url);
+      console.log("New url set: " + web3Url);
+    } else {
+      setNewUrl('');
+      console.log("New URL clear");
+    }
+  };
+  
 
   useEffect(() => {
     setIsMainLoading(true);
@@ -248,9 +266,30 @@ export default function Manage() {
       setSol(jsonData && getValue("sol"));
       setNotes(jsonData && getValue("notes"));
 
-      // ... (initialize other states similarly)
+      //IPFS URL of Web3Domain
+      setWeb2Url(jsonData && getValue("web_url"));
+      //User Website
+      setWeb3Url(jsonData && getValue("web3_url"));
+      
+      
+
     }
   }, [jsonData]);
+
+  useEffect(() => {
+    if (web3Url !== '') {
+      setWebUrl(web3Url);
+      console.log(web3Url);
+      setFlag.on(); // Set flag to true
+    } else if (web2Url !== '') {
+      setWebUrl(web2Url);
+      console.log(web2Url); 
+      setFlag.off(); // Set flag to false
+    }
+
+    handleFlagChange();
+
+  }, [webUrl,web3Url,web2Url]);
 
   
   return (
@@ -322,6 +361,7 @@ export default function Manage() {
                   <Tab>Contact</Tab>
                   <Tab>Social</Tab>
                   <Tab>Wallet</Tab>
+                  <Tab>Domain</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -615,6 +655,39 @@ export default function Manage() {
                       </FormControl>
                     </Stack>
                   </TabPanel>
+
+                  <TabPanel> 
+              Redirects To: <br></br>{webUrl}<br></br>
+
+              <FormControl display='flex' alignItems='center'>
+  <FormLabel htmlFor='change-url' mb='0'>
+    Turn on Redirects to own link
+  </FormLabel>
+  <Switch id='change-url'  onChange={() => {
+      setFlag.toggle();
+      handleFlagChange();
+    }} isChecked={flag} />
+</FormControl>
+
+{flag && (
+              <FormControl mt={2}>
+                      <FormLabel>Your New Website URL</FormLabel>
+                      <Input
+                        type="url"
+                        placeholder="http:// or ipfs://"
+                        size="md"
+                        value={web3Url}
+                        onChange={(event) =>
+                          setWeb3Url(event.currentTarget.value)
+                        }
+                      />
+                       <FormHelperText>
+          Leave it blank for default link
+        </FormHelperText>
+                    </FormControl>
+)}
+                     </TabPanel>
+
                 </TabPanels>
               </Tabs>
 

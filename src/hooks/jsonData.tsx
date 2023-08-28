@@ -28,7 +28,7 @@ export function useJsonValue(jsonData: JsonData) {
   const getValue = (domainKey: string) => {
     const cryptoKeys = ["eth", "bsc", "zil", "sol", "matic", "btc", "fil"];
     const socialKeys = ["facebook", "twitter", "telegram", "youtube", "instagram", "discord"];
-    const otherKeys = ["notes", "website", "name", "email", "phone", "tg_bot", "web_url"];
+    const otherKeys = ["notes", "website", "name", "email", "phone", "tg_bot", "web_url", "web3_url"];
 
     let result: string | any = ''; // Allow any type for the result
 
