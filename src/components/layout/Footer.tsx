@@ -53,8 +53,9 @@ export function Footer(props: Props) {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Text as="samp">{SITE_DESCRIPTION}</Text>
+        <Text as="samp" hideBelow='md'>{SITE_DESCRIPTION}</Text>
         <Link
+        hideBelow='md'
           href={"/"}
           textAlign={useBreakpointValue({ base: "center", md: "left" })}
           fontFamily={"heading"}
@@ -100,7 +101,7 @@ export function Footer(props: Props) {
           </SocialButton>
         </Stack>
       </Container>
-      <Box position="absolute" bottom={2} right={2}>
+      <Box position="absolute" bottom={2} right={2} hideBelow='md'>
         <NetworkStatus />
       </Box>
     </Box>

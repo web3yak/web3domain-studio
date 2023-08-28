@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 var w3d = require("@web3yak/web3domain");
 import Link from 'next/link';
+import useDomainInfo from '../../../hooks/domainInfo';
 import {
   Box,
   Button,
@@ -18,19 +19,29 @@ import {
   CardBody,
   CardFooter,
   Image,
-  Text
+  Text,
+  Kbd,
+  ButtonGroup,
+  IconButton,
+  useClipboard
+
 } from "@chakra-ui/react";
+import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
+import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
+
 
 export default function Info() {
   const { isConnected, connector, address } = useAccount();
   const router = useRouter();
   const { info } = router.query;
+  const { ownerAddress } = useDomainInfo(info);
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const [domainAddr, setDomainAddr] = useState(null);
   const [error, setError] = useState('');
+  const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
   useEffect(() => {
 
@@ -63,18 +74,45 @@ export default function Info() {
 
       fetchData();
 
-
       resolve.getAddress(info, "ETH")
         .then(address => {
           setDomainAddr(address);
+          setValue(address);
           setIsLoading(false);
         })
         .catch(err => {
           setError(err.message);
           setIsLoading(false);
         });
-    }
+    } 
   }, [info]);
+
+    // Use another useEffect to set webUrl
+    useEffect(() => {
+      var web_url = '';
+      var web3_url = '';
+  
+      if (jsonData?.records?.hasOwnProperty('51') && jsonData.records['51'].value !== '') {
+        // If the '51' property exists in jsonData.records and its value is not empty
+        // Set web3_url
+        web3_url = jsonData.records['51'].value;
+      }
+      
+      if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '') {
+        // If the '50' property exists in jsonData.records and its value is not empty
+        // Set web_url
+        web_url = 'https://ipfs.io/ipfs/' + jsonData.records['50'].value;
+      }
+      
+  
+      if (web3_url !== '') {
+        setWebUrl(web3_url);
+        console.log(web3_url);
+      } else if (web_url !== '') {
+        setWebUrl(web_url);
+        console.log(web_url);
+      }
+    }, [jsonData]);
 
   return (
 
@@ -90,7 +128,7 @@ export default function Info() {
         textAlign="center"
         alignContent={"center"}
         borderRadius="lg"
-        p={{ base: 5, lg: 2 }}
+        p={{ base: 2, lg: 1 }}
         bgSize={"lg"}
         maxH={"80vh"}
       >
@@ -99,11 +137,12 @@ export default function Info() {
           alignItems={"center"}
           justifyContent={"center"}
         >
+          <Kbd>{info}</Kbd>
           <Stack
             as={Box}
             textAlign={"center"}
-            spacing={{ base: 8, md: 5 }}
-            py={{ base: 20, md: 36 }}
+            spacing={{ base: 2, md: 2 }}
+            py={{ base: 10, md: 6 }}
           >
 
             {isLoading ? (
@@ -118,19 +157,18 @@ export default function Info() {
                 ) : (
                   <p>
 
-                    {domainAddr !== null ? <Link href={`/address/${domainAddr}`}>{domainAddr}</Link> : ""}
-
                     {domainAddr !== null ?
 
                       <Card
                         direction={{ base: 'column', sm: 'row' }}
                         overflow='hidden'
                         variant='outline'
+                        align='center'
                       >
 
                         <Image
-
-                          maxW={{ base: '100%', sm: '200px' }}
+                          ml={2}
+                          boxSize='150px'
                           src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
                           alt={jsonData?.name}
                         />
@@ -141,17 +179,37 @@ export default function Info() {
 
                             <Text py='2'>
                               {jsonData?.description}
-                            </Text>
+                            </Text><br />
+
+                            <ButtonGroup size='sm' isAttached variant='outline'>
+                              <Button onClick={onCopy}>{domainAddr}</Button>
+                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
+                            </ButtonGroup>
+
+
                           </CardBody>
 
                           <CardFooter>
+                          {address == ownerAddress ? (
+                            <div>
                             <Button variant='solid' colorScheme='blue'>
-                              Visit Site
+                              <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
                             </Button>
-&nbsp;
+                            &nbsp;
                             <Button variant='solid' colorScheme='yellow'>
-                            <Link href={`/domain/manage/${info}`}>Manage Domain</Link>
+                              <Link href={`/domain/manage/${info}`}>Modify Record</Link>
                             </Button>
+
+                            &nbsp;
+                            </div>
+                          ):(<></>)}
+
+                            <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
+                            <Link href={`${webUrl}`} passHref>
+ <a  target="_blank" rel="noopener noreferrer">Visit</a>
+</Link>                     </Button>
+                           
+
                           </CardFooter>
                         </Stack>
                       </Card>
@@ -159,14 +217,14 @@ export default function Info() {
 
                       <Card align='center'>
                         <CardHeader>
-                          <Heading size='md'>{info}</Heading>
+                          <Heading size='md'>Register {info}</Heading>
                         </CardHeader>
                         <CardBody>
-                          <Text>Not available</Text>
+                          <Text>{DOMAIN_DESCRIPTION}</Text>
                         </CardBody>
                         <CardFooter>
                           <div>
-                            <Link href={`/domain/mint/${info}`}>{info}</Link>
+                            <Button colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
                           </div>
 
 

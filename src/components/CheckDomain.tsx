@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useDomainValidation } from '../hooks/validate';
 var w3d = require("@web3yak/web3domain");
 import {
   Box,
@@ -14,6 +15,8 @@ import {
   useColorModeValue,
   SimpleGrid
 } from "@chakra-ui/react";
+
+
 interface Props {
   domain: string
 }
@@ -23,7 +26,7 @@ const delay = (ms: number | undefined) => new Promise(
 );
 
 export function CheckDomain(props: Props) {
-
+  const { isValidDomain, validateDomain } = useDomainValidation();
   const [domainAddr, setDomainAddr] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -42,8 +45,10 @@ export function CheckDomain(props: Props) {
     async function makeRequest() {
       console.log('before');
 
+      validateDomain(props.domain);
       await delay(3000);
 
+      if (isValidDomain) {
       resolve.getAddress(props.domain, "ETH")
         .then((address: React.SetStateAction<string>) => {
           setDomainAddr(address);
@@ -61,6 +66,12 @@ export function CheckDomain(props: Props) {
         }).finally(() => {
           setIsLoading(false);
         });
+      }
+      else
+      {
+        console.log("invalid domain");
+        setIsLoading(false);
+      }
 
       //setDomainAddr('iii');
       console.log('after');
@@ -69,7 +80,7 @@ export function CheckDomain(props: Props) {
     makeRequest();
 
 
-  }, [props.domain]); // The empty dependency array ensures this effect runs only once on mount
+  }, [props.domain, isValidDomain]); // The empty dependency array ensures this effect runs only once on mount
 
   return (
     <>
@@ -88,13 +99,17 @@ export function CheckDomain(props: Props) {
           {domainAddr != null ?
 
             <div>
-              <Badge><Link href={`/domain/info/${props.domain}`}>WhoIs</Link></Badge>
+              <Badge colorScheme='purple'><Link href={`/domain/info/${props.domain}`}>WhoIs</Link></Badge>
             </div>
 
             : 
             
             <div>
-            <Badge colorScheme='green'><Link href={`/domain/info/${props.domain}`}>Mint ✔</Link></Badge>
+              {isValidDomain ? (
+            <Badge colorScheme='green'><Link href={`/domain/info/${props.domain}`}>Available ✔</Link></Badge>
+            ) : (
+              <Badge colorScheme='red'>Invalid</Badge>
+            )}
           </div>
             
             

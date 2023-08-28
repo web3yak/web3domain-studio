@@ -25,5 +25,5 @@ export const DOMAIN_PRICE_ETH = '0.1' //price should be equal to contract or hig
 export const DOMAIN_IMAGE_URL = 'https://bafybeih7ff4qpnrasx44hms5qvt4wapk6lqh2prnhgj7myub4ozvc5rksm.ipfs.nftstorage.link/' //Image path starts with ipfs:// or https://
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
 export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'
-export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
+export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin
 

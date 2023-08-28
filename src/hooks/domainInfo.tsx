@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useContractReads } from 'wagmi';
 import abiFile from '../abiFile.json';
-
-const CONTRACT_ADDRESS = '0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902'; // Mumbai
+import { useNetworkValidation, checkContract } from './useNetworkValidation';
+const contractAddress = checkContract();
+var CONTRACT_ADDRESS = ''; // No contract found
+    if (contractAddress) {
+      CONTRACT_ADDRESS = contractAddress;
+      console.log(CONTRACT_ADDRESS);
+    } else {
+      console.log("No matching contract address found for the current chain.");
+    }
 
 function useDomainInfo(domainName: string) {
   const [domainId, setDomainId] = useState<number | null>(null);
@@ -12,19 +19,19 @@ function useDomainInfo(domainName: string) {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        address: CONTRACT_ADDRESS,
+        address: CONTRACT_ADDRESS as `0x${string}`,
         abi: abiFile.abi,
         functionName: 'getID',
         args: [domainName],
       },
       {
-        address: CONTRACT_ADDRESS,
+        address: CONTRACT_ADDRESS as `0x${string}`,
         abi: abiFile.abi,
         functionName: 'getOwner',
         args: [domainId],
       },
       {
-        address: CONTRACT_ADDRESS,
+        address: CONTRACT_ADDRESS as `0x${string}`,
         abi: abiFile.abi,
         functionName: 'tokenURI',
         args: [domainId],
@@ -39,6 +46,7 @@ function useDomainInfo(domainName: string) {
       setOwnerAddress(dataArray[1]);
       setOldUri(dataArray[2]);
     }
+    console.log("am here");
   }, [data, isError]);
 
   return {

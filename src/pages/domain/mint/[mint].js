@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ethers } from 'ethers';
 import { generateJson } from '../../../hooks/ipfs';
 import { useDomainValidation } from '../../../hooks/validate';
+import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
 
 import {
   useAccount,
@@ -39,18 +40,19 @@ import {
 import { ExternalLinkIcon } from '@chakra-ui/icons'; // Assuming this is how ExternalLinkIcon is imported in your project
 
 import abiFile from '../../../abiFile.json';
-import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
-
-
-//const CONTRACT_ADDRESS = '0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0'; //Polygon
-const CONTRACT_ADDRESS = '0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902'; // Mumbai
-
+import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION, NETWORK_ERROR } from '../../../configuration/Config'
+const contractAddress = checkContract();
+var CONTRACT_ADDRESS = ''; // No contract found
+    if (contractAddress) {
+      CONTRACT_ADDRESS = contractAddress;
+      //console.log(CONTRACT_ADDRESS);
+    } 
 
 
 export default function Info() {
 
   const { isValidDomain, validateDomain } = useDomainValidation(); // Use the correct variable names
-
+  const isNetworkValid = useNetworkValidation();
   const uniqueId = Math.round(Date.now() * Math.random()).toString();
   const { address, connector, isConnected } = useAccount()
   const router = useRouter();
@@ -111,7 +113,7 @@ export default function Info() {
       }
       else {
         console.log(prepareError);
-        showAlert("Network issue!")
+        showAlert("Domain is prepared to get minted.")
       }
     }
     else {
@@ -123,7 +125,7 @@ export default function Info() {
   function showAlert(err) {
 
     toast({
-      title: 'Error',
+      title: 'Notice',
       description: err,
       status: 'warning',
       duration: 4000,
@@ -180,6 +182,7 @@ export default function Info() {
         bgSize={"lg"}
         maxH={"80vh"}
       >
+        {isNetworkValid ? (
         <Container
           maxW={"3xl"}
           alignItems={"center"}
@@ -285,7 +288,11 @@ export default function Info() {
           </div>
         )}
 
-</Container></Box></Flex>
+</Container>
+):
+(<>{NETWORK_ERROR}</>)
+            }
+</Box></Flex>
       </>
 
 )

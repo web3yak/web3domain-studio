@@ -9,19 +9,26 @@ import {
 import abiFile from '../abiFile.json';
 import { ethers } from 'ethers';
 import { Button, useToast } from "@chakra-ui/react";
+import { checkContract } from '../hooks/useNetworkValidation';
 
 function TokenURI({ domainName, TokenURI }: { domainName: string; TokenURI: string }) {
   const { domainId, ownerAddress, oldUri } = useDomainInfo(domainName);
-  const CONTRACT_ADDRESS = '0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902'; // Mumbai
+  const contractAddress = checkContract();
+var CONTRACT_ADDRESS = ''; // No contract found
+    if (contractAddress) {
+      CONTRACT_ADDRESS = contractAddress;
+      //console.log(CONTRACT_ADDRESS);
+    } 
+
   const {
     config,
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: CONTRACT_ADDRESS,
+    address: CONTRACT_ADDRESS as `0x${string}`,
     abi: abiFile.abi,
     functionName: 'setTokenURI',
-    args: [1, TokenURI],
+    args: [domainId, TokenURI],
     overrides: {
       value: ethers.utils.parseEther("0.01")
     }

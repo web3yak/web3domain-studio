@@ -6,8 +6,9 @@ import { useJsonValue } from "../../../hooks/jsonData";
 import { generateJson } from '../../../hooks/ipfs';
 import TokenURI from '../../../components/TokenURI'; // Adjust the path to the actual location
 import { useAccount, useNetwork } from "wagmi";
+import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
 import Link from "next/link";
-
+import useDomainInfo from '../../../hooks/domainInfo';
 import {
   Icon,
   Box,
@@ -34,9 +35,17 @@ import {
   Text,
   FormErrorMessage,
   CircularProgress,
-  Divider
+  Divider,
+  Kbd ,
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
+
 import {
   FaBitcoin,
   FaEthereum,
@@ -58,6 +67,7 @@ import {
   DOMAIN_IMAGE_URL,
   DOMAIN_NETWORK_CHAIN,
   DOMAIN_DESCRIPTION,
+  NETWORK_ERROR,
 } from "../../../configuration/Config";
 
 
@@ -66,8 +76,8 @@ export default function Manage() {
   const router = useRouter();
   const { manage } = router.query;
   const domain = manage ? String(manage).toLowerCase() : "";
-
-  
+  const isNetworkValid = useNetworkValidation();
+  const { ownerAddress } = useDomainInfo(domain);
   
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonData as null
@@ -199,9 +209,9 @@ export default function Manage() {
   useEffect(() => {
     setIsMainLoading(true);
 
-    
+    const randomNumber = Math.random(); // Generate a random number
     if (domain) {
-      const url = "https://w3d.name/api/v1/index.php?domain=" + domain;
+      const url = "https://w3d.name/api/v1/index.php?domain=" + domain+"&update=yes&"+randomNumber;
       console.log(url);
       const fetchData = async () => {
         try {
@@ -252,6 +262,13 @@ export default function Manage() {
       color={useColorModeValue("gray.700", "whiteAlpha.900")}
       shadow="base"
     >
+      
+      <Container
+          maxW='3xl'
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Kbd><Link href={`/domain/info/${domain}`}>{domain}</Link></Kbd>
       <Box
         textAlign="center"
         alignContent={"center"}
@@ -260,13 +277,31 @@ export default function Manage() {
         bgSize={"lg"}
         maxH={"80vh"}
       >
-        <Container maxW={"3xl"} alignItems={"center"} justifyContent={"center"}>
+{isNetworkValid ? (
+        
+        
+        <Stack
+        as={Box}
+        textAlign={"center"}
+        alignItems={"center"}
+    justifyContent={"center"}
+        spacing={{ base: 2, md: 2 }}
+        py={{ base: 10, md: 2 }}
+      >
+
+        <Card
+        direction={{ base: 'column', sm: 'row' }}
+        overflow='hidden'
+        variant='outline'
+        
+      >
+        <Stack>
           <Heading as="h5" size="sm">
-            On-Chain Blockchain Records ({domain})
+            Blockchain Records ({domain})
           </Heading>
-          <Divider /><br/>
+          <Divider />
           {isMainLoading ? (
-            <Box padding="6" boxShadow="lg" bg="white">
+            <Box padding="12" boxShadow="lg" bg="white">
               <SkeletonCircle size="10" />
               <SkeletonText
                 mt="4"
@@ -276,6 +311,10 @@ export default function Manage() {
               />
             </Box>
           ) : (
+           
+<div>
+{address == ownerAddress ? (  
+
             <form onSubmit={handleSubmit}>
               <Tabs isFitted variant="enclosed">
                 <TabList mb="1em">
@@ -604,9 +643,25 @@ export default function Manage() {
 
               </Stack>
             </form>
+
+            
+):(  <Alert status='error'>
+<AlertIcon />
+<AlertTitle>You are not authorized.</AlertTitle>
+</Alert>)}
+</div>
+
           )}
-        </Container>
+          </Stack>
+          </Card>
+          </Stack>
+        
+):
+(<>{NETWORK_ERROR}</>)
+            }
+
       </Box>
+      </Container>
     </Flex>
   );
 
