@@ -39,4 +39,4 @@ yarn-error.log*
 
 package-lock.json
 yarn.lock
-src/configuration/Config.ts
+src/configuration/Config.tsx
