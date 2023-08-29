@@ -283,23 +283,23 @@ const [flag, setFlag] = useBoolean();
     if (web3Url !== '') {
       setWebUrl(web3Url);
       //console.log(web3Url);
-      setFlag.on(); // Set flag to true
+      //setFlag.on(); // Set flag to true
     } else if (web2Url !== '') {
       setWebUrl(web2Url);
       console.log(web2Url); 
-      setFlag.off(); // Set flag to false
+      //setFlag.off(); // Set flag to false
     }
 
-    handleFlagChange();
+   // handleFlagChange();
 
   }, [webUrl,web3Url,web2Url,newUrl]);
 
   useEffect(() => {
     if (flag) {
-     // setNewUrl(web3Url);
+     setNewUrl(web3Url);
       console.log("ON");
     } else {
-      setNewUrl(web2Url);
+      setNewUrl('');
      console.log("OFF");
     }
   }, [flag]);
@@ -680,7 +680,7 @@ const [flag, setFlag] = useBoolean();
   </FormLabel>
   <Switch id='change-url'  onChange={() => {
       setFlag.toggle();
-      handleFlagChange();
+      //handleFlagChange();
     }} isChecked={flag} />
 </FormControl>
 
@@ -691,9 +691,9 @@ const [flag, setFlag] = useBoolean();
                         type="url"
                         placeholder="http:// or ipfs://"
                         size="md"
-                        value={web3Url}
+                        value={newUrl}
                         onChange={(event) =>
-                          setWeb3Url(event.currentTarget.value)
+                          setNewUrl(event.currentTarget.value)
                         }
                       />
                        <FormHelperText>
