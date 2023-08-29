@@ -214,11 +214,14 @@ const [flag, setFlag] = useBoolean();
   };
 
   const handleFlagChange = () => {
-    if (!flag) {
+    if (flag) {
       setNewUrl(web3Url);
       console.log("New url set: " + web3Url);
+      console.log("Switch is on");
     } else {
-      setNewUrl('');
+     // setNewUrl('');
+      //setWeb3Url(web2Url);
+     // setWebUrl(web2Url);
       console.log("New URL clear");
     }
   };
@@ -279,7 +282,7 @@ const [flag, setFlag] = useBoolean();
   useEffect(() => {
     if (web3Url !== '') {
       setWebUrl(web3Url);
-      console.log(web3Url);
+      //console.log(web3Url);
       setFlag.on(); // Set flag to true
     } else if (web2Url !== '') {
       setWebUrl(web2Url);
@@ -289,8 +292,17 @@ const [flag, setFlag] = useBoolean();
 
     handleFlagChange();
 
-  }, [webUrl,web3Url,web2Url]);
+  }, [webUrl,web3Url,web2Url,newUrl]);
 
+  useEffect(() => {
+    if (flag) {
+     // setNewUrl(web3Url);
+      console.log("ON");
+    } else {
+      setNewUrl(web2Url);
+     console.log("OFF");
+    }
+  }, [flag]);
   
   return (
     <Flex
@@ -657,7 +669,10 @@ const [flag, setFlag] = useBoolean();
                   </TabPanel>
 
                   <TabPanel> 
-              Redirects To: <br></br>{webUrl}<br></br>
+              webUrl: {webUrl}<br></br>
+              web3url: {web3Url}<br></br>
+              web2url: {web2Url}<br></br>
+              newUrl: {newUrl}<br></br>
 
               <FormControl display='flex' alignItems='center'>
   <FormLabel htmlFor='change-url' mb='0'>
