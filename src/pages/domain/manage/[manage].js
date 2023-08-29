@@ -69,9 +69,9 @@ import {
   FaLink
 } from "react-icons/fa";
 import {
-  DOMAIN,
+  
   DOMAIN_IMAGE_URL,
-  DOMAIN_NETWORK_CHAIN,
+  DOMAIN_TLD,
   DOMAIN_DESCRIPTION,
   NETWORK_ERROR,
 } from "../../../configuration/Config";
@@ -221,7 +221,6 @@ export default function Manage() {
 
   useEffect(() => {
     setIsMainLoading(true);
-
     const randomNumber = Math.random(); // Generate a random number
     if (domain) {
       const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&update=yes&" + randomNumber;
@@ -320,7 +319,7 @@ export default function Manage() {
           bgSize={"lg"}
           maxH={"80vh"}
         >
-          {isNetworkValid ? (
+          {isNetworkValid && domain.endsWith('.'+DOMAIN_TLD)? (
 
 
             <Stack

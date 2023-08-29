@@ -43,7 +43,7 @@ import {
   Kbd ,
 } from '@chakra-ui/react'
 import { useAccount, useNetwork } from "wagmi";
-import { NETWORK_ERROR,DOMAIN_TYPE } from '../../../configuration/Config'
+import { NETWORK_ERROR,DOMAIN_TYPE,DOMAIN_TLD } from '../../../configuration/Config'
 
 
 export default function Info() {
@@ -182,7 +182,7 @@ export default function Info() {
         bgSize={"lg"}
         maxH={"80vh"}
       >
-        {isNetworkValid ? (
+        {isNetworkValid && domain.endsWith('.'+DOMAIN_TLD) ? (
           
             <Stack
               as={Box}
