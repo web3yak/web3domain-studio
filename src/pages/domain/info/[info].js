@@ -60,13 +60,13 @@ export default function Info() {
 
     if (info) {
       const url = "https://w3d.name/api/v1/index.php?domain=" + info;
-      console.log(url);
+     // console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
-          console.log(json);
+         // console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -107,10 +107,10 @@ export default function Info() {
   
       if (web3_url !== '') {
         setWebUrl(web3_url);
-        console.log(web3_url);
+       // console.log(web3_url);
       } else if (web_url !== '') {
         setWebUrl(web_url);
-        console.log(web_url);
+       // console.log(web_url);
       }
     }, [jsonData]);
 

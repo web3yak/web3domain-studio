@@ -132,11 +132,11 @@ export default function Manage() {
   };
 
   const handleUpload = async () => {
-    console.log("Verify record of  " + domain);
+   // console.log("Verify record of  " + domain);
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log('Verify data running...');
+    //  console.log('Verify data running...');
       const response = await generateJson(jsonDataNew, domain);
       if (response.ok) {
         const responseText = await response.text();
@@ -144,7 +144,7 @@ export default function Manage() {
         try {
           const responseObject = JSON.parse(responseText);
           const cidValue = responseObject.cid;
-          console.log('https://ipfs.io/ipfs/' + cidValue);
+         // console.log('https://ipfs.io/ipfs/' + cidValue);
           setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
           setIsLoading(false);
 
@@ -162,7 +162,7 @@ export default function Manage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log('Saving record..');
+    //console.log('Saving record..');
 
     const array = {
       name: manage,
@@ -211,7 +211,7 @@ export default function Manage() {
         51: { type: "web3_url", value: newUrl },
       },
     };
-    console.log(array);
+    //console.log(array);
 
     setJsonDataNew(array);
   };
@@ -224,14 +224,14 @@ export default function Manage() {
     const randomNumber = Math.random(); // Generate a random number
     if (domain) {
       const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&update=yes&" + randomNumber;
-      console.log(url);
+     // console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
           setIsMainLoading(false);
-          console.log(json);
+         // console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -277,7 +277,7 @@ export default function Manage() {
       //setFlag.on(); // Set flag to true
     } else if (web2Url !== '') {
       setWebUrl(web2Url);
-      console.log(web2Url);
+     // console.log(web2Url);
       //setFlag.off(); // Set flag to false
     }
 
@@ -288,10 +288,10 @@ export default function Manage() {
   useEffect(() => {
     if (flag) {
       setNewUrl(web3Url);
-      console.log("ON");
+      //console.log("ON");
     } else {
       setNewUrl('');
-      console.log("OFF");
+     // console.log("OFF");
     }
   }, [flag]);
 

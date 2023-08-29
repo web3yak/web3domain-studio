@@ -6,7 +6,7 @@ const contractAddress = checkContract();
 var CONTRACT_ADDRESS = ''; // No contract found
     if (contractAddress) {
       CONTRACT_ADDRESS = contractAddress;
-      console.log(CONTRACT_ADDRESS);
+     // console.log(CONTRACT_ADDRESS);
     } else {
       console.log("No matching contract address found for the current chain.");
     }
@@ -46,7 +46,7 @@ function useDomainInfo(domainName: string) {
       setOwnerAddress(dataArray[1]);
       setOldUri(dataArray[2]);
     }
-    console.log("am here");
+   // console.log("am here");
   }, [data, isError]);
 
   return {

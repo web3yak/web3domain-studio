@@ -9,7 +9,7 @@ export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
 export const THEME_CONFIG = { initialColorMode: THEME_INITIAL_COLOR }
 
-export const SOCIAL_MEDIUM = 'web3yak'
+export const SOCIAL_MEDIUM = '@web3yak'
 export const SOCIAL_TWITTER = 'web3yak'
 export const SOCIAL_GITHUB = 'web3yak'
 export const SOCIAL_LINKEDIN = 'web3yak'

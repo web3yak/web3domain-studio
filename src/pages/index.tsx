@@ -66,7 +66,7 @@ const Home: NextPage = () => {
 
   const fetchData = (param: string) => {
 
-    console.log(param + " ...... " + value);
+    //console.log(param + " ...... " + value);
 
     // Convert param to lowercase
    // let newParam = process_domain(param);
@@ -85,17 +85,17 @@ const Home: NextPage = () => {
 
     validateDomain(param);
 
-    console.log(param + " **** " + value);
+   // console.log(param + " **** " + value);
 
     if (isValidDomain) {
-      console.log("*");
+     // console.log("*");
       setValue2(process_domain(param));
       setValue3(process_domain('my' + param));
       setShowBox(true); // Show Box when value is updated after 5 seconds of inactivity
 
     }
     else {
-      console.log("invalid domain");
+    //  console.log("invalid domain");
 
       setShowBox(false);
     }

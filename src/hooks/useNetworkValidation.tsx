@@ -7,7 +7,7 @@ function useNetworkValidation() {
 
   if (!isConnected) {
     // Not connected
-    console.log("Not connected to any wallet");
+   // console.log("Not connected to any wallet");
     return false;
   }
 

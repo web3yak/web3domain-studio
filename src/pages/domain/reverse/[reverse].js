@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 var w3d = require("@web3yak/web3domain");
-console.log(w3d);
+//console.log(w3d);
 import Link from 'next/link';
 import { FaEthereum, FaGreaterThan } from "react-icons/fa";
 import {
@@ -132,7 +132,7 @@ export default function Info() {
     };
 
     const resolve = new w3d.Web3Domain(settings);
-    console.log(resolve);
+   // console.log(resolve);
 
     // console.log(resolve.SmartContractAddress); //Polygon Mainnet contract address
     // console.log(resolve.fvm_SmartContractAddress);  //Filecoin 
