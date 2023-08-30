@@ -132,46 +132,19 @@ export default function Manage() {
   };
 
   const handleUpload = async () => {
-   // console.log("Verify record of  " + domain);
+   console.log("Verify record of  " + domain);
     setIsLoading(true);
     if (domain !== 'undefined') {
 
       console.log(jsonData);
 
       //Generate NFT image
-      genImage(domain);
-
-
-    
-      
+      await genImage(domain);
+   
     }
   }
 
-  async function genJson()
-{
-  console.log(jsonDataNew);
-  const response = await generateJson(jsonDataNew, domain);
-      if (response.ok) {
-        const responseText = await response.text();
-
-        try {
-          const responseObject = JSON.parse(responseText);
-          const cidValue = responseObject.cid;
-         // console.log('https://ipfs.io/ipfs/' + cidValue);
-          setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
-          setIsLoading(false);
-          
-
-        } catch (error) {
-          console.log("Error parsing JSON:", error);
-        }
-
-      } else {
-        console.log("Error generating JSON.");
-        setIsLoading(false);
-      }
-
-}
+ 
   async function genImage(domainName) {
     
     const key = '100';
@@ -181,7 +154,7 @@ export default function Manage() {
       console.log('Image content:', imageContent);
       setImage("https://ipfs.io/ipfs/"+imageContent);
       // Perform further actions with the image content
-     //await genJson();
+     await genJson();
     } else {
       console.log('Failed to generate image content.');
       setIsLoading(false);
@@ -189,8 +162,37 @@ export default function Manage() {
     
   }
 
+  async function genJson()
+  {
+    //handleSubmit(null); 
+    console.log(jsonDataNew);
+    const response = await generateJson(jsonDataNew, domain);
+        if (response.ok) {
+          const responseText = await response.text();
+  
+          try {
+            const responseObject = JSON.parse(responseText);
+            const cidValue = responseObject.cid;
+           console.log('https://ipfs.io/ipfs/' + cidValue);
+            setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
+            setIsLoading(false);
+            
+  
+          } catch (error) {
+            console.log("Error parsing JSON:", error);
+          }
+  
+        } else {
+          console.log("Error generating JSON.");
+          setIsLoading(false);
+        }
+  
+  }
+
   const handleSubmit = (event) => {
+    if (event) {
     event.preventDefault();
+    }
 
     console.log('Saving record..');
 
@@ -246,14 +248,12 @@ export default function Manage() {
     setJsonDataNew(array);
   };
 
-
   useEffect(() => {
-    if (image) {
-      handleSubmit(event);
-      genJson();
-    }
+    console.log(image);
+    handleSubmit(null);
+    //genJson();
   }, [image]);
-
+  
   useEffect(() => {
     setIsMainLoading(true);
     const randomNumber = Math.random(); // Generate a random number
