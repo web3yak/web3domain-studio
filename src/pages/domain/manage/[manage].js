@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 var w3d = require("@web3yak/web3domain");
 import { useURLValidation } from "../../../hooks/validate";
 import { useJsonValue } from "../../../hooks/jsonData";
-import { generateJson } from '../../../hooks/ipfs';
+import { generateJson, generateImage } from '../../../hooks/ipfs';
 import TokenURI from '../../../components/TokenURI'; // Adjust the path to the actual location
 import { useAccount, useNetwork } from "wagmi";
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
@@ -89,7 +89,7 @@ export default function Manage() {
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonData as null
   const { getValue } = useJsonValue(jsonData);
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
-
+  const [image, setImage] = useState(DOMAIN_IMAGE_URL);
   const [isMainLoading, setIsMainLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState("");
@@ -136,8 +136,21 @@ export default function Manage() {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-    //  console.log('Verify data running...');
-      const response = await generateJson(jsonDataNew, domain);
+      console.log(jsonData);
+
+      //Generate NFT image
+      genImage(domain);
+
+
+    
+      
+    }
+  }
+
+  async function genJson()
+{
+  console.log(jsonDataNew);
+  const response = await generateJson(jsonDataNew, domain);
       if (response.ok) {
         const responseText = await response.text();
 
@@ -147,6 +160,7 @@ export default function Manage() {
          // console.log('https://ipfs.io/ipfs/' + cidValue);
           setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
           setIsLoading(false);
+          
 
         } catch (error) {
           console.log("Error parsing JSON:", error);
@@ -156,18 +170,34 @@ export default function Manage() {
         console.log("Error generating JSON.");
         setIsLoading(false);
       }
+
+}
+  async function genImage(domainName) {
+    
+    const key = '100';
+  
+    const imageContent = await generateImage(domainName, key);
+    if (imageContent) {
+      console.log('Image content:', imageContent);
+      setImage("https://ipfs.io/ipfs/"+imageContent);
+      // Perform further actions with the image content
+     //await genJson();
+    } else {
+      console.log('Failed to generate image content.');
+      setIsLoading(false);
     }
+    
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    //console.log('Saving record..');
+    console.log('Saving record..');
 
     const array = {
       name: manage,
       description: DOMAIN_DESCRIPTION,
-      image: DOMAIN_IMAGE_URL,
+      image: image,
       attributes: [
         { trait_type: "domain", value: manage },
         { trait_type: "level", value: "2" },
@@ -211,13 +241,18 @@ export default function Manage() {
         51: { type: "web3_url", value: newUrl },
       },
     };
-    //console.log(array);
+    console.log(array);
 
     setJsonDataNew(array);
   };
 
 
-
+  useEffect(() => {
+    if (image) {
+      handleSubmit(event);
+      genJson();
+    }
+  }, [image]);
 
   useEffect(() => {
     setIsMainLoading(true);
