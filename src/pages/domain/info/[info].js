@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 var w3d = require("@web3yak/web3domain");
 import Link from 'next/link';
 import useDomainInfo from '../../../hooks/domainInfo';
+import { useURLValidation } from '../../../hooks/validate';
 import {
   Box,
   Button,
@@ -33,6 +34,7 @@ import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAI
 
 export default function Info() {
   const { isConnected, connector, address } = useAccount();
+  const { validateURL } = useURLValidation();
   const router = useRouter();
   const { info } = router.query;
   const { ownerAddress } = useDomainInfo(info);
@@ -59,14 +61,15 @@ export default function Info() {
 
 
     if (info) {
-      const url = "https://w3d.name/api/v1/index.php?domain=" + info;
-      console.log(url);
+      const randomNumber = Math.random();
+      const url = "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
+      // console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
-          console.log(json);
+          // console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -84,35 +87,38 @@ export default function Info() {
           setError(err.message);
           setIsLoading(false);
         });
-    } 
+    }
   }, [info]);
 
-    // Use another useEffect to set webUrl
-    useEffect(() => {
-      var web_url = '';
-      var web3_url = '';
-  
-      if (jsonData?.records?.hasOwnProperty('51') && jsonData.records['51'].value !== '') {
-        // If the '51' property exists in jsonData.records and its value is not empty
-        // Set web3_url
-        web3_url = jsonData.records['51'].value;
-      }
-      
-      if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '') {
-        // If the '50' property exists in jsonData.records and its value is not empty
-        // Set web_url
+  // Use another useEffect to set webUrl
+  useEffect(() => {
+    var web_url = '';
+    var web3_url = '';
+
+    if (jsonData?.records?.hasOwnProperty('51') && jsonData.records['51'].value !== '') {
+      // If the '51' property exists in jsonData.records and its value is not empty
+      // Set web3_url
+      web3_url = jsonData.records['51'].value;
+    }
+
+    if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '') {
+      // If the '50' property exists in jsonData.records and its value is not empty
+      // Set web_url
+      // console.log(jsonData);
+      if (jsonData.records['50'].value != 'https://ipfs.io/ipfs/null') {
         web_url = 'https://ipfs.io/ipfs/' + jsonData.records['50'].value;
       }
-      
-  
-      if (web3_url !== '') {
-        setWebUrl(web3_url);
-        console.log(web3_url);
-      } else if (web_url !== '') {
-        setWebUrl(web_url);
-        console.log(web_url);
-      }
-    }, [jsonData]);
+    }
+
+
+    if (web3_url !== '') {
+      setWebUrl(web3_url);
+      // console.log(web3_url);
+    } else if (web_url !== '') {
+      setWebUrl(web_url);
+      // console.log(web_url);
+    }
+  }, [jsonData]);
 
   return (
 
@@ -190,25 +196,28 @@ export default function Info() {
                           </CardBody>
 
                           <CardFooter>
-                          {address == ownerAddress ? (
-                            <div>
-                            <Button variant='solid' colorScheme='blue'>
-                              <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
-                            </Button>
-                            &nbsp;
-                            <Button variant='solid' colorScheme='yellow'>
-                              <Link href={`/domain/manage/${info}`}>Modify Record</Link>
-                            </Button>
+                            {address == ownerAddress ? (
+                              <div>
+                                <Button variant='solid' colorScheme='blue'>
+                                  <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
+                                </Button>
+                                &nbsp;
+                                <Button variant='solid' colorScheme='yellow'>
+                                  <Link href={`/domain/manage/${info}`}>Modify Record</Link>
+                                </Button>
 
-                            &nbsp;
-                            </div>
-                          ):(<></>)}
+                                &nbsp;
+                              </div>
+                            ) : (<></>)}
 
-                            <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
-                            <Link href={`${webUrl}`} passHref>
- <a  target="_blank" rel="noopener noreferrer">Visit</a>
-</Link>                     </Button>
-                           
+                            {
+                              validateURL(webUrl) && webUrl != '' && (
+                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
+                                  <Link href={`${webUrl}`} passHref>
+                                    <a target="_blank" rel="noopener noreferrer">Visit</a>
+                                  </Link>                     </Button>
+                              )}
+
 
                           </CardFooter>
                         </Stack>

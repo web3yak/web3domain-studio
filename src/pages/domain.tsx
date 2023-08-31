@@ -47,7 +47,7 @@ export default function DomainList() {
       if (chain) {
         if (chain?.network === 'filecoin-mainnet') {
           provider = 'fvm';
-          console.log(provider);
+         // console.log(provider);
         }
       }
 

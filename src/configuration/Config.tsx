@@ -15,8 +15,8 @@ export const SOCIAL_GITHUB = 'web3yak'
 export const SOCIAL_LINKEDIN = 'web3yak'
 export const SOCIAL_DISCORD = 'web3yak'
 
-export const INFURA_KEY = '3ff237d4c............0b271251407' //3ff................198
-export const ALCHEMY_KEY = 'wdUDrkg1............qJCQWfO1InE7'; //wdUDrk..........O1InE7
+export const INFURA_KEY = '3ff237d4c4d14dc8b3b480b271251407' //3ff................198
+export const ALCHEMY_KEY = 'wdUDrkg1zZhHlYC-59w5qJCQWfO1InE7'; //wdUDrk..........O1InE7
 export const NETWORKS = [polygon, filecoin, polygonMumbai ]; //polygon, filecoin, polygonMumbai
 export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
 

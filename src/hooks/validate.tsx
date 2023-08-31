@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 function isValidDomainName(domainName: string): boolean {
-  console.log('Validating : '+domainName);
+  //console.log('Validating : '+domainName);
   const dotCount = domainName.split('.').length - 1;
   if (dotCount > 1) return false;
 

@@ -19,7 +19,7 @@ var CONTRACT_ADDRESS = ''; // No contract found
       CONTRACT_ADDRESS = contractAddress;
       //console.log(CONTRACT_ADDRESS);
     } 
-
+//console.log(TokenURI);
   const {
     config,
     error: prepareError,

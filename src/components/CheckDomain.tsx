@@ -31,7 +31,7 @@ export function CheckDomain(props: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const url = "https://w3d.name/api/v1/index.php?domain=" + props.domain;
-  console.log(url);
+  //console.log(url);
 
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function CheckDomain(props: Props) {
     };
     const resolve = new w3d.Web3Domain(settings);
     async function makeRequest() {
-      console.log('before');
+      //console.log('before');
 
       validateDomain(props.domain);
       await delay(3000);
@@ -54,7 +54,7 @@ export function CheckDomain(props: Props) {
           setDomainAddr(address);
           setError(''); // Clear any previous errors if successful
           setIsLoading(false); // Request completed
-          console.log(address);
+         // console.log(address);
         })
         .catch((err: Error) => {
           if (err.message === "Too Many Requests") {
@@ -69,12 +69,12 @@ export function CheckDomain(props: Props) {
       }
       else
       {
-        console.log("invalid domain");
+       // console.log("invalid domain");
         setIsLoading(false);
       }
 
       //setDomainAddr('iii');
-      console.log('after');
+      //console.log('after');
     }
 
     makeRequest();

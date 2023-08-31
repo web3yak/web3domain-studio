@@ -100,7 +100,7 @@ export default function Info() {
 
 
   const handleMint = async () => {
-    console.log("hello " + domain);
+   // console.log("hello " + domain);
     handleValidation(domain);
     if (isValidDomain) {
 
@@ -112,7 +112,7 @@ export default function Info() {
         write();
       }
       else {
-        console.log(prepareError);
+       // console.log(prepareError);
         showAlert("Domain is prepared to get minted.")
       }
     }
@@ -141,8 +141,8 @@ export default function Info() {
 
       if (domain !== 'undefined') {
         const array = { "name": domain, "description": DOMAIN_DESCRIPTION, "image": DOMAIN_IMAGE_URL, "attributes": [{ "trait_type": "domain", "value": domain }, { "trait_type": "level", "value": "2" }, { "trait_type": "length", "value": 8 }] };
-        console.log(array);
-        console.log('fetch data running...');
+       // console.log(array);
+        //console.log('fetch data running...');
         const response = await generateJson(array, domain);
         if (response.ok) {
           const responseText = await response.text();
@@ -150,7 +150,7 @@ export default function Info() {
           try {
             const responseObject = JSON.parse(responseText);
             const cidValue = responseObject.cid;
-            console.log(cidValue);
+          //  console.log(cidValue);
             setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
           } catch (error) {
             console.log("Error parsing JSON:", error);
