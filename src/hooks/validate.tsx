@@ -30,10 +30,11 @@ export function useDomainValidation() {
 // hooks/validate.tsx
 export function useURLValidation() {
   const validateURL = (param: string) => {
-    if(param != null)
+    if(param != null && param !="")
     {
     const input = param.toLowerCase(); // Convert input to lowercase
     
+    console.log("validating URL of: "+input);
     if (input.trim() === '') {
       // Reset validation if input is empty or starts with 'http'
       return true;
@@ -47,7 +48,7 @@ export function useURLValidation() {
   }
   else
   {
-    return true;
+    return false;
   }
   };
 
