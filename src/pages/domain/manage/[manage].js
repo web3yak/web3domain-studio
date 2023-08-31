@@ -40,7 +40,9 @@ import {
   FormHelperText,
   Switch,
   useBoolean,
-  InputRightElement
+  InputRightElement,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import {
@@ -131,6 +133,11 @@ export default function Manage() {
     }
   };
 
+  const updateImage = async () => {
+    console.log("Update the image");
+    await genImage(domain);
+  }
+
   const handleUpload = async () => {
     console.log("Verify record of  " + domain);
     setIsLoading(true);
@@ -139,7 +146,7 @@ export default function Manage() {
       console.log(jsonData);
 
       //Generate NFT image
-      await genImage(domain);
+      // await genImage(domain);
 
     }
   }
@@ -154,7 +161,7 @@ export default function Manage() {
       console.log('Image content:', imageContent);
       setImage("https://ipfs.io/ipfs/" + imageContent);
       // Perform further actions with the image content
-      await genJson();
+      // await genJson();
     } else {
       console.log('Failed to generate image content.');
       setIsLoading(false);
@@ -249,7 +256,7 @@ export default function Manage() {
 
   useEffect(() => {
     console.log(image);
-   // handleSubmit(null);
+    // handleSubmit(null);
     //genJson();
   }, [image]);
 
@@ -276,7 +283,9 @@ export default function Manage() {
 
   useEffect(() => {
     if (jsonData) {
-      setImage(jsonData && getValue("image"));
+      var img = jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
+      console.log(img);
+      setImage(jsonData && img);
       setProfile(jsonData && getValue("name"));
       setEmail(jsonData && getValue("email"));
       setPhone(jsonData && getValue("phone"));
@@ -400,40 +409,40 @@ export default function Manage() {
                               <Tab>Social</Tab>
                               <Tab>Wallet</Tab>
                               <Tab>Domain</Tab>
-                              <Tab>Notes</Tab>
+
                             </TabList>
                             <TabPanels>
                               <TabPanel>
 
+                                <Grid templateColumns='repeat(3, 1fr)' gap={1}>
+                                  <GridItem w='100%' bg='green.500' >
 
-                                <Card
-                                  direction={{ base: 'column', sm: 'row' }}
-                                  overflow='hidden'
-                                  variant='outline'
-                                >
-                                  <Image
-                                    objectFit='cover'
-                                    maxW={{ base: '100%', sm: '200px' }}
-                                    src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
-                                    alt={jsonData?.name}
-                                  />
-
-                                  <Stack>
-                                    <CardBody>
-                                      hello
-                                    </CardBody>
-
-                                    <CardFooter>
-                                      <Button variant='solid' colorScheme='blue'>
+                                    <Image
+                                      boxSize='175px'
+                                      src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+                                      alt={jsonData?.name}
+                                    />
+                                    <br />
+                                    <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
                                       Update NFT Image
-                                      </Button>
-                                    </CardFooter>
-                                  </Stack>
-                                </Card>
+                                    </Button>
 
+                                  </GridItem>
+                                  <GridItem colSpan={2} w='100%' h='10' bg='blue.500' >
 
+                                    <FormControl mt={2}>
+                                      <FormLabel>Notes</FormLabel>
+                                      <Textarea
+                                        placeholder="About you or your company"
+                                        size="md"
+                                        value={notes}
+                                        onChange={(event) => setNotes(event.target.value)}
+                                      />
+                                    </FormControl>
 
+                                  </GridItem>
 
+                                </Grid>
                               </TabPanel>
 
                               <TabPanel>
@@ -770,18 +779,7 @@ export default function Manage() {
                                 )}
                               </TabPanel>
 
-                              <TabPanel>
 
-                                <FormControl mt={2}>
-                                  <FormLabel>Notes</FormLabel>
-                                  <Textarea
-                                    placeholder="About you or your company"
-                                    size="md"
-                                    value={notes}
-                                    onChange={(event) => setNotes(event.target.value)}
-                                  />
-                                </FormControl>
-                              </TabPanel>
 
                             </TabPanels>
                           </Tabs>
