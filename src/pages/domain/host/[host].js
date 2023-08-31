@@ -4,6 +4,8 @@ var w3d = require("@web3yak/web3domain");
 import Link from 'next/link';
 import useDomainInfo from '../../../hooks/domainInfo';
 import { useURLValidation } from '../../../hooks/validate';
+import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
+
 import {
   Box,
   Button,
@@ -24,26 +26,73 @@ import {
   Kbd,
   ButtonGroup,
   IconButton,
-  useClipboard
+  useClipboard,
+  useBoolean,
+  InputGroup,
+  Input,
+  InputRightElement,
+  FormControl,
+  FormLabel,
+  Switch,
+  FormHelperText,
+  form
 
 } from "@chakra-ui/react";
-import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
+import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
-import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
+import {  DOMAIN_TLD, NETWORK_ERROR } from '../../../configuration/Config'
 
 
 export default function Info() {
   const { isConnected, connector, address } = useAccount();
   const { validateURL } = useURLValidation();
+  const isNetworkValid = useNetworkValidation();
   const router = useRouter();
-  const { info } = router.query;
-  const { ownerAddress } = useDomainInfo(info);
+  const { host } = router.query;
+  const domain = host ? String(host).toLowerCase() : "";
+  const { ownerAddress } = useDomainInfo(domain);
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
-  const [domainAddr, setDomainAddr] = useState(null);
+
   const [error, setError] = useState('');
   const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+
+  const [flag, setFlag] = useBoolean();
+  const [newUrl, setNewUrl] = useState('');
+  const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
+
+
+  const handleSubmit = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+
+    console.log('Saving record..');
+
+    console.log(jsonData);
+
+        // Update the jsonDataNew object with the new web3_url value
+        const updatedJsonData = {
+          ...jsonData,
+          records: {
+            ...jsonData.records,
+            "51": {
+              type: "web3_url",
+              value: newUrl
+            }
+          }
+        };
+    
+        setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
+    
+        console.log(updatedJsonData);
+  };
 
   useEffect(() => {
 
@@ -60,15 +109,16 @@ export default function Info() {
     // console.log(resolve.fvm_SmartContractAddress);  //Filecoin 
 
 
-    if (info) {
+    if (domain) {
       const randomNumber = Math.random();
-      const url = "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
+      const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&" + randomNumber;
       // console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
+          setIsLoading(false);
           // console.log(json);
         } catch (error) {
           console.log("error", error);
@@ -77,18 +127,8 @@ export default function Info() {
 
       fetchData();
 
-      resolve.getAddress(info, "ETH")
-        .then(address => {
-          setDomainAddr(address);
-          setValue(address);
-          setIsLoading(false);
-        })
-        .catch(err => {
-          setError(err.message);
-          setIsLoading(false);
-        });
     }
-  }, [info]);
+  }, [domain]);
 
   // Use another useEffect to set webUrl
   useEffect(() => {
@@ -143,7 +183,16 @@ export default function Info() {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Kbd>{info}</Kbd>
+          <Kbd><Link href={`/domain/info/${domain}`}>{domain}</Link></Kbd>
+          <Box
+          textAlign="center"
+          alignContent={"center"}
+          borderRadius="lg"
+          p={{ base: 5, lg: 2 }}
+          bgSize={"lg"}
+          maxH={"80vh"}
+        >
+          {isNetworkValid && domain.endsWith('.' + DOMAIN_TLD) ? (
           <Stack
             as={Box}
             textAlign={"center"}
@@ -163,8 +212,8 @@ export default function Info() {
                 ) : (
                   <p>
 
-                    {domainAddr !== null ?
-
+                    {address == ownerAddress  ?
+           <form onSubmit={handleSubmit}>
                       <Card
                         direction={{ base: 'column', sm: 'row' }}
                         overflow='hidden'
@@ -181,72 +230,86 @@ export default function Info() {
 
                         <Stack>
                           <CardBody>
-                            <Heading size='md'>{jsonData?.name}</Heading>
+                         
+                          <Text mb='4px'>Redirect to:</Text>
+                                <InputGroup>
 
-                            <Text py='2'>
-                              {jsonData?.description}
-                            </Text><br />
+                                  <Input
+                                    value={webUrl}
+                                    placeholder='No website defined!'
+                                    size='sm'
+                                    disabled="true"
+                                  />
+                                  {webUrl != null && (
+                                    <InputRightElement width='1rem' >
 
-                            <ButtonGroup size='sm' isAttached variant='outline'>
-                              <Button onClick={onCopy}>{domainAddr}</Button>
-                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
-                            </ButtonGroup>
+                                      <Link href={`${webUrl}`} passHref>
+                                        <a target="_blank" rel="noopener noreferrer">
+                                          <FaExternalLinkAlt mx='2px' />
+                                        </a>
+                                      </Link>
+                                    </InputRightElement>
+                                  )}
+                                </InputGroup>
+                                <br />
 
+                                <FormControl display='flex' alignItems='center'>
+                                  <FormLabel htmlFor='change-url' mb='0'>
+                                    Turn on Redirects to own link
+                                  </FormLabel>
+                                  <Switch id='change-url' onChange={() => {
+                                    setFlag.toggle();
+                                    //handleFlagChange();
+                                  }} isChecked={flag} />
+                                </FormControl>
+
+                                {flag && (
+                                  <FormControl mt={2}>
+                                    <FormLabel>Your New Website URL</FormLabel>
+                                    <Input
+                                      type="url"
+                                      placeholder="http://"
+                                      size="md"
+                                      value={newUrl}
+                                      onChange={(event) =>
+                                        setNewUrl(event.currentTarget.value)
+                                      }
+                                    />
+                                    <FormHelperText>
+                                      IPFS & http URL both are supported.<br/>
+                                      {newUrl}
+                                    </FormHelperText>
+                                  </FormControl>
+                                )}
 
                           </CardBody>
 
                           <CardFooter>
                             {address == ownerAddress ? (
                               <div>
-                                <Button variant='solid' colorScheme='blue'>
-                                  <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
-                                </Button>
+                                <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                              Save
+                            </Button>
                                 &nbsp;
                                 <Button variant='solid' colorScheme='yellow'>
-                                  <Link href={`/domain/manage/${info}`}>Modify Record</Link>
+                                  <Link href={`/domain/manage/${domain}`}>Update Website</Link>
                                 </Button>
 
-                                &nbsp;
-
-                                <Button variant='solid' colorScheme='teal'>
-                                  <Link href={`/domain/host/${info}`}>Web Host</Link>
-                                </Button>
-                                
                                 &nbsp;
                               </div>
-                            ) : (<></>)}
+                            ) : (<>Not authorized</>)}
 
-                            {
-                              validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
-                                  <Link href={`${webUrl}`} passHref>
-                                    <a target="_blank" rel="noopener noreferrer">Visit</a>
-                                  </Link>                     </Button>
-                              )}
-
-
+                 
                           </CardFooter>
                         </Stack>
                       </Card>
+                      </form>
                       :
 
-                      <Card align='center'>
-                        <CardHeader>
-                          <Heading size='md'>Register {info}</Heading>
-                        </CardHeader>
-                        <CardBody>
-                          <Text>{DOMAIN_DESCRIPTION}</Text>
-                        </CardBody>
-                        <CardFooter>
-                          <div>
-                            <Button colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
-                          </div>
-
-
-                        </CardFooter>
-                      </Card>
-
-
+                      <Alert status='error'>
+                      <AlertIcon />
+                      <AlertTitle>You are not authorized.</AlertTitle>
+                    </Alert>
 
                     }
 
@@ -259,6 +322,10 @@ export default function Info() {
             )}
 
           </Stack>
+           ) :
+           (<>{NETWORK_ERROR}</>)
+         }
+         </Box>
         </Container>
 
       </Box>

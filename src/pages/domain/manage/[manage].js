@@ -40,7 +40,9 @@ import {
   FormHelperText,
   Switch,
   useBoolean,
-  InputRightElement
+  InputRightElement,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import {
@@ -69,7 +71,7 @@ import {
   FaLink
 } from "react-icons/fa";
 import {
-  
+
   DOMAIN_IMAGE_URL,
   DOMAIN_TLD,
   DOMAIN_DESCRIPTION,
@@ -131,67 +133,71 @@ export default function Manage() {
     }
   };
 
+  const updateImage = async () => {
+    console.log("Update the image");
+    await genImage(domain);
+  }
+
   const handleUpload = async () => {
-   console.log("Verify record of  " + domain);
+    console.log("Verify record of  " + domain);
     setIsLoading(true);
     if (domain !== 'undefined') {
 
       console.log(jsonData);
 
       //Generate NFT image
-      await genImage(domain);
-   
+      // await genImage(domain);
+
     }
   }
 
- 
+
   async function genImage(domainName) {
-    
+
     const key = '100';
-  
+
     const imageContent = await generateImage(domainName, key);
     if (imageContent) {
       console.log('Image content:', imageContent);
-      setImage("https://ipfs.io/ipfs/"+imageContent);
+      setImage("https://ipfs.io/ipfs/" + imageContent);
       // Perform further actions with the image content
-     await genJson();
+      // await genJson();
     } else {
       console.log('Failed to generate image content.');
       setIsLoading(false);
     }
-    
+
   }
 
-  async function genJson()
-  {
+  async function genJson() {
     //handleSubmit(null); 
     console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
-        if (response.ok) {
-          const responseText = await response.text();
-  
-          try {
-            const responseObject = JSON.parse(responseText);
-            const cidValue = responseObject.cid;
-           console.log('https://ipfs.io/ipfs/' + cidValue);
-            setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
-            setIsLoading(false);
-            
-  
-          } catch (error) {
-            console.log("Error parsing JSON:", error);
-          }
-  
-        } else {
-          console.log("Error generating JSON.");
-          setIsLoading(false);
-        }
-  
+    if (response.ok) {
+      const responseText = await response.text();
+
+      try {
+        const responseObject = JSON.parse(responseText);
+        const cidValue = responseObject.cid;
+        console.log('https://ipfs.io/ipfs/' + cidValue);
+        setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
+        setIsLoading(false);
+
+
+      } catch (error) {
+        console.log("Error parsing JSON:", error);
+      }
+
+    } else {
+      console.log("Error generating JSON.");
+      setIsLoading(false);
+    }
+
   }
 
   const handleSubmit = (event) => {
     if (event) {
-    event.preventDefault();
+      event.preventDefault();
     }
 
     console.log('Saving record..');
@@ -250,23 +256,23 @@ export default function Manage() {
 
   useEffect(() => {
     console.log(image);
-    handleSubmit(null);
+    // handleSubmit(null);
     //genJson();
   }, [image]);
-  
+
   useEffect(() => {
     setIsMainLoading(true);
     const randomNumber = Math.random(); // Generate a random number
     if (domain) {
       const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&update=yes&" + randomNumber;
-     // console.log(url);
+      // console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
           setIsMainLoading(false);
-         // console.log(json);
+          // console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -277,6 +283,9 @@ export default function Manage() {
 
   useEffect(() => {
     if (jsonData) {
+      var img = jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
+      console.log(img);
+      setImage(jsonData && img);
       setProfile(jsonData && getValue("name"));
       setEmail(jsonData && getValue("email"));
       setPhone(jsonData && getValue("phone"));
@@ -312,7 +321,7 @@ export default function Manage() {
       //setFlag.on(); // Set flag to true
     } else if (web2Url !== '') {
       setWebUrl(web2Url);
-     // console.log(web2Url);
+      // console.log(web2Url);
       //setFlag.off(); // Set flag to false
     }
 
@@ -326,7 +335,7 @@ export default function Manage() {
       //console.log("ON");
     } else {
       setNewUrl('');
-     // console.log("OFF");
+      // console.log("OFF");
     }
   }, [flag]);
 
@@ -354,7 +363,7 @@ export default function Manage() {
           bgSize={"lg"}
           maxH={"80vh"}
         >
-          {isNetworkValid && domain.endsWith('.'+DOMAIN_TLD)? (
+          {isNetworkValid && domain.endsWith('.' + DOMAIN_TLD) ? (
 
 
             <Stack
@@ -400,35 +409,58 @@ export default function Manage() {
                               <Tab>Social</Tab>
                               <Tab>Wallet</Tab>
                               <Tab>Domain</Tab>
+
                             </TabList>
                             <TabPanels>
                               <TabPanel>
-                                <FormControl isRequired mt={2}>
-                                  <FormLabel>Profile Name</FormLabel>
-                                  <Input
-                                    type="text"
-                                    placeholder="Company / Your name"
-                                    size="md"
-                                    value={profile}
-                                    onChange={(event) =>
-                                      setProfile(event.currentTarget.value)
-                                    }
-                                  />
-                                </FormControl>
 
-                                <FormControl mt={2}>
-                                  <FormLabel>Extra Information</FormLabel>
-                                  <Textarea
-                                    placeholder="Extra Information goes here..."
-                                    size="md"
-                                    value={notes}
-                                    onChange={(event) => setNotes(event.target.value)}
-                                  />
-                                </FormControl>
+                                <Grid templateColumns='repeat(3, 1fr)' gap={1}>
+                                  <GridItem w='100%' bg='green.500' >
+
+                                    <Image
+                                      boxSize='175px'
+                                      src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+                                      alt={jsonData?.name}
+                                    />
+                                    <br />
+                                    <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
+                                      Update NFT Image
+                                    </Button>
+
+                                  </GridItem>
+                                  <GridItem colSpan={2} w='100%' h='10' bg='blue.500' >
+
+                                    <FormControl mt={2}>
+                                      <FormLabel>Notes</FormLabel>
+                                      <Textarea
+                                        placeholder="About you or your company"
+                                        size="md"
+                                        value={notes}
+                                        onChange={(event) => setNotes(event.target.value)}
+                                      />
+                                    </FormControl>
+
+                                  </GridItem>
+
+                                </Grid>
                               </TabPanel>
 
                               <TabPanel>
                                 <Stack spacing={2}>
+
+
+                                  <FormControl isRequired mt={2}>
+                                    <FormLabel>Profile Information</FormLabel>
+                                    <Input
+                                      type="text"
+                                      placeholder="Company / Your name"
+                                      size="md"
+                                      value={profile}
+                                      onChange={(event) =>
+                                        setProfile(event.currentTarget.value)
+                                      }
+                                    />
+                                  </FormControl>
                                   <FormControl>
                                     <InputGroup>
                                       <InputLeftElement pointerEvents="none">
@@ -717,7 +749,7 @@ export default function Manage() {
                                   )}
                                 </InputGroup>
                                 <br />
-                                
+
                                 <FormControl display='flex' alignItems='center'>
                                   <FormLabel htmlFor='change-url' mb='0'>
                                     Turn on Redirects to own link
@@ -741,11 +773,13 @@ export default function Manage() {
                                       }
                                     />
                                     <FormHelperText>
-                                      IPFS & http URL both are supported. 
+                                      IPFS & http URL both are supported.
                                     </FormHelperText>
                                   </FormControl>
                                 )}
                               </TabPanel>
+
+
 
                             </TabPanels>
                           </Tabs>

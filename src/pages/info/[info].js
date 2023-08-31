@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 var w3d = require("@web3yak/web3domain");
 import Link from 'next/link';
-import useDomainInfo from '../../../hooks/domainInfo';
-import { useURLValidation } from '../../../hooks/validate';
 import {
   Box,
   Button,
@@ -20,30 +18,17 @@ import {
   CardBody,
   CardFooter,
   Image,
-  Text,
-  Kbd,
-  ButtonGroup,
-  IconButton,
-  useClipboard
-
+  Text
 } from "@chakra-ui/react";
-import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
-import { useAccount, useNetwork } from "wagmi";
-import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
-
 
 export default function Info() {
-  const { isConnected, connector, address } = useAccount();
-  const { validateURL } = useURLValidation();
   const router = useRouter();
   const { info } = router.query;
-  const { ownerAddress } = useDomainInfo(info);
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const [domainAddr, setDomainAddr] = useState(null);
   const [error, setError] = useState('');
-  const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+
 
   useEffect(() => {
 
@@ -61,15 +46,14 @@ export default function Info() {
 
 
     if (info) {
-      const randomNumber = Math.random();
-      const url = "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
-      // console.log(url);
+      const url = "https://w3d.name/api/v1/index.php?domain=" + info;
+      console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
-          // console.log(json);
+          console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -77,10 +61,10 @@ export default function Info() {
 
       fetchData();
 
+
       resolve.getAddress(info, "ETH")
         .then(address => {
           setDomainAddr(address);
-          setValue(address);
           setIsLoading(false);
         })
         .catch(err => {
@@ -89,36 +73,6 @@ export default function Info() {
         });
     }
   }, [info]);
-
-  // Use another useEffect to set webUrl
-  useEffect(() => {
-    var web_url = '';
-    var web3_url = '';
-
-    if (jsonData?.records?.hasOwnProperty('51') && jsonData.records['51'].value !== '') {
-      // If the '51' property exists in jsonData.records and its value is not empty
-      // Set web3_url
-      web3_url = jsonData.records['51'].value;
-    }
-
-    if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '') {
-      // If the '50' property exists in jsonData.records and its value is not empty
-      // Set web_url
-      // console.log(jsonData);
-      if (jsonData.records['50'].value != 'https://ipfs.io/ipfs/null') {
-        web_url = 'https://ipfs.io/ipfs/' + jsonData.records['50'].value;
-      }
-    }
-
-
-    if (web3_url !== '') {
-      setWebUrl(web3_url);
-      // console.log(web3_url);
-    } else if (web_url !== '') {
-      setWebUrl(web_url);
-      // console.log(web_url);
-    }
-  }, [jsonData]);
 
   return (
 
@@ -134,7 +88,7 @@ export default function Info() {
         textAlign="center"
         alignContent={"center"}
         borderRadius="lg"
-        p={{ base: 2, lg: 1 }}
+        p={{ base: 5, lg: 2 }}
         bgSize={"lg"}
         maxH={"80vh"}
       >
@@ -143,12 +97,11 @@ export default function Info() {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Kbd>{info}</Kbd>
           <Stack
             as={Box}
             textAlign={"center"}
-            spacing={{ base: 2, md: 2 }}
-            py={{ base: 10, md: 6 }}
+            spacing={{ base: 8, md: 5 }}
+            py={{ base: 20, md: 36 }}
           >
 
             {isLoading ? (
@@ -163,18 +116,19 @@ export default function Info() {
                 ) : (
                   <p>
 
+                    {domainAddr !== null ? <Link href={`/address/${domainAddr}`}>{domainAddr}</Link> : ""}
+
                     {domainAddr !== null ?
 
                       <Card
                         direction={{ base: 'column', sm: 'row' }}
                         overflow='hidden'
                         variant='outline'
-                        align='center'
                       >
 
                         <Image
-                          ml={2}
-                          boxSize='150px'
+
+                          maxW={{ base: '100%', sm: '200px' }}
                           src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
                           alt={jsonData?.name}
                         />
@@ -185,46 +139,13 @@ export default function Info() {
 
                             <Text py='2'>
                               {jsonData?.description}
-                            </Text><br />
-
-                            <ButtonGroup size='sm' isAttached variant='outline'>
-                              <Button onClick={onCopy}>{domainAddr}</Button>
-                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
-                            </ButtonGroup>
-
-
+                            </Text>
                           </CardBody>
 
                           <CardFooter>
-                            {address == ownerAddress ? (
-                              <div>
-                                <Button variant='solid' colorScheme='blue'>
-                                  <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
-                                </Button>
-                                &nbsp;
-                                <Button variant='solid' colorScheme='yellow'>
-                                  <Link href={`/domain/manage/${info}`}>Modify Record</Link>
-                                </Button>
-
-                                &nbsp;
-
-                                <Button variant='solid' colorScheme='teal'>
-                                  <Link href={`/domain/host/${info}`}>Web Host</Link>
-                                </Button>
-                                
-                                &nbsp;
-                              </div>
-                            ) : (<></>)}
-
-                            {
-                              validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
-                                  <Link href={`${webUrl}`} passHref>
-                                    <a target="_blank" rel="noopener noreferrer">Visit</a>
-                                  </Link>                     </Button>
-                              )}
-
-
+                            <Button variant='solid' colorScheme='blue'>
+                              Visit
+                            </Button>
                           </CardFooter>
                         </Stack>
                       </Card>
@@ -232,14 +153,14 @@ export default function Info() {
 
                       <Card align='center'>
                         <CardHeader>
-                          <Heading size='md'>Register {info}</Heading>
+                          <Heading size='md'>{info}</Heading>
                         </CardHeader>
                         <CardBody>
-                          <Text>{DOMAIN_DESCRIPTION}</Text>
+                          <Text>Not available</Text>
                         </CardBody>
                         <CardFooter>
                           <div>
-                            <Button colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
+                            <Link href={`/mint/${info}`}>{info}</Link>
                           </div>
 
 
@@ -264,5 +185,6 @@ export default function Info() {
       </Box>
 
     </Flex>
-  )
+
+  );
 }
