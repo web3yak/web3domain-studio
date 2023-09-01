@@ -145,8 +145,7 @@ export default function Manage() {
 
       console.log(jsonData);
 
-      //Generate NFT image
-      // await genImage(domain);
+      await genJson();
 
     }
   }

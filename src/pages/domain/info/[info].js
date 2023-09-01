@@ -199,17 +199,22 @@ export default function Info() {
                             {address == ownerAddress ? (
                               <div>
                                 <Button variant='solid' colorScheme='blue'>
-                                  <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
+                                  <Link href={`/domain/reverse/${info}`}>Address</Link>
                                 </Button>
                                 &nbsp;
                                 <Button variant='solid' colorScheme='yellow'>
-                                  <Link href={`/domain/manage/${info}`}>Modify Record</Link>
+                                  <Link href={`/domain/manage/${info}`}>Record</Link>
                                 </Button>
 
                                 &nbsp;
 
                                 <Button variant='solid' colorScheme='teal'>
-                                  <Link href={`/domain/host/${info}`}>Web Host</Link>
+                                  <Link href={`/domain/host/${info}`}>Host</Link>
+                                </Button>
+                                
+                                &nbsp;
+                                <Button variant='solid' colorScheme='red'>
+                                  <Link href={`/domain/image/${info}`}>Image</Link>
                                 </Button>
                                 
                                 &nbsp;

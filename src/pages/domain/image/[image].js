@@ -58,8 +58,8 @@ export default function Info() {
   const { validateURL } = useURLValidation();
   const isNetworkValid = useNetworkValidation();
   const router = useRouter();
-  const { host } = router.query;
-  const domain = host ? String(host).toLowerCase() : "";
+  const { image } = router.query;
+  const domain = image ? String(image).toLowerCase() : "";
   const { ownerAddress } = useDomainInfo(domain);
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const { getValue } = useJsonValue(jsonData);
@@ -342,10 +342,9 @@ export default function Info() {
 
                                           {isLoading ? (
 
-                                            <>  <CircularProgress isIndeterminate size="24px" /> Preparing
-                                            </>
+                                            <>  <CircularProgress isIndeterminate size="24px" /> Submitting </>
                                           ) : (
-                                            'Prepare'
+                                            'Verify'
                                           )}
 
                                         </Button>
