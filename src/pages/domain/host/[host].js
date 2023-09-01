@@ -38,7 +38,8 @@ import {
   FormLabel,
   Switch,
   FormHelperText,
-  form
+  form,
+  CircularProgress
 
 } from "@chakra-ui/react";
 import {
@@ -65,7 +66,7 @@ export default function Info() {
   const [error, setError] = useState('');
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isMainLoading, setIsMainLoading] = useState(true);
   const [flag, setFlag] = useBoolean();
   const [newUrl, setNewUrl] = useState('');
   const [web2Url, setWeb2Url] = useState('');
@@ -98,6 +99,7 @@ export default function Info() {
     setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
 
     console.log(updatedJsonData);
+    setIsLoading(false);
   };
 
   const handleUpload = async () => {
@@ -140,7 +142,7 @@ export default function Info() {
 
   useEffect(() => {
 
-    setIsLoading(true); // Set isLoading to true whenever the effect runs
+    setIsMainLoading(true); // Set isLoading to true whenever the effect runs
 
     if (domain) {
       const randomNumber = Math.random();
@@ -151,7 +153,7 @@ export default function Info() {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
-          setIsLoading(false);
+          setIsMainLoading(false);
           // console.log(json);
         } catch (error) {
           console.log("error", error);
@@ -163,9 +165,6 @@ export default function Info() {
     }
   }, [domain]);
 
-  useEffect(() => {
-    console.log(visitUrl);
-  }, [visitUrl]);
 
 
   // Use another useEffect to set webUrl
@@ -185,25 +184,28 @@ export default function Info() {
 
       console.log(web3Url);
       console.log(web2Url);
-
-
-      const isValid = validateURL(web3Url);
-
-      if (isValid) {
-        console.log("Valid URL " + web3Url);
-        setVisitUrl(web3Url);
-      }
-      else {
-        if (validateURL(web2Url)) {
-          setVisitUrl(web2Url);
-        }
-
-      }
-      console.log(visitUrl);
     }
 
   }, [jsonData]);
 
+
+  useEffect(() => {
+    
+    const isValid = validateURL(web3Url);
+
+    if (isValid) {
+      console.log("Valid URL " + web3Url);
+      setVisitUrl(web3Url);
+    }
+    else {
+      if (validateURL(web2Url)) {
+        setVisitUrl(web2Url);
+      }
+
+    }
+    console.log(visitUrl);
+  }, [visitUrl,web3Url, web2Url]); 
+ 
   return (
 
     <Flex
@@ -244,7 +246,7 @@ export default function Info() {
                 py={{ base: 10, md: 6 }}
               >
 
-                {isLoading ? (
+                {isMainLoading ? (
                   <Box padding='6' boxShadow='lg' bg='white'>
                     <SkeletonCircle size='10' />
                     <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='3' />

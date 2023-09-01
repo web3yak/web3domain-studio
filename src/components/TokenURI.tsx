@@ -41,13 +41,29 @@ var CONTRACT_ADDRESS = ''; // No contract found
   })
   const toast = useToast();
 
-
+  const randomNumber = Math.random();
+  const url = "https://w3d.name/api/v1/index.php?domain=" + domainName + "&" + randomNumber+"&update=yes";
+ 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+
+
+    const updateApi = async () => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        console.log("API updated");
+        // console.log(json);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    
     if (isSuccess) {
+      updateApi();
       setShowSuccessAlert(true);
     }
     if (isPrepareError || isError) {
@@ -57,7 +73,7 @@ var CONTRACT_ADDRESS = ''; // No contract found
     }
   }, [isSuccess, isPrepareError, isError, prepareError, error]);
 
-  useEffect(() => {
+   useEffect(() => {
     
   function showAlert(title: string, err: string) {
 
