@@ -50,7 +50,7 @@ import {
 } from '@chakra-ui/react'
 import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
-import { DOMAIN_TLD, NETWORK_ERROR } from '../../../configuration/Config'
+import { DOMAIN_TLD, NETWORK_ERROR, DOMAIN_IMAGE_URL } from '../../../configuration/Config'
 
 
 export default function Info() {
@@ -69,9 +69,7 @@ export default function Info() {
   const [isMainLoading, setIsMainLoading] = useState(true);
   const [flag, setFlag] = useBoolean();
   const [newUrl, setNewUrl] = useState('');
-  const [web2Url, setWeb2Url] = useState('');
-  const [web3Url, setWeb3Url] = useState('');
-  const [visitUrl, setVisitUrl] = useState('');
+  const [nftImage, setNftImage] = useState(DOMAIN_IMAGE_URL);
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
 
 
@@ -84,17 +82,12 @@ export default function Info() {
 
     console.log(jsonData);
 
-    // Update the jsonDataNew object with the new web3_url value
-    const updatedJsonData = {
-      ...jsonData,
-      records: {
-        ...jsonData.records,
-        "51": {
-          type: "web3_url",
-          value: newUrl
-        }
-      }
-    };
+// Update the jsonDataNew object with the new "image" value
+const updatedJsonData = {
+  ...jsonData,
+  image: nftImage, // Set the "image" property to the new value (nftImage)
+};
+
 
     setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
 
@@ -114,8 +107,25 @@ export default function Info() {
     }
   }
 
+  async function genImage(domainName) {
+
+    const key = '100';
+
+    const imageContent = await generateImage(domainName, key);
+    if (imageContent) {
+      console.log('Image content:', imageContent);
+      setNftImage("https://ipfs.io/ipfs/" + imageContent);
+      console.log(jsonData);
+      // Perform further actions with the image content
+      // await genJson();
+    } else {
+      console.log('Failed to generate image content.');
+      setIsLoading(false);
+    }
+
+  }
+
   async function genJson() {
-    //handleSubmit(null); 
     console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
@@ -139,6 +149,12 @@ export default function Info() {
     }
 
   }
+
+  const updateImage = async () => {
+    console.log("Update the image");
+    await genImage(domain);
+  }
+
 
   useEffect(() => {
 
@@ -165,46 +181,6 @@ export default function Info() {
     }
   }, [domain]);
 
-
-
-  // Use another useEffect to set webUrl
-  useEffect(() => {
-
-    console.log(jsonData);
-    if (jsonData) {
-      var web2_url = getValue("web_url");
-      //console.log(web2_url);
-
-      var web3_url = getValue("web3_url");
-      //console.log(web3_url);
-
-
-      setWeb2Url(web2_url);
-      setWeb3Url(web3_url);
-
-      console.log(web3Url);
-      console.log(web2Url);
-    }
-
-  }, [jsonData]);
-
-
-  useEffect(() => {
-    
-    const isValid = validateURL(web3Url);
-
-    if (isValid) {
-      console.log("Valid URL " + web3Url);
-      setVisitUrl(web3Url);
-    }
-    else {
-      if (validateURL(web2Url)) {
-        setVisitUrl(web2Url);
-      }
-
-    }
-    console.log(visitUrl);
-  }, [visitUrl,web3Url, web2Url]); 
  
   return (
 
@@ -276,58 +252,9 @@ export default function Info() {
 
                               <Stack>
                                 <CardBody>
-
-                                  <Text mb='4px'>Redirect to:</Text>
-                                  <InputGroup>
-
-                                    <Input
-                                      value={visitUrl}
-                                      placeholder='No website defined!'
-                                      size='sm'
-                                      disabled="true"
-                                    />
-                                    {web3Url != null && (
-                                      <InputRightElement width='1rem' >
-
-                                        <Link href={`${visitUrl}`} passHref>
-                                          <a target="_blank" rel="noopener noreferrer">
-                                            <FaExternalLinkAlt mx='2px' />
-                                          </a>
-                                        </Link>
-                                      </InputRightElement>
-                                    )}
-                                  </InputGroup>
-                                  <br />
-
-                                  <FormControl display='flex' alignItems='center'>
-                                    <FormLabel htmlFor='change-url' mb='0'>
-                                      Turn on Redirects to own link
-                                    </FormLabel>
-                                    <Switch id='change-url' onChange={() => {
-                                      setFlag.toggle();
-                                      //handleFlagChange();
-                                    }} isChecked={flag} />
-                                  </FormControl>
-
-                                  {flag && (
-                                    <FormControl mt={2}>
-                                      <FormLabel>Your New Website URL</FormLabel>
-                                      <Input
-                                        type="url"
-                                        placeholder="http://"
-                                        size="md"
-                                        value={newUrl}
-                                        onChange={(event) =>
-                                          setNewUrl(event.currentTarget.value)
-                                        }
-                                      />
-                                      <FormHelperText>
-                                        IPFS & http URL both are supported.<br />
-                                        {newUrl}
-                                      </FormHelperText>
-                                    </FormControl>
-                                  )}
-
+                                <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
+                                      Update NFT Image
+                                    </Button>
                                 </CardBody>
 
                                 <CardFooter>

@@ -133,10 +133,6 @@ export default function Manage() {
     }
   };
 
-  const updateImage = async () => {
-    console.log("Update the image");
-    await genImage(domain);
-  }
 
   const handleUpload = async () => {
     console.log("Verify record of  " + domain);
@@ -151,22 +147,7 @@ export default function Manage() {
   }
 
 
-  async function genImage(domainName) {
 
-    const key = '100';
-
-    const imageContent = await generateImage(domainName, key);
-    if (imageContent) {
-      console.log('Image content:', imageContent);
-      setImage("https://ipfs.io/ipfs/" + imageContent);
-      // Perform further actions with the image content
-      // await genJson();
-    } else {
-      console.log('Failed to generate image content.');
-      setIsLoading(false);
-    }
-
-  }
 
   async function genJson() {
     //handleSubmit(null); 
@@ -422,9 +403,7 @@ export default function Manage() {
                                       alt={jsonData?.name}
                                     />
                                     <br />
-                                    <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
-                                      Update NFT Image
-                                    </Button>
+                               
 
                                   </GridItem>
                                   <GridItem colSpan={2} w='100%' h='10' bg='blue.500' >
