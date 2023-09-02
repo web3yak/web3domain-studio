@@ -30,7 +30,6 @@ import {
   ButtonGroup,
   IconButton,
   useClipboard,
-  useBoolean,
   InputGroup,
   Input,
   InputRightElement,
@@ -67,10 +66,13 @@ export default function Info() {
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
   const [isLoading, setIsLoading] = useState(true);
   const [isMainLoading, setIsMainLoading] = useState(true);
-  const [flag, setFlag] = useBoolean();
   const [newUrl, setNewUrl] = useState('');
   const [nftImage, setNftImage] = useState(DOMAIN_IMAGE_URL);
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
+  const [show, setShow] = useState(false);
+
+  let firstImg=jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
+  
 
 
   const handleSubmit = (event) => {
@@ -116,8 +118,7 @@ const updatedJsonData = {
       console.log('Image content:', imageContent);
       setNftImage("https://ipfs.io/ipfs/" + imageContent);
       console.log(jsonData);
-      // Perform further actions with the image content
-      // await genJson();
+      setShow(true);
     } else {
       console.log('Failed to generate image content.');
       setIsLoading(false);
@@ -153,6 +154,7 @@ const updatedJsonData = {
   const updateImage = async () => {
     console.log("Update the image");
     await genImage(domain);
+    
   }
 
 
@@ -242,14 +244,22 @@ const updatedJsonData = {
                               variant='outline'
                               align='center'
                             >
-
+{nftImage == DOMAIN_IMAGE_URL ?  (
                               <Image
                                 ml={2}
-                                boxSize='150px'
-                                src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+                                boxSize='200px'
+                                src={firstImg}
                                 alt={jsonData?.name}
                               />
+                              ):(
 
+                                <Image
+                                ml={2}
+                                boxSize='200px'
+                                src={nftImage}
+                                alt={jsonData?.name} 
+                                />
+                              )}
                               <Stack>
                                 <CardBody>
                                 <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
@@ -258,14 +268,17 @@ const updatedJsonData = {
                                 </CardBody>
 
                                 <CardFooter>
+                         
                                   {address == ownerAddress ? (
                                     <div>
+                                      { show ?  (
                                       <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                                         Save
                                       </Button>
-                                      &nbsp;
+                                   
+                                      ): (<></>)}
                                       {jsonDataNew != null ? (
-                                        <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+                                        <Button ml="1" rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
 
                                           {isLoading ? (
 
@@ -279,7 +292,7 @@ const updatedJsonData = {
                                         <></>
                                       )}
 
-                                      &nbsp;
+                              &nbsp;
                                       {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
 
                                     </div>
