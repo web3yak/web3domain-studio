@@ -30,10 +30,6 @@ import {
   ButtonGroup,
   IconButton,
   useClipboard,
-<<<<<<< HEAD
-  useBoolean,
-=======
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
   InputGroup,
   Input,
   InputRightElement,
@@ -53,11 +49,7 @@ import {
 } from '@chakra-ui/react'
 import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
-<<<<<<< HEAD
-import { DOMAIN_TLD, NETWORK_ERROR } from '../../../configuration/Config'
-=======
 import { DOMAIN_TLD, NETWORK_ERROR, DOMAIN_IMAGE_URL } from '../../../configuration/Config'
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
 
 export default function Info() {
@@ -74,14 +66,6 @@ export default function Info() {
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
   const [isLoading, setIsLoading] = useState(true);
   const [isMainLoading, setIsMainLoading] = useState(true);
-<<<<<<< HEAD
-  const [flag, setFlag] = useBoolean();
-  const [newUrl, setNewUrl] = useState('');
-  const [web2Url, setWeb2Url] = useState('');
-  const [web3Url, setWeb3Url] = useState('');
-  const [visitUrl, setVisitUrl] = useState('');
-  const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
-=======
   const [newUrl, setNewUrl] = useState('');
   const [nftImage, setNftImage] = useState(DOMAIN_IMAGE_URL);
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
@@ -89,7 +73,6 @@ export default function Info() {
 
   let firstImg=jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
   
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
 
   const handleSubmit = (event) => {
@@ -101,26 +84,12 @@ export default function Info() {
 
     console.log(jsonData);
 
-<<<<<<< HEAD
-    // Update the jsonDataNew object with the new web3_url value
-    const updatedJsonData = {
-      ...jsonData,
-      records: {
-        ...jsonData.records,
-        "51": {
-          type: "web3_url",
-          value: newUrl
-        }
-      }
-    };
-=======
 // Update the jsonDataNew object with the new "image" value
 const updatedJsonData = {
   ...jsonData,
   image: nftImage, // Set the "image" property to the new value (nftImage)
 };
 
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
     setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
 
@@ -140,10 +109,6 @@ const updatedJsonData = {
     }
   }
 
-<<<<<<< HEAD
-  async function genJson() {
-    //handleSubmit(null); 
-=======
   async function genImage(domainName) {
 
     const key = '100';
@@ -162,7 +127,6 @@ const updatedJsonData = {
   }
 
   async function genJson() {
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
     console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
@@ -187,8 +151,6 @@ const updatedJsonData = {
 
   }
 
-<<<<<<< HEAD
-=======
   const updateImage = async () => {
     console.log("Update the image");
     await genImage(domain);
@@ -196,7 +158,6 @@ const updatedJsonData = {
   }
 
 
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
   useEffect(() => {
 
     setIsMainLoading(true); // Set isLoading to true whenever the effect runs
@@ -222,49 +183,6 @@ const updatedJsonData = {
     }
   }, [domain]);
 
-<<<<<<< HEAD
-
-
-  // Use another useEffect to set webUrl
-  useEffect(() => {
-
-    console.log(jsonData);
-    if (jsonData) {
-      var web2_url = getValue("web_url");
-      //console.log(web2_url);
-
-      var web3_url = getValue("web3_url");
-      //console.log(web3_url);
-
-
-      setWeb2Url(web2_url);
-      setWeb3Url(web3_url);
-
-      console.log(web3Url);
-      console.log(web2Url);
-    }
-
-  }, [jsonData]);
-
-
-  useEffect(() => {
-    
-    const isValid = validateURL(web3Url);
-
-    if (isValid) {
-      console.log("Valid URL " + web3Url);
-      setVisitUrl(web3Url);
-    }
-    else {
-      if (validateURL(web2Url)) {
-        setVisitUrl(web2Url);
-      }
-
-    }
-    console.log(visitUrl);
-  }, [visitUrl,web3Url, web2Url]); 
-=======
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
  
   return (
 
@@ -326,81 +244,6 @@ const updatedJsonData = {
                               variant='outline'
                               align='center'
                             >
-<<<<<<< HEAD
-
-                              <Image
-                                ml={2}
-                                boxSize='150px'
-                                src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
-                                alt={jsonData?.name}
-                              />
-
-                              <Stack>
-                                <CardBody>
-
-                                  <Text mb='4px'>Redirect to:</Text>
-                                  <InputGroup>
-
-                                    <Input
-                                      value={visitUrl}
-                                      placeholder='No website defined!'
-                                      size='sm'
-                                      disabled="true"
-                                    />
-                                    {web3Url != null && (
-                                      <InputRightElement width='1rem' >
-
-                                        <Link href={`${visitUrl}`} passHref>
-                                          <a target="_blank" rel="noopener noreferrer">
-                                            <FaExternalLinkAlt mx='2px' />
-                                          </a>
-                                        </Link>
-                                      </InputRightElement>
-                                    )}
-                                  </InputGroup>
-                                  <br />
-
-                                  <FormControl display='flex' alignItems='center'>
-                                    <FormLabel htmlFor='change-url' mb='0'>
-                                      Turn on Redirects to own link
-                                    </FormLabel>
-                                    <Switch id='change-url' onChange={() => {
-                                      setFlag.toggle();
-                                      //handleFlagChange();
-                                    }} isChecked={flag} />
-                                  </FormControl>
-
-                                  {flag && (
-                                    <FormControl mt={2}>
-                                      <FormLabel>Your New Website URL</FormLabel>
-                                      <Input
-                                        type="url"
-                                        placeholder="http://"
-                                        size="md"
-                                        value={newUrl}
-                                        onChange={(event) =>
-                                          setNewUrl(event.currentTarget.value)
-                                        }
-                                      />
-                                      <FormHelperText>
-                                        IPFS & http URL both are supported.<br />
-                                        {newUrl}
-                                      </FormHelperText>
-                                    </FormControl>
-                                  )}
-
-                                </CardBody>
-
-                                <CardFooter>
-                                  {address == ownerAddress ? (
-                                    <div>
-                                      <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
-                                        Save
-                                      </Button>
-                                      &nbsp;
-                                      {jsonDataNew != null ? (
-                                        <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
-=======
 {nftImage == DOMAIN_IMAGE_URL ?  (
                               <Image
                                 ml={2}
@@ -436,7 +279,6 @@ const updatedJsonData = {
                                       ): (<></>)}
                                       {jsonDataNew != null ? (
                                         <Button ml="1" rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
                                           {isLoading ? (
 
@@ -450,11 +292,7 @@ const updatedJsonData = {
                                         <></>
                                       )}
 
-<<<<<<< HEAD
-                                      &nbsp;
-=======
                               &nbsp;
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                       {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
 
                                     </div>
