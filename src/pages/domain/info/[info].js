@@ -196,36 +196,6 @@ export default function Info() {
                           </CardBody>
 
                           <CardFooter>
-<<<<<<< HEAD
-                            {address == ownerAddress ? (
-                              <div>
-                                <Button variant='solid' colorScheme='blue'>
-                                  <Link href={`/domain/reverse/${info}`}>Domain Address</Link>
-                                </Button>
-                                &nbsp;
-                                <Button variant='solid' colorScheme='yellow'>
-                                  <Link href={`/domain/manage/${info}`}>Modify Record</Link>
-                                </Button>
-
-                                &nbsp;
-
-                                <Button variant='solid' colorScheme='teal'>
-                                  <Link href={`/domain/host/${info}`}>Web Host</Link>
-                                </Button>
-                                
-                                &nbsp;
-                              </div>
-                            ) : (<></>)}
-
-                            {
-                              validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
-                                  <Link href={`${webUrl}`} passHref>
-                                    <a target="_blank" rel="noopener noreferrer">Visit</a>
-                                  </Link>                     </Button>
-                              )}
-
-=======
                          
                             {address == ownerAddress ? (
                              
@@ -258,7 +228,6 @@ export default function Info() {
                                   </Link>                     </Button>
                               )}
 
->>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
                           </CardFooter>
                         </Stack>
