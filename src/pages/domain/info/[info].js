@@ -196,34 +196,33 @@ export default function Info() {
                           </CardBody>
 
                           <CardFooter>
+                         
                             {address == ownerAddress ? (
-                              <div>
+                             
+                             <Stack direction="row" spacing={1}>          
                                 <Button variant='solid' colorScheme='blue'>
                                   <Link href={`/domain/reverse/${info}`}>Address</Link>
                                 </Button>
-                                &nbsp;
+                       
                                 <Button variant='solid' colorScheme='yellow'>
                                   <Link href={`/domain/manage/${info}`}>Record</Link>
                                 </Button>
 
-                                &nbsp;
 
                                 <Button variant='solid' colorScheme='teal'>
                                   <Link href={`/domain/host/${info}`}>Host</Link>
                                 </Button>
-                                
-                                &nbsp;
+                        
                                 <Button variant='solid' colorScheme='red'>
                                   <Link href={`/domain/image/${info}`}>Image</Link>
                                 </Button>
-                                
-                                &nbsp;
-                              </div>
+                        
+                        </Stack>
                             ) : (<></>)}
 
                             {
                               validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}>
+                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}  ml="1">
                                   <Link href={`${webUrl}`} passHref>
                                     <a target="_blank" rel="noopener noreferrer">Visit</a>
                                   </Link>                     </Button>

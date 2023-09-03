@@ -34,7 +34,7 @@ export function useURLValidation() {
     {
     const input = param.toLowerCase(); // Convert input to lowercase
     
-    console.log("validating URL of: "+input);
+    //console.log("validating URL of: "+input);
     if (input.trim() === '') {
       // Reset validation if input is empty or starts with 'http'
       return true;

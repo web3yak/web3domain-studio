@@ -384,45 +384,15 @@ export default function Manage() {
                         <form onSubmit={handleSubmit}>
                           <Tabs isFitted variant="enclosed">
                             <TabList mb="1em">
+
                               <Tab>General</Tab>
-                              <Tab>Contact</Tab>
                               <Tab>Social</Tab>
                               <Tab>Wallet</Tab>
-                              <Tab>Domain</Tab>
+
 
                             </TabList>
                             <TabPanels>
-                              <TabPanel>
-
-                                <Grid templateColumns='repeat(3, 1fr)' gap={1}>
-                                  <GridItem w='100%' bg='green.500' >
-
-                                    <Image
-                                      boxSize='175px'
-                                      src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
-                                      alt={jsonData?.name}
-                                    />
-                                    <br />
-                               
-
-                                  </GridItem>
-                                  <GridItem colSpan={2} w='100%' h='10' bg='blue.500' >
-
-                                    <FormControl mt={2}>
-                                      <FormLabel>Notes</FormLabel>
-                                      <Textarea
-                                        placeholder="About you or your company"
-                                        size="md"
-                                        value={notes}
-                                        onChange={(event) => setNotes(event.target.value)}
-                                      />
-                                    </FormControl>
-
-                                  </GridItem>
-
-                                </Grid>
-                              </TabPanel>
-
+                      
                               <TabPanel>
                                 <Stack spacing={2}>
 
@@ -704,65 +674,10 @@ export default function Manage() {
                                 </Stack>
                               </TabPanel>
 
-                              <TabPanel>
-
-                                <Text mb='4px'>Redirect to:</Text>
-                                <InputGroup>
-
-                                  <Input
-                                    value={webUrl}
-                                    placeholder='No website defined!'
-                                    size='sm'
-                                    disabled="true"
-                                  />
-                                  {webUrl != null && (
-                                    <InputRightElement width='1rem' >
-
-                                      <Link href={`${webUrl}`} passHref>
-                                        <a target="_blank" rel="noopener noreferrer">
-                                          <FaExternalLinkAlt mx='2px' />
-                                        </a>
-                                      </Link>
-                                    </InputRightElement>
-                                  )}
-                                </InputGroup>
-                                <br />
-
-                                <FormControl display='flex' alignItems='center'>
-                                  <FormLabel htmlFor='change-url' mb='0'>
-                                    Turn on Redirects to own link
-                                  </FormLabel>
-                                  <Switch id='change-url' onChange={() => {
-                                    setFlag.toggle();
-                                    //handleFlagChange();
-                                  }} isChecked={flag} />
-                                </FormControl>
-
-                                {flag && (
-                                  <FormControl mt={2}>
-                                    <FormLabel>Your New Website URL</FormLabel>
-                                    <Input
-                                      type="url"
-                                      placeholder="http://"
-                                      size="md"
-                                      value={newUrl}
-                                      onChange={(event) =>
-                                        setNewUrl(event.currentTarget.value)
-                                      }
-                                    />
-                                    <FormHelperText>
-                                      IPFS & http URL both are supported.
-                                    </FormHelperText>
-                                  </FormControl>
-                                )}
-                              </TabPanel>
-
-
-
-                            </TabPanels>
+                                                 </TabPanels>
                           </Tabs>
 
-                          <Stack direction="row" spacing={4}>
+                          <Stack direction="row" spacing={2}>
                             <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                               Save
                             </Button>
