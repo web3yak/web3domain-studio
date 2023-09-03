@@ -133,10 +133,13 @@ export default function Manage() {
     }
   };
 
+<<<<<<< HEAD
   const updateImage = async () => {
     console.log("Update the image");
     await genImage(domain);
   }
+=======
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
   const handleUpload = async () => {
     console.log("Verify record of  " + domain);
@@ -151,6 +154,7 @@ export default function Manage() {
   }
 
 
+<<<<<<< HEAD
   async function genImage(domainName) {
 
     const key = '100';
@@ -167,6 +171,9 @@ export default function Manage() {
     }
 
   }
+=======
+
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
   async function genJson() {
     //handleSubmit(null); 
@@ -403,6 +410,7 @@ export default function Manage() {
                         <form onSubmit={handleSubmit}>
                           <Tabs isFitted variant="enclosed">
                             <TabList mb="1em">
+<<<<<<< HEAD
                               <Tab>General</Tab>
                               <Tab>Contact</Tab>
                               <Tab>Social</Tab>
@@ -442,8 +450,16 @@ export default function Manage() {
                                   </GridItem>
 
                                 </Grid>
-                              </TabPanel>
+=======
 
+                              <Tab>General</Tab>
+                              <Tab>Social</Tab>
+                              <Tab>Wallet</Tab>
+
+
+                            </TabList>
+                            <TabPanels>
+                      
                               <TabPanel>
                                 <Stack spacing={2}>
 
@@ -511,10 +527,39 @@ export default function Manage() {
                                     </FormErrorMessage>
                                   </FormControl>
                                 </Stack>
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                               </TabPanel>
 
                               <TabPanel>
                                 <Stack spacing={2}>
+<<<<<<< HEAD
+
+
+                                  <FormControl isRequired mt={2}>
+                                    <FormLabel>Profile Information</FormLabel>
+                                    <Input
+                                      type="text"
+                                      placeholder="Company / Your name"
+                                      size="md"
+                                      value={profile}
+                                      onChange={(event) =>
+                                        setProfile(event.currentTarget.value)
+                                      }
+                                    />
+                                  </FormControl>
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+                                        <FaEnvelope color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="email"
+                                        placeholder="Email Address"
+                                        size="md"
+                                        value={email}
+                                        onChange={(event) =>
+                                          setEmail(event.currentTarget.value)
+=======
                                   <FormControl>
                                     <InputGroup>
                                       <InputLeftElement pointerEvents="none">
@@ -561,6 +606,7 @@ export default function Manage() {
                                         size="sm"
                                         onChange={(event) =>
                                           setFacebook(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                         }
                                       />
                                     </InputGroup>
@@ -569,6 +615,17 @@ export default function Manage() {
                                   <FormControl>
                                     <InputGroup>
                                       <InputLeftElement pointerEvents="none">
+<<<<<<< HEAD
+                                        <FaPhoneAlt color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="tel"
+                                        placeholder="Phone number"
+                                        value={phone}
+                                        size="md"
+                                        onChange={(event) =>
+                                          setPhone(event.currentTarget.value)
+=======
                                         <FaYoutube color="gray.300" />
                                       </InputLeftElement>
                                       <Input
@@ -578,11 +635,47 @@ export default function Manage() {
                                         value={youtube}
                                         onChange={(event) =>
                                           setYoutube(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                         }
                                       />
                                     </InputGroup>
                                   </FormControl>
 
+<<<<<<< HEAD
+                                  <FormControl isInvalid={!validateURL(url)}>
+                                    <FormLabel>Website Link</FormLabel>
+                                    <Input
+                                      type="url"
+                                      placeholder="https://"
+                                      size="md"
+                                      value={url}
+                                      onChange={(event) => {
+                                        setUrl(event.target.value); // Update email state
+                                        handleURLChange(event); // Validate and perform necessary actions
+                                      }}
+                                    />
+                                    <FormErrorMessage>
+                                      Enter valid website link
+                                    </FormErrorMessage>
+                                  </FormControl>
+                                </Stack>
+                              </TabPanel>
+
+                              <TabPanel>
+                                <Stack spacing={2}>
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+                                        <FaTwitter color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Twitter Link"
+                                        value={twitter}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setTwitter(event.currentTarget.value)
+=======
                                   <FormControl>
                                     <InputGroup>
                                       <InputLeftElement pointerEvents="none">
@@ -612,10 +705,26 @@ export default function Manage() {
                                         size="sm"
                                         onChange={(event) =>
                                           setDiscord(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                         }
                                       />
                                     </InputGroup>
                                   </FormControl>
+<<<<<<< HEAD
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+                                        <FaTelegram color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Telegram Link"
+                                        size="sm"
+                                        value={telegram}
+                                        onChange={(event) =>
+                                          setTelegram(event.currentTarget.value)
+=======
                                 </Stack>
                               </TabPanel>
 
@@ -633,10 +742,165 @@ export default function Manage() {
                                         size="sm"
                                         onChange={(event) =>
                                           setBtc(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                         }
                                       />
                                     </InputGroup>
                                   </FormControl>
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+<<<<<<< HEAD
+                                        <FaFacebookSquare color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Facebook Link"
+                                        value={facebook}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setFacebook(event.currentTarget.value)
+=======
+                                        <FaEthereum color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="Ethereum Wallet Address"
+                                        value={eth}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setEth(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </FormControl>
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+<<<<<<< HEAD
+                                        <FaYoutube color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Youtube Link"
+                                        size="sm"
+                                        value={youtube}
+                                        onChange={(event) =>
+                                          setYoutube(event.currentTarget.value)
+=======
+                                        <FaEthereum color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="Polygon Wallet Address"
+                                        value={matic}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setMatic(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </FormControl>
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+<<<<<<< HEAD
+                                        <FaInstagram color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Instagram Link"
+                                        value={instagram}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setInstagram(event.currentTarget.value)
+=======
+                                        <FaEthereum color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="BSC Wallet Address"
+                                        value={bsc}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setBsc(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </FormControl>
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+<<<<<<< HEAD
+                                        <FaDiscord color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="url"
+                                        placeholder="Discord Link"
+                                        value={discord}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setDiscord(event.currentTarget.value)
+=======
+                                        <FaWallet color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="Filecoin Wallet Address"
+                                        value={fil}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setFil(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </FormControl>
+<<<<<<< HEAD
+                                </Stack>
+                              </TabPanel>
+
+                              <TabPanel>
+                                <Stack spacing={3}>
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+                                        <FaBitcoin color="red.500" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="Bitcoin Wallet Address"
+                                        value={btc}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setBtc(event.currentTarget.value)
+=======
+
+                                  <FormControl>
+                                    <InputGroup>
+                                      <InputLeftElement pointerEvents="none">
+                                        <FaWallet color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
+                                        type="text"
+                                        placeholder="Solana Wallet Address"
+                                        value={sol}
+                                        size="sm"
+                                        onChange={(event) =>
+                                          setSol(event.currentTarget.value)
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </FormControl>
+<<<<<<< HEAD
 
                                   <FormControl>
                                     <InputGroup>
@@ -816,6 +1080,47 @@ export default function Manage() {
                       </Alert>)}
                     </div>
 
+=======
+                                </Stack>
+                              </TabPanel>
+
+                                                 </TabPanels>
+                          </Tabs>
+
+                          <Stack direction="row" spacing={2}>
+                            <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                              Save
+                            </Button>
+                            {jsonDataNew != null ? (
+                              <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+
+                                {isLoading ? (
+
+                                  <>  <CircularProgress isIndeterminate size="24px" /> Submitting </>
+                                ) : (
+                                  'Verify'
+                                )}
+
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
+
+                            {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
+
+
+
+                          </Stack>
+                        </form>
+
+
+                      ) : (<Alert status='error'>
+                        <AlertIcon />
+                        <AlertTitle>You are not authorized.</AlertTitle>
+                      </Alert>)}
+                    </div>
+
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                   )}
                 </Stack>
               </Card>

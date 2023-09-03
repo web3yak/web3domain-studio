@@ -30,7 +30,10 @@ import {
   ButtonGroup,
   IconButton,
   useClipboard,
+<<<<<<< HEAD
   useBoolean,
+=======
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
   InputGroup,
   Input,
   InputRightElement,
@@ -50,7 +53,11 @@ import {
 } from '@chakra-ui/react'
 import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
+<<<<<<< HEAD
 import { DOMAIN_TLD, NETWORK_ERROR } from '../../../configuration/Config'
+=======
+import { DOMAIN_TLD, NETWORK_ERROR, DOMAIN_IMAGE_URL } from '../../../configuration/Config'
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
 
 export default function Info() {
@@ -67,12 +74,22 @@ export default function Info() {
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
   const [isLoading, setIsLoading] = useState(true);
   const [isMainLoading, setIsMainLoading] = useState(true);
+<<<<<<< HEAD
   const [flag, setFlag] = useBoolean();
   const [newUrl, setNewUrl] = useState('');
   const [web2Url, setWeb2Url] = useState('');
   const [web3Url, setWeb3Url] = useState('');
   const [visitUrl, setVisitUrl] = useState('');
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
+=======
+  const [newUrl, setNewUrl] = useState('');
+  const [nftImage, setNftImage] = useState(DOMAIN_IMAGE_URL);
+  const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
+  const [show, setShow] = useState(false);
+
+  let firstImg=jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
+  
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
 
   const handleSubmit = (event) => {
@@ -84,6 +101,7 @@ export default function Info() {
 
     console.log(jsonData);
 
+<<<<<<< HEAD
     // Update the jsonDataNew object with the new web3_url value
     const updatedJsonData = {
       ...jsonData,
@@ -95,6 +113,14 @@ export default function Info() {
         }
       }
     };
+=======
+// Update the jsonDataNew object with the new "image" value
+const updatedJsonData = {
+  ...jsonData,
+  image: nftImage, // Set the "image" property to the new value (nftImage)
+};
+
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
     setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
 
@@ -114,8 +140,29 @@ export default function Info() {
     }
   }
 
+<<<<<<< HEAD
   async function genJson() {
     //handleSubmit(null); 
+=======
+  async function genImage(domainName) {
+
+    const key = '100';
+
+    const imageContent = await generateImage(domainName, key);
+    if (imageContent) {
+      console.log('Image content:', imageContent);
+      setNftImage("https://ipfs.io/ipfs/" + imageContent);
+      console.log(jsonData);
+      setShow(true);
+    } else {
+      console.log('Failed to generate image content.');
+      setIsLoading(false);
+    }
+
+  }
+
+  async function genJson() {
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
     console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
@@ -140,6 +187,16 @@ export default function Info() {
 
   }
 
+<<<<<<< HEAD
+=======
+  const updateImage = async () => {
+    console.log("Update the image");
+    await genImage(domain);
+    
+  }
+
+
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
   useEffect(() => {
 
     setIsMainLoading(true); // Set isLoading to true whenever the effect runs
@@ -165,6 +222,7 @@ export default function Info() {
     }
   }, [domain]);
 
+<<<<<<< HEAD
 
 
   // Use another useEffect to set webUrl
@@ -205,6 +263,8 @@ export default function Info() {
     }
     console.log(visitUrl);
   }, [visitUrl,web3Url, web2Url]); 
+=======
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
  
   return (
 
@@ -266,6 +326,7 @@ export default function Info() {
                               variant='outline'
                               align='center'
                             >
+<<<<<<< HEAD
 
                               <Image
                                 ml={2}
@@ -339,6 +400,43 @@ export default function Info() {
                                       &nbsp;
                                       {jsonDataNew != null ? (
                                         <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+=======
+{nftImage == DOMAIN_IMAGE_URL ?  (
+                              <Image
+                                ml={2}
+                                boxSize='200px'
+                                src={firstImg}
+                                alt={jsonData?.name}
+                              />
+                              ):(
+
+                                <Image
+                                ml={2}
+                                boxSize='200px'
+                                src={nftImage}
+                                alt={jsonData?.name} 
+                                />
+                              )}
+                              <Stack>
+                                <CardBody>
+                                <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
+                                      Update NFT Image
+                                    </Button>
+                                </CardBody>
+
+                                <CardFooter>
+                         
+                                  {address == ownerAddress ? (
+                                    <div>
+                                      { show ?  (
+                                      <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                                        Save
+                                      </Button>
+                                   
+                                      ): (<></>)}
+                                      {jsonDataNew != null ? (
+                                        <Button ml="1" rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
 
                                           {isLoading ? (
 
@@ -352,7 +450,11 @@ export default function Info() {
                                         <></>
                                       )}
 
+<<<<<<< HEAD
                                       &nbsp;
+=======
+                              &nbsp;
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                       {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
 
                                     </div>

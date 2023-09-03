@@ -342,9 +342,16 @@ export default function Info() {
 
                                           {isLoading ? (
 
+<<<<<<< HEAD
                                             <>  <CircularProgress isIndeterminate size="24px" /> Submitting </>
                                           ) : (
                                             'Verify'
+=======
+                                            <>  <CircularProgress isIndeterminate size="24px" /> Preparing
+                                            </>
+                                          ) : (
+                                            'Prepare'
+>>>>>>> bed758f39c9e34b9f9840d03b94c5922be3d9b4b
                                           )}
 
                                         </Button>

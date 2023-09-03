@@ -169,6 +169,8 @@ export default function Info() {
     >
        <Container
           maxW={"3xl"}
+          alignContent={"center"}
+          textAlign="center"
           alignItems={"center"}
           justifyContent={"center"}
         >
@@ -209,6 +211,7 @@ export default function Info() {
                         direction={{ base: 'column', sm: 'row' }}
                         overflow='hidden'
                         variant='outline'
+                        
                       >
                         <Stack>
                           <Heading size='md'>On-chain Reverse Address</Heading>
