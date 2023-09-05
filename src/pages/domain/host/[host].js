@@ -8,7 +8,7 @@ import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkVa
 import { useJsonValue } from "../../../hooks/jsonData";
 import { generateJson, generateImage } from '../../../hooks/ipfs';
 import TokenURI from '../../../components/TokenURI'; // Adjust the path to the actual location
-
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -39,7 +39,8 @@ import {
   Switch,
   FormHelperText,
   form,
-  CircularProgress
+  CircularProgress,
+  InputLeftElement
 
 } from "@chakra-ui/react";
 import {
@@ -48,7 +49,7 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
-import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
+import { FaCopy, FaExternalLinkAlt, FaForward, FaLink } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
 import { DOMAIN_TLD, NETWORK_ERROR } from '../../../configuration/Config'
 
@@ -73,7 +74,15 @@ export default function Info() {
   const [web3Url, setWeb3Url] = useState('');
   const [visitUrl, setVisitUrl] = useState('');
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
-
+  const [linkLabel1, setLinkLabel1] = useState("");
+  const [linkLabel2, setLinkLabel2] = useState("");
+  const [linkLabel3, setLinkLabel3] = useState("");
+  const [link1, setLink1] = useState("");
+  const [link2, setLink2] = useState("");
+  const [link3, setLink3] = useState("");
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
+  const [img3, setImg3] = useState("");
 
   const handleSubmit = (event) => {
     if (event) {
@@ -190,7 +199,7 @@ export default function Info() {
 
 
   useEffect(() => {
-    
+
     const isValid = validateURL(web3Url);
 
     if (isValid) {
@@ -204,8 +213,8 @@ export default function Info() {
 
     }
     console.log(visitUrl);
-  }, [visitUrl,web3Url, web2Url]); 
- 
+  }, [visitUrl, web3Url, web2Url]);
+
   return (
 
     <Flex
@@ -260,109 +269,277 @@ export default function Info() {
 
                         {address == ownerAddress ?
                           <form onSubmit={handleSubmit}>
-                            <Card
-                              direction={{ base: 'column', sm: 'row' }}
-                              overflow='hidden'
-                              variant='outline'
-                              align='center'
-                            >
+                            <Tabs isFitted variant="enclosed">
+                              <TabList mb="1em">
 
-                              <Image
-                                ml={2}
-                                boxSize='150px'
-                                src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
-                                alt={jsonData?.name}
-                              />
+                                <Tab>General</Tab>
+                                <Tab>Image</Tab>
+                                <Tab>Link</Tab>
 
-                              <Stack>
-                                <CardBody>
 
-                                  <Text mb='4px'>Redirect to:</Text>
-                                  <InputGroup>
+                              </TabList>
+                              <TabPanels>
+                                <TabPanel>
+                                  <Stack spacing={2}>
+                                    <Card
+                                      direction={{ base: 'column', sm: 'row' }}
+                                      overflow='hidden'
+                                      variant='outline'
+                                      align='center'
+                                    >
 
-                                    <Input
-                                      value={visitUrl}
-                                      placeholder='No website defined!'
-                                      size='sm'
-                                      disabled="true"
-                                    />
-                                    {web3Url != null && (
-                                      <InputRightElement width='1rem' >
-
-                                        <Link href={`${visitUrl}`} passHref>
-                                          <a target="_blank" rel="noopener noreferrer">
-                                            <FaExternalLinkAlt mx='2px' />
-                                          </a>
-                                        </Link>
-                                      </InputRightElement>
-                                    )}
-                                  </InputGroup>
-                                  <br />
-
-                                  <FormControl display='flex' alignItems='center'>
-                                    <FormLabel htmlFor='change-url' mb='0'>
-                                      Turn on Redirects to own link
-                                    </FormLabel>
-                                    <Switch id='change-url' onChange={() => {
-                                      setFlag.toggle();
-                                      //handleFlagChange();
-                                    }} isChecked={flag} />
-                                  </FormControl>
-
-                                  {flag && (
-                                    <FormControl mt={2}>
-                                      <FormLabel>Your New Website URL</FormLabel>
-                                      <Input
-                                        type="url"
-                                        placeholder="http://"
-                                        size="md"
-                                        value={newUrl}
-                                        onChange={(event) =>
-                                          setNewUrl(event.currentTarget.value)
-                                        }
+                                      <Image
+                                        ml={2}
+                                        boxSize='150px'
+                                        src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+                                        alt={jsonData?.name}
                                       />
-                                      <FormHelperText>
-                                        IPFS & http URL both are supported.<br />
-                                        {newUrl}
-                                      </FormHelperText>
-                                    </FormControl>
-                                  )}
 
-                                </CardBody>
+                                      <Stack>
+                                        <CardBody>
 
-                                <CardFooter>
-                                  {address == ownerAddress ? (
-                                    <div>
-                                      <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
-                                        Save
-                                      </Button>
-                                      &nbsp;
-                                      {jsonDataNew != null ? (
-                                        <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+                                          <Text mb='4px'>Redirect to:</Text>
+                                          <InputGroup>
 
-                                          {isLoading ? (
+                                            <Input
+                                              value={visitUrl}
+                                              placeholder='No website defined!'
+                                              size='sm'
+                                              disabled="true"
+                                            />
+                                            {web3Url != null && (
+                                              <InputRightElement width='1rem' >
 
-                                            <>  <CircularProgress isIndeterminate size="24px" /> Preparing
-                                            </>
-                                          ) : (
-                                            'Prepare'
+                                                <Link href={`${visitUrl}`} passHref>
+                                                  <a target="_blank" rel="noopener noreferrer">
+                                                    <FaExternalLinkAlt mx='2px' />
+                                                  </a>
+                                                </Link>
+                                              </InputRightElement>
+                                            )}
+                                          </InputGroup>
+                                          <br />
+
+                                          <FormControl display='flex' alignItems='center'>
+                                            <FormLabel htmlFor='change-url' mb='0'>
+                                              Turn on Redirects to own link
+                                            </FormLabel>
+                                            <Switch id='change-url' onChange={() => {
+                                              setFlag.toggle();
+                                              //handleFlagChange();
+                                            }} isChecked={flag} />
+                                          </FormControl>
+
+                                          {flag && (
+                                            <FormControl mt={2}>
+                                              <FormLabel>Your New Website URL</FormLabel>
+                                              <Input
+                                                type="url"
+                                                placeholder="http://"
+                                                size="md"
+                                                value={newUrl}
+                                                onChange={(event) =>
+                                                  setNewUrl(event.currentTarget.value)
+                                                }
+                                              />
+                                              <FormHelperText>
+                                                IPFS & http URL both are supported.<br />
+                                                {newUrl}
+                                              </FormHelperText>
+                                            </FormControl>
                                           )}
 
-                                        </Button>
-                                      ) : (
-                                        <></>
-                                      )}
-
-                                      &nbsp;
-                                      {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
-
-                                    </div>
-                                  ) : (<>Not authorized</>)}
+                                        </CardBody>
 
 
-                                </CardFooter>
-                              </Stack>
-                            </Card>
+                                      </Stack>
+                                    </Card>
+                                  </Stack>
+                                </TabPanel>
+                                <TabPanel>
+
+                                  <Stack spacing={2}>
+                                    <FormControl>
+                                      <InputGroup>
+                                        <InputLeftElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputLeftElement>
+                                        <Input
+                                          type="url"
+                                          placeholder="Image Link 1"
+                                          value={img1}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setImg1(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+
+                                    <FormControl>
+                                      <InputGroup>
+                                        <InputLeftElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputLeftElement>
+                                        <Input
+                                          type="url"
+                                          placeholder="Image Link 2"
+                                          size="sm"
+                                          value={img2}
+                                          onChange={(event) =>
+                                            setImg2(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+
+                                    <FormControl>
+                                      <InputGroup>
+                                        <InputLeftElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputLeftElement>
+                                        <Input
+                                          type="url"
+                                          placeholder="Image Link 3"
+                                          value={img3}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setImg3(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+
+
+
+
+                                  </Stack>
+
+                                </TabPanel>
+                                <TabPanel>
+                                  <Stack spacing={2}>
+                                    <FormControl>
+                                      <Text mb='8px'>Link No.1</Text>
+                                      <InputGroup>
+                                        <Input
+                                          type="text"
+                                          placeholder="Label-1"
+                                          value={linkLabel1}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLinkLabel1(event.currentTarget.value)
+                                          }
+                                        />
+                                        <InputRightElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputRightElement>
+                                        <Input
+                                          ml="1"
+                                          type="url"
+                                          placeholder="Label-1 Link"
+                                          value={link1}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLink1(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl>
+                                      <Text mb='8px'>Link No.2</Text>
+                                      <InputGroup>
+                                        <Input
+                                          type="text"
+                                          placeholder="Label-2"
+                                          value={linkLabel2}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLinkLabel1(event.currentTarget.value)
+                                          }
+                                        />
+                                        <InputRightElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputRightElement>
+                                        <Input
+                                          ml="1"
+                                          type="url"
+                                          placeholder="Label-2 Link"
+                                          value={link2}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLink2(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+
+                                    <FormControl>
+                                      <Text mb='8px'>Link No.3</Text>
+                                      <InputGroup>
+                                        <Input
+                                          type="text"
+                                          placeholder="Label-3"
+                                          value={linkLabel3}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLinkLabel3(event.currentTarget.value)
+                                          }
+                                        />
+                                        <InputRightElement pointerEvents="none">
+                                          <FaLink color="gray.300" />
+                                        </InputRightElement>
+                                        <Input
+                                          ml="1"
+                                          type="url"
+                                          placeholder="Label-3 Link"
+                                          value={link3}
+                                          size="sm"
+                                          onChange={(event) =>
+                                            setLink3(event.currentTarget.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+
+
+
+
+                                  </Stack>
+                                </TabPanel>
+                              </TabPanels>
+                            </Tabs>
+
+
+                            {address == ownerAddress ? (
+                              <div>
+                                <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                                  Save
+                                </Button>
+                                &nbsp;
+                                {jsonDataNew != null ? (
+                                  <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+
+                                    {isLoading ? (
+
+                                      <>  <CircularProgress isIndeterminate size="24px" /> Preparing
+                                      </>
+                                    ) : (
+                                      'Prepare'
+                                    )}
+
+                                  </Button>
+                                ) : (
+                                  <></>
+                                )}
+
+                                &nbsp;
+                                {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
+
+                              </div>
+                            ) : (<>Not authorized</>)}
+
+
+
                           </form>
                           :
 
