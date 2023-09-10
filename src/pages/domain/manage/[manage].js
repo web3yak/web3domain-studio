@@ -210,9 +210,6 @@ export default function Manage() {
         },
         7: {
           type: "link",
-          value: {
-            OpenSea: "",
-          },
         },
         8: {
           type: "crypto",

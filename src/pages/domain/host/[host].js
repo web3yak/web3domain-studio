@@ -98,6 +98,22 @@ export default function Info() {
       ...jsonData,
       records: {
         ...jsonData.records,
+        7: {
+          type: "link",
+          value: {
+            linkLabel1: link1,
+            linkLabel2: link2,
+            linkLabel3: link3,
+          },
+        },
+        20: {
+          type: "img",
+          value: {
+            "img1": img1,
+            "img2": img2,
+            "img3": img3,
+          },
+        },
         "51": {
           type: "web3_url",
           value: newUrl
@@ -183,16 +199,24 @@ export default function Info() {
     if (jsonData) {
       var web2_url = getValue("web_url");
       //console.log(web2_url);
-
       var web3_url = getValue("web3_url");
       //console.log(web3_url);
-
-
       setWeb2Url(web2_url);
       setWeb3Url(web3_url);
 
-      console.log(web3Url);
-      console.log(web2Url);
+      const linkData = jsonData.records && jsonData.records['7'] && jsonData.records['7'].value;
+    
+      if (linkData) {
+        // Check if linkLabel1, linkLabel2 exist in the linkData object
+        if (linkData) {
+          setLinkLabel1(linkData.linkLabel1);
+          setLinkLabel2(linkData.linkLabel2);
+          setLinkLabel3(linkData.linkLabel3);
+        }
+      }
+
+
+
     }
 
   }, [jsonData]);
@@ -454,7 +478,7 @@ export default function Info() {
                                           value={linkLabel2}
                                           size="sm"
                                           onChange={(event) =>
-                                            setLinkLabel1(event.currentTarget.value)
+                                            setLinkLabel2(event.currentTarget.value)
                                           }
                                         />
                                         <InputRightElement pointerEvents="none">
