@@ -101,9 +101,9 @@ export default function Info() {
         7: {
           type: "link",
           value: {
-            linkLabel1: link1,
-            linkLabel2: link2,
-            linkLabel3: link3,
+            [linkLabel1]: link1,
+            [linkLabel2]: link2,
+            [linkLabel3]: link3,
           },
         },
         20: {
@@ -205,15 +205,28 @@ export default function Info() {
       setWeb3Url(web3_url);
 
       const linkData = jsonData.records && jsonData.records['7'] && jsonData.records['7'].value;
-    
-      if (linkData) {
-        // Check if linkLabel1, linkLabel2 exist in the linkData object
-        if (linkData) {
-          setLinkLabel1(linkData.linkLabel1);
-          setLinkLabel2(linkData.linkLabel2);
-          setLinkLabel3(linkData.linkLabel3);
-        }
-      }
+
+if (linkData) {
+  // Loop through the keys in linkData
+  for (const key in linkData) {
+    // Set the state variables dynamically
+    if (key === 'l1') {
+      setLinkLabel1(key);
+      setLink1(linkData[key]);
+    } else if (key === 'l2') {
+      setLinkLabel2(key);
+      setLink2(linkData[key]);
+    } else if (key === 'l3') {
+      setLinkLabel3(key);
+      setLink3(linkData[key]);
+    }
+  }
+}
+
+
+
+
+
 
 
 
