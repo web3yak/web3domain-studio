@@ -139,6 +139,13 @@ export default function Info() {
     }
   }
 
+  const preview = async () => {
+    console.log("preview record of  " + domain);
+   // setIsLoading(true);
+    if (domain !== 'undefined') {
+      console.log(jsonDataNew);
+    }
+  }
   async function genJson() {
     //handleSubmit(null); 
     console.log(jsonDataNew);
@@ -559,6 +566,12 @@ export default function Info() {
 
                             {address == ownerAddress ? (
                               <div>
+ <Button rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
+                                  Preview
+                                </Button>
+                               
+
+
                                 <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                                   Save
                                 </Button>
