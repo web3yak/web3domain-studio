@@ -125,6 +125,7 @@ var CONTRACT_ADDRESS = ''; // No contract found
 
       {write && (
         <Button
+        size="sm" 
           rightIcon={<FaStop />}
           colorScheme="yellow"
           mt={4}
