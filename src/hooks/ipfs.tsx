@@ -38,3 +38,26 @@ export async function generateImage(domainName: string, key: string): Promise<st
     return null;
   }
 }
+
+export async function generatePreview(rawjson: any[], name: string): Promise<object | null> {
+  try {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(rawjson)); // Append JSON data
+    formData.append('name', name); // Append name string
+    formData.append('template',"https://w3d.name/api/template/theme1/index.php");
+    formData.append('generate','false');
+
+    const url = `https://w3d.name/api/template/start.php`;
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData, // Use the FormData object
+    });
+
+ 
+   // console.log(response.ok);
+    return response;
+  } catch (error) {
+    console.error('Error generating JSON:', error);
+    return null;
+  }
+}

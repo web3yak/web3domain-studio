@@ -6,9 +6,11 @@ import useDomainInfo from '../../../hooks/domainInfo';
 import { useURLValidation } from '../../../hooks/validate';
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
 import { useJsonValue, getParent } from "../../../hooks/jsonData";
-import { generateJson, generateImage } from '../../../hooks/ipfs';
+import { generateJson, generatePreview } from '../../../hooks/ipfs';
 import TokenURI from '../../../components/TokenURI'; // Adjust the path to the actual location
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
+
 import {
   Box,
   Button,
@@ -83,6 +85,11 @@ export default function Info() {
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [htmlPreview,setHtmlPreview] = useState('No preview available');
+
+  const onClose = () => setIsOpen(false);
+  const onOpen = () => setIsOpen(true);
 
   const handleSubmit = (event) => {
     if (event) {
@@ -141,9 +148,18 @@ export default function Info() {
 
   const preview = async () => {
     console.log("preview record of  " + domain);
+    const response = await generatePreview(jsonDataNew, domain);
    // setIsLoading(true);
-    if (domain !== 'undefined') {
+  
+
+    if (domain !== 'undefined' && response) {
+
       console.log(jsonDataNew);
+      const responseText = await response.text();
+      //console.log(responseText);
+      setHtmlPreview(responseText);
+      onOpen(); // Open the modal to display the response
+
     }
   }
   async function genJson() {
@@ -566,10 +582,26 @@ export default function Info() {
 
                             {address == ownerAddress ? (
                               <div>
- <Button rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
-                                  Preview
-                                </Button>
-                               
+
+<Modal isOpen={isOpen} onClose={onClose} size="full">
+  <ModalOverlay />
+  <ModalContent
+   maxW="90vw"  // Set maximum width to 100vw (viewport width)
+   maxH="90vh"  // Set maximum height to 100vh (viewport height)
+   >
+    <ModalHeader>Preview @{domain}</ModalHeader>
+    <ModalCloseButton />
+    <ModalBody>
+    <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
+    </ModalBody>
+    <ModalFooter>
+      <Button colorScheme="blue" mr={3} onClick={onClose}>
+        Close
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
 
 
                                 <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
@@ -577,6 +609,11 @@ export default function Info() {
                                 </Button>
                                 &nbsp;
                                 {jsonDataNew != null ? (
+<div>
+<Button rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
+Preview
+</Button>
+
                                   <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
 
                                     {isLoading ? (
@@ -588,6 +625,8 @@ export default function Info() {
                                     )}
 
                                   </Button>
+</div>
+                                  
                                 ) : (
                                   <></>
                                 )}
