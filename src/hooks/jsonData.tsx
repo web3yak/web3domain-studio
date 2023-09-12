@@ -67,4 +67,26 @@ export function useJsonValue(jsonData: JsonData) {
   };
 }
 
+// utils.js
+
+export function getParent(jsonData: JsonData, targetType: string) {
+  let parentNumber = null; // Initialize parentNumber to null
+
+  // Iterate through the records in jsonData
+  for (const recordNumber in jsonData.records) {
+    const record = jsonData.records[recordNumber];
+
+    // Check if the record has a type property and it equals the targetType
+    if (record.type === targetType) {
+      // If it's a targetType type record, retrieve its parent number
+      parentNumber = recordNumber;
+      break; // Exit the loop since we found the parent
+    }
+  }
+
+  // Return the parentNumber, which contains the parent number of the targetType type record
+  return parentNumber;
+}
+
+
     

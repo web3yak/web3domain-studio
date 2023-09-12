@@ -5,10 +5,12 @@ import Link from 'next/link';
 import useDomainInfo from '../../../hooks/domainInfo';
 import { useURLValidation } from '../../../hooks/validate';
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
-import { useJsonValue } from "../../../hooks/jsonData";
-import { generateJson, generateImage } from '../../../hooks/ipfs';
+import { useJsonValue, getParent } from "../../../hooks/jsonData";
+import { generateJson, generatePreview } from '../../../hooks/ipfs';
 import TokenURI from '../../../components/TokenURI'; // Adjust the path to the actual location
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
+
 import {
   Box,
   Button,
@@ -83,6 +85,10 @@ export default function Info() {
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClose = () => setIsOpen(false);
+  
 
   const handleSubmit = (event) => {
     if (event) {
@@ -139,6 +145,20 @@ export default function Info() {
     }
   }
 
+  const preview = async () => {
+    console.log("preview record of  " + domain);
+    const response = await generatePreview(jsonDataNew, domain);
+   // setIsLoading(true);
+  
+
+    if (domain !== 'undefined' && response) {
+
+      console.log(jsonDataNew);
+      const responseText = await response.text();
+      //console.log(responseText);
+      const onOpen = () => setIsOpen(true);
+    }
+  }
   async function genJson() {
     //handleSubmit(null); 
     console.log(jsonDataNew);
@@ -204,32 +224,42 @@ export default function Info() {
       setWeb2Url(web2_url);
       setWeb3Url(web3_url);
 
-      const linkData = jsonData.records && jsonData.records['7'] && jsonData.records['7'].value;
+      const parentNumber = getParent(jsonData, "link");
+      //console.log("Parent Number of 'link' type record:", parentNumber);
 
-if (linkData) {
-  // Loop through the keys in linkData
-  for (const key in linkData) {
-    // Set the state variables dynamically
-    if (key === 'l1') {
-      setLinkLabel1(key);
-      setLink1(linkData[key]);
-    } else if (key === 'l2') {
-      setLinkLabel2(key);
-      setLink2(linkData[key]);
-    } else if (key === 'l3') {
-      setLinkLabel3(key);
-      setLink3(linkData[key]);
-    }
-  }
-}
+      const linkData = jsonData.records && jsonData.records[parentNumber] && jsonData.records[parentNumber].value;
 
+      if (linkData) {
+        let i = 1; // Initialize the index variable
 
+        // Loop through the keys and values in the "value" object
+        for (const key in linkData) {
+          if (key !== "") { // Skip empty keys
+            if (i === 1) {
+              setLinkLabel1(key);
+              setLink1(linkData[key]);
+            } else if (i === 2) {
+              setLinkLabel2(key);
+              setLink2(linkData[key]);
+            } else if (i === 3) {
+              setLinkLabel3(key);
+              setLink3(linkData[key]);
+            }
 
+            i++; // Increment the index variable
+          }
+        }
+      }
 
+      const imgParentNumber = getParent(jsonData, "img");
+      //console.log("Parent Number of 'link' type record:", parentNumber);
 
-
-
-
+      const imgLinkData = jsonData.records && jsonData.records[imgParentNumber] && jsonData.records[imgParentNumber].value;
+      if (imgLinkData) {
+        setImg1(imgLinkData.img1);
+        setImg2(imgLinkData.img2);
+        setImg3(imgLinkData.img3);
+      }
     }
 
   }, [jsonData]);
@@ -549,11 +579,36 @@ if (linkData) {
 
                             {address == ownerAddress ? (
                               <div>
+
+<Modal isOpen={isOpen} onClose={onClose}>
+  <ModalOverlay />
+  <ModalContent>
+    <ModalHeader>Modal Title</ModalHeader>
+    <ModalCloseButton />
+    <ModalBody>
+      {/* Your HTML content goes here */}
+      <p>Hello, this is your HTML content.</p>
+    </ModalBody>
+    <ModalFooter>
+      <Button colorScheme="blue" mr={3} onClick={onClose}>
+        Close
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+
+
                                 <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                                   Save
                                 </Button>
                                 &nbsp;
                                 {jsonDataNew != null ? (
+<div>
+<Button rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
+Preview
+</Button>
+
                                   <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
 
                                     {isLoading ? (
@@ -565,6 +620,8 @@ if (linkData) {
                                     )}
 
                                   </Button>
+</div>
+                                  
                                 ) : (
                                   <></>
                                 )}
