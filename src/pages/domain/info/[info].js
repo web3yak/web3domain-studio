@@ -200,20 +200,20 @@ export default function Info() {
                             {address == ownerAddress ? (
                              
                              <Stack direction="row" spacing={1}>          
-                                <Button variant='solid' colorScheme='blue'>
+                                <Button size='sm' variant='solid' colorScheme='blue'>
                                   <Link href={`/domain/reverse/${info}`}>Address</Link>
                                 </Button>
                        
-                                <Button variant='solid' colorScheme='yellow'>
+                                <Button size='sm' variant='solid' colorScheme='yellow'>
                                   <Link href={`/domain/manage/${info}`}>Record</Link>
                                 </Button>
 
 
-                                <Button variant='solid' colorScheme='teal'>
+                                <Button size='sm' variant='solid' colorScheme='teal'>
                                   <Link href={`/domain/host/${info}`}>Host</Link>
                                 </Button>
                         
-                                <Button variant='solid' colorScheme='red'>
+                                <Button size='sm' variant='solid' colorScheme='red'>
                                   <Link href={`/domain/image/${info}`}>Image</Link>
                                 </Button>
                         
@@ -222,7 +222,7 @@ export default function Info() {
 
                             {
                               validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}  ml="1">
+                                <Button size='sm' variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}  ml="1">
                                   <Link href={`${webUrl}`} passHref>
                                     <a target="_blank" rel="noopener noreferrer">Visit</a>
                                   </Link>                     </Button>
@@ -243,7 +243,7 @@ export default function Info() {
                         </CardBody>
                         <CardFooter>
                           <div>
-                            <Button colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
+                            <Button size='sm' colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
                           </div>
 
 
