@@ -589,7 +589,7 @@ export default function Info() {
    maxW="90vw"  // Set maximum width to 100vw (viewport width)
    maxH="90vh"  // Set maximum height to 100vh (viewport height)
    >
-    <ModalHeader>Modal Title</ModalHeader>
+    <ModalHeader>Preview @{domain}</ModalHeader>
     <ModalCloseButton />
     <ModalBody>
     <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
