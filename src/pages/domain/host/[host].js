@@ -86,9 +86,10 @@ export default function Info() {
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [htmlPreview,setHtmlPreview] = useState('No preview available');
 
   const onClose = () => setIsOpen(false);
-  
+  const onOpen = () => setIsOpen(true);
 
   const handleSubmit = (event) => {
     if (event) {
@@ -156,7 +157,9 @@ export default function Info() {
       console.log(jsonDataNew);
       const responseText = await response.text();
       //console.log(responseText);
-      const onOpen = () => setIsOpen(true);
+      setHtmlPreview(responseText);
+      onOpen(); // Open the modal to display the response
+
     }
   }
   async function genJson() {
@@ -580,14 +583,16 @@ export default function Info() {
                             {address == ownerAddress ? (
                               <div>
 
-<Modal isOpen={isOpen} onClose={onClose}>
+<Modal isOpen={isOpen} onClose={onClose} size="full">
   <ModalOverlay />
-  <ModalContent>
+  <ModalContent
+   maxW="90vw"  // Set maximum width to 100vw (viewport width)
+   maxH="90vh"  // Set maximum height to 100vh (viewport height)
+   >
     <ModalHeader>Modal Title</ModalHeader>
     <ModalCloseButton />
     <ModalBody>
-      {/* Your HTML content goes here */}
-      <p>Hello, this is your HTML content.</p>
+    <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
     </ModalBody>
     <ModalFooter>
       <Button colorScheme="blue" mr={3} onClick={onClose}>
