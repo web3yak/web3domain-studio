@@ -125,7 +125,14 @@ export default function Info() {
       // Set web_url
       // console.log(jsonData);
       if (jsonData.records['50'].value != 'https://ipfs.io/ipfs/null') {
+        if(jsonData.records['50'].value.startsWith("https://"))
+        {
+          web_url =jsonData.records['50'].value;
+        }
+        else
+        {
         web_url = 'https://ipfs.io/ipfs/' + jsonData.records['50'].value;
+        }
       }
     }
 
@@ -183,9 +190,6 @@ export default function Info() {
                   <p>
 
                     {domainAddr !== null ?
-
-
-
 
                       <Card
                         direction={{ base: 'column', sm: 'row' }}
