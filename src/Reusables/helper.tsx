@@ -6,6 +6,8 @@ import {
   Text,
   useColorModeValue,
   VisuallyHidden,
+  Show,
+   Hide
 } from "@chakra-ui/react";
 import {
   SITE_NAME
@@ -23,7 +25,7 @@ export const Logo = (props: any) => {
           objectFit={"cover"}
           src={"/logo.png"}
         />
-        <Text as="kbd">{SITE_NAME}</Text>
+       <Show above='sm'> <Text as="kbd">{SITE_NAME}</Text></Show>
       </>
     </HStack>
   );
