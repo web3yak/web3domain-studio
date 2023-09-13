@@ -324,12 +324,15 @@ export default function Manage() {
       borderRadius="md"
       color={useColorModeValue("gray.700", "whiteAlpha.900")}
       shadow="base"
+      minWidth='max-content'
     >
 
       <Container
         maxW='3xl'
         alignItems={"center"}
         justifyContent={"center"}
+        alignContent={"center"}
+        textAlign="center"
       >
         <Kbd><Link href={`/domain/info/${domain}`}>{domain}</Link></Kbd>
         <Box
@@ -352,15 +355,10 @@ export default function Manage() {
               py={{ base: 10, md: 2 }}
             >
 
-              <Card
-                direction={{ base: 'column', sm: 'row' }}
-                overflow='hidden'
-                variant='outline'
-
-              >
+          
                 <Stack>
                   <Heading as="h5" size="sm">
-                    Blockchain Records ({domain})
+                    Blockchain Record
                   </Heading>
                   <Divider />
                   {isMainLoading ? (
@@ -709,7 +707,7 @@ export default function Manage() {
 
                   )}
                 </Stack>
-              </Card>
+              
             </Stack>
 
           ) :

@@ -24,13 +24,23 @@ import {
   Kbd,
   ButtonGroup,
   IconButton,
-  useClipboard
+  useClipboard,
+  useDisclosure,
+
 
 } from "@chakra-ui/react";
 import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
-import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
-
+import { DOMAIN_TLD, DOMAIN_DESCRIPTION } from '../../../configuration/Config'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
 export default function Info() {
   const { isConnected, connector, address } = useAccount();
@@ -44,6 +54,15 @@ export default function Info() {
   const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
+  const onOpen = () => setIsOpen(true);
+
+
+  const enlarge = async () => {
+    onOpen(); // Open the modal to display the response
+
+  }
 
   useEffect(() => {
 
@@ -106,7 +125,14 @@ export default function Info() {
       // Set web_url
       // console.log(jsonData);
       if (jsonData.records['50'].value != 'https://ipfs.io/ipfs/null') {
+        if(jsonData.records['50'].value.startsWith("https://"))
+        {
+          web_url =jsonData.records['50'].value;
+        }
+        else
+        {
         web_url = 'https://ipfs.io/ipfs/' + jsonData.records['50'].value;
+        }
       }
     }
 
@@ -177,11 +203,27 @@ export default function Info() {
                           boxSize='150px'
                           src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
                           alt={jsonData?.name}
+                          onClick={() => enlarge()}
                         />
 
                         <Stack>
                           <CardBody>
                             <Heading size='md'>{jsonData?.name}</Heading>
+
+                            <Modal isOpen={isOpen} onClose={onClose}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                  <Image
+                                    ml={2}
+                                    src={jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image}
+                                    alt={jsonData?.name}
+                                  />
+                                </ModalBody>
+                              </ModalContent>
+                            </Modal>
+
 
                             <Text py='2'>
                               {jsonData?.description}
@@ -196,33 +238,33 @@ export default function Info() {
                           </CardBody>
 
                           <CardFooter>
-                         
-                            {address == ownerAddress ? (
-                             
-                             <Stack direction="row" spacing={1}>          
-                                <Button variant='solid' colorScheme='blue'>
+
+                            {address == ownerAddress && info.endsWith('.' + DOMAIN_TLD) ? (
+
+                              <Stack direction="row" spacing={1}>
+                                <Button size='sm' variant='solid' colorScheme='blue'>
                                   <Link href={`/domain/reverse/${info}`}>Address</Link>
                                 </Button>
-                       
-                                <Button variant='solid' colorScheme='yellow'>
+
+                                <Button size='sm' variant='solid' colorScheme='yellow'>
                                   <Link href={`/domain/manage/${info}`}>Record</Link>
                                 </Button>
 
 
-                                <Button variant='solid' colorScheme='teal'>
+                                <Button size='sm' variant='solid' colorScheme='teal'>
                                   <Link href={`/domain/host/${info}`}>Host</Link>
                                 </Button>
-                        
-                                <Button variant='solid' colorScheme='red'>
+
+                                <Button size='sm' variant='solid' colorScheme='red'>
                                   <Link href={`/domain/image/${info}`}>Image</Link>
                                 </Button>
-                        
-                        </Stack>
+
+                              </Stack>
                             ) : (<></>)}
 
                             {
                               validateURL(webUrl) && webUrl != '' && (
-                                <Button variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />}  ml="1">
+                                <Button size='sm' variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />} ml="1">
                                   <Link href={`${webUrl}`} passHref>
                                     <a target="_blank" rel="noopener noreferrer">Visit</a>
                                   </Link>                     </Button>
@@ -243,7 +285,7 @@ export default function Info() {
                         </CardBody>
                         <CardFooter>
                           <div>
-                            <Button colorScheme='teal' size='lg'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
+                            <Button size='sm' colorScheme='teal'>  <Link href={`/domain/mint/${info}`}>Start</Link></Button>
                           </div>
 
 

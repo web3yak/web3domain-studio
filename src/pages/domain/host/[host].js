@@ -86,7 +86,7 @@ export default function Info() {
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [htmlPreview,setHtmlPreview] = useState('No preview available');
+  const [htmlPreview, setHtmlPreview] = useState('No preview available');
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -98,7 +98,7 @@ export default function Info() {
 
     console.log('Saving record..');
 
-    console.log(jsonData);
+    //console.log(jsonData);
 
     // Update the jsonDataNew object with the new web3_url value
     const updatedJsonData = {
@@ -121,16 +121,13 @@ export default function Info() {
             "img3": img3,
           },
         },
-        "51": {
-          type: "web3_url",
-          value: newUrl
-        }
+        "51": { type: "web3_url", value: newUrl }
       }
     };
 
     setJsonDataNew(updatedJsonData); // Update the state with the modified jsonData
 
-    console.log(updatedJsonData);
+    //console.log(updatedJsonData);
     setIsLoading(false);
   };
 
@@ -141,20 +138,20 @@ export default function Info() {
 
       console.log(jsonData);
 
-      await genJson();
+      await getLayout();
 
     }
   }
 
   const preview = async () => {
     console.log("preview record of  " + domain);
-    const response = await generatePreview(jsonDataNew, domain);
-   // setIsLoading(true);
-  
+    const response = await generatePreview(jsonDataNew, domain, 'false');
+    // setIsLoading(true);
+
 
     if (domain !== 'undefined' && response) {
 
-      console.log(jsonDataNew);
+      //console.log(jsonDataNew);
       const responseText = await response.text();
       //console.log(responseText);
       setHtmlPreview(responseText);
@@ -162,10 +159,45 @@ export default function Info() {
 
     }
   }
-  async function genJson() {
+
+  const getLayout = async () => {
+    console.log("cid of layout  " + domain);
+    const response = await generatePreview(jsonDataNew, domain, 'true');
+    if (response.ok) {
+      const responseText = await response.text();
+      try {
+        const responseObject = JSON.parse(responseText);
+        const cidValue = responseObject.cid;
+        const cidUrl = 'https://ipfs.io/ipfs/' + cidValue;
+        console.log(cidUrl);
+        setWeb2Url(cidUrl);
+
+        const updatedJsonData = {
+          ...jsonDataNew,
+          records: {
+            ...jsonDataNew.records,
+
+            "50": { type: "web_url", value: cidUrl }
+          }
+        }
+        console.log(web2Url);
+        //console.log(updatedJsonData);
+        setJsonDataNew(updatedJsonData);
+
+        await genJson(updatedJsonData);
+
+
+      } catch (error) {
+        console.log("Error parsing JSON of layout:", error);
+      }
+    }
+
+
+  }
+  async function genJson(updatedJsonData) {
     //handleSubmit(null); 
-    console.log(jsonDataNew);
-    const response = await generateJson(jsonDataNew, domain);
+    console.log(updatedJsonData);
+    const response = await generateJson(updatedJsonData, domain);
     if (response.ok) {
       const responseText = await response.text();
 
@@ -218,7 +250,7 @@ export default function Info() {
   // Use another useEffect to set webUrl
   useEffect(() => {
 
-    console.log(jsonData);
+    // console.log(jsonData);
     if (jsonData) {
       var web2_url = getValue("web_url");
       //console.log(web2_url);
@@ -267,6 +299,10 @@ export default function Info() {
 
   }, [jsonData]);
 
+  useEffect(() => {
+    // Call genJson whenever jsonDataNew changes
+    console.log(jsonDataNew);
+  }, [jsonDataNew]);
 
   useEffect(() => {
 
@@ -581,60 +617,63 @@ export default function Info() {
 
 
                             {address == ownerAddress ? (
-                              <div>
-
-<Modal isOpen={isOpen} onClose={onClose} size="full">
-  <ModalOverlay />
-  <ModalContent
-   maxW="90vw"  // Set maximum width to 100vw (viewport width)
-   maxH="90vh"  // Set maximum height to 100vh (viewport height)
-   >
-    <ModalHeader>Preview @{domain}</ModalHeader>
-    <ModalCloseButton />
-    <ModalBody>
-    <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
-    </ModalBody>
-    <ModalFooter>
-      <Button colorScheme="blue" mr={3} onClick={onClose}>
-        Close
-      </Button>
-    </ModalFooter>
-  </ModalContent>
-</Modal>
+                              <Stack direction="row" spacing={2}>
 
 
+                                <Modal isOpen={isOpen} onClose={onClose} size="full">
+                                  <ModalOverlay />
+                                  <ModalContent
+                                    maxW="80vw"  // Set maximum width to 100vw (viewport width)
+                                    maxH="80vh"  // Set maximum height to 100vh (viewport height)
+                                  >
+                                    <ModalHeader>Preview @{domain}</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                      <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                                        Close
+                                      </Button>
+                                    </ModalFooter>
+                                  </ModalContent>
+                                </Modal>
 
-                                <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+
+
+                                <Button size="sm" rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                                   Save
                                 </Button>
-                                &nbsp;
+
                                 {jsonDataNew != null ? (
-<div>
-<Button rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
-Preview
-</Button>
+                                  <Stack direction="row" spacing={2}>
+                                    {flag === false && (
+                                    <Button size="sm" rightIcon={<FaForward />} colorScheme="red" width="half" mt={4} onClick={() => preview()} >
+                                      Preview
+                                    </Button>
+)}
+                                    <Button size="sm" rightIcon={<FaForward />} colorScheme="pink" width="half" mt={4} onClick={() => handleUpload()} >
 
-                                  <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+                                      {isLoading ? (
 
-                                    {isLoading ? (
+                                        <>  <CircularProgress isIndeterminate size="24px" /> Preparing
+                                        </>
+                                      ) : (
+                                        'Prepare'
+                                      )}
 
-                                      <>  <CircularProgress isIndeterminate size="24px" /> Preparing
-                                      </>
-                                    ) : (
-                                      'Prepare'
-                                    )}
+                                    </Button>
+                                  </Stack>
 
-                                  </Button>
-</div>
-                                  
                                 ) : (
                                   <></>
                                 )}
 
-                                &nbsp;
+
                                 {claimUrl != 'http://web3domain.org' ? (<TokenURI domainName={domain} TokenURI={claimUrl} />) : (<></>)}
 
-                              </div>
+
+                              </Stack>
                             ) : (<>Not authorized</>)}
 
 
