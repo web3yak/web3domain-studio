@@ -5,6 +5,12 @@ import Link from 'next/link';
 import useDomainInfo from '../../../hooks/domainInfo';
 import { useURLValidation } from '../../../hooks/validate';
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@chakra-ui/react'
+import {
   Box,
   Button,
   Container,
@@ -41,6 +47,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
+import { ChevronRightIcon } from '@chakra-ui/icons'; // Assuming this is how ExternalLinkIcon is imported in your project
 
 export default function Info() {
   const { isConnected, connector, address } = useAccount();
@@ -156,6 +163,7 @@ export default function Info() {
       color={useColorModeValue("gray.700", "whiteAlpha.900")}
       shadow="base"
     >
+      
       <Box
         textAlign="center"
         alignContent={"center"}
@@ -164,11 +172,30 @@ export default function Info() {
         bgSize={"lg"}
         maxH={"80vh"}
       >
+        
+<Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/domain/search'>Domain Search</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  
+  <BreadcrumbItem>
+    <BreadcrumbLink href='#'>{info}</BreadcrumbLink>
+  </BreadcrumbItem>
+
+</Breadcrumb>
+
         <Container
           maxW={"3xl"}
           alignItems={"center"}
           justifyContent={"center"}
         >
+          
+
           <Kbd>{info}</Kbd>
           <Stack
             as={Box}

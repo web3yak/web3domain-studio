@@ -1,50 +1,19 @@
 import type { NextPage } from "next";
-import React, { useState } from 'react';
-import { useAccount } from "wagmi";
+import React from "react";
 
-import Search from '../components/domain/Search';
+import Search from "../components/domain/Search";
 // Import debounce from lodash
 import {
   Box,
-  Button,
   Container,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Stack,
-  Textarea,
   useColorModeValue,
-  Input,
-  Text,
-  Divider,
-  AbsoluteCenter,
-  Fade, ScaleFade, Slide, SlideFade, Collapse,
 } from "@chakra-ui/react";
 
-
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from '@chakra-ui/react'
 const Home: NextPage = () => {
-  
-  const { isConnected, connector, address } = useAccount();
-  
-  const [value, setValue] = useState('');
-
-  
-
-
   return (
-
     <Flex
       align="center"
       justify="center"
@@ -55,17 +24,13 @@ const Home: NextPage = () => {
     >
       <Box
         textAlign="center"
-        alignContent={'center'}
+        alignContent={"center"}
         borderRadius="lg"
         p={{ base: 5, lg: 16 }}
         bgSize={"lg"}
         maxH={"80vh"}
       >
-        <Container
-          maxW={"5xl"}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
+        <Container maxW={"5xl"} alignItems={"center"} justifyContent={"center"}>
           <Stack
             as={Box}
             textAlign={"center"}
@@ -73,7 +38,6 @@ const Home: NextPage = () => {
             py={{ base: 20, md: 16 }}
           >
             <div>
-
               <Heading as="h2" fontSize="2xl" my={1}>
                 Web3 Domain Search
               </Heading>
@@ -85,9 +49,7 @@ const Home: NextPage = () => {
         </Container>
       </Box>
     </Flex>
-
-  )
-
+  );
 };
 
 export default Home;
