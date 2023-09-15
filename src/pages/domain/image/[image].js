@@ -82,7 +82,7 @@ export default function Info() {
 
     console.log('Saving record..');
 
-    console.log(jsonData);
+   // console.log(jsonData);
 
 // Update the jsonDataNew object with the new "image" value
 const updatedJsonData = {
@@ -102,7 +102,7 @@ const updatedJsonData = {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log(jsonData);
+      //console.log(jsonData);
 
       await genJson();
 
@@ -117,7 +117,7 @@ const updatedJsonData = {
     if (imageContent) {
       console.log('Image content:', imageContent);
       setNftImage("https://ipfs.io/ipfs/" + imageContent);
-      console.log(jsonData);
+      //console.log(jsonData);
       setShow(true);
     } else {
       console.log('Failed to generate image content.');
@@ -127,7 +127,7 @@ const updatedJsonData = {
   }
 
   async function genJson() {
-    console.log(jsonDataNew);
+    //console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
       const responseText = await response.text();

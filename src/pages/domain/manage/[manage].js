@@ -139,7 +139,7 @@ export default function Manage() {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log(jsonData);
+     // console.log(jsonData);
 
       await genJson();
 
@@ -151,7 +151,7 @@ export default function Manage() {
 
   async function genJson() {
     //handleSubmit(null); 
-    console.log(jsonDataNew);
+   // console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
       const responseText = await response.text();

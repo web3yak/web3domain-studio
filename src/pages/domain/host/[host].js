@@ -136,7 +136,7 @@ export default function Info() {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log(jsonData);
+      //console.log(jsonData);
 
       await getLayout();
 
@@ -169,7 +169,7 @@ export default function Info() {
         const responseObject = JSON.parse(responseText);
         const cidValue = responseObject.cid;
         const cidUrl = 'https://ipfs.io/ipfs/' + cidValue;
-        console.log(cidUrl);
+       // console.log(cidUrl);
         setWeb2Url(cidUrl);
 
         const updatedJsonData = {
