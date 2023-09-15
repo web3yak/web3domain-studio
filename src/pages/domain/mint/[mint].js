@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { generateJson } from '../../../hooks/ipfs';
 import { useDomainValidation } from '../../../hooks/validate';
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
+import Notice from "../../../components/domain/notice";
 
 import {
   useAccount,
@@ -36,9 +37,15 @@ import {
   AlertTitle,
   AlertDescription,
   useToast,
+  Kbd,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from '@chakra-ui/icons'; // Assuming this is how ExternalLinkIcon is imported in your project
-
+import { ExternalLinkIcon, ChevronRightIcon } from '@chakra-ui/icons'; // Assuming this is how ExternalLinkIcon is imported in your project
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@chakra-ui/react'
 import abiFile from '../../../abiFile.json';
 import { DOMAIN, DOMAIN_PRICE_ETH, DOMAIN_IMAGE_URL, DOMAIN_NETWORK_CHAIN, DOMAIN_DESCRIPTION, NETWORK_ERROR } from '../../../configuration/Config'
 const contractAddress = checkContract();
@@ -182,16 +189,41 @@ export default function Info() {
         bgSize={"lg"}
         maxH={"80vh"}
       >
+
+
+
         {isNetworkValid ? (
         <Container
           maxW={"3xl"}
           alignItems={"center"}
           justifyContent={"center"}
         >
+
+          
+<Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/domain/search'>Domain Search</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  
+  <BreadcrumbItem>
+    <BreadcrumbLink href='#'>{domain}</BreadcrumbLink>
+  </BreadcrumbItem>
+
+</Breadcrumb>
+
+
+          <Kbd>{domain}</Kbd>
+
         <Card
           direction={{ base: 'column', sm: 'row' }}
           overflow='hidden'
           variant='outline'
+          mt="1"
         >
           <Image
             objectFit='cover'
@@ -290,7 +322,7 @@ export default function Info() {
 
 </Container>
 ):
-(<>{NETWORK_ERROR}</>)
+(<Notice/>)
             }
 </Box></Flex>
       </>

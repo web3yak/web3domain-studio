@@ -3,31 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useAccount, useNetwork } from "wagmi";
 import {
   Box,
-  Button,
   Container,
   Flex,
   Heading,
   Stack,
   Spinner,
   useColorModeValue,
-  SimpleGrid
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
-import Link from 'next/link';
-import { useNetworkValidation } from '../hooks/useNetworkValidation';
+import Link from "next/link";
+import { useNetworkValidation } from "../hooks/useNetworkValidation";
 var w3d = require("@web3yak/web3domain");
-import { NETWORK_ERROR, DOMAIN_TLD, DOMAIN_NETWORK_CHAIN } from '../configuration/Config'
+import { DOMAIN_TLD } from "../configuration/Config";
+import Notice from "../components/domain/notice";
 
 type DomainTuple = [string, string];
 
-
 export default function DomainList() {
-  const { isConnected, connector, address } = useAccount();
+  const { address } = useAccount();
   const { chain } = useNetwork();
   const [domainAddr, setDomainAddr] = useState<DomainTuple[]>([]);
-  const [error, setError] = useState(''); // Specify the type for error state
+  const [error, setError] = useState(""); // Specify the type for error state
   const [isLoading, setIsLoading] = useState(true);
-  const domain_tld='.'+DOMAIN_TLD;
+  const domain_tld = "." + DOMAIN_TLD;
   const isNetworkValid = useNetworkValidation();
   const fetchDataIfNetworkValid = () => {
     if (isNetworkValid) {
@@ -40,68 +39,65 @@ export default function DomainList() {
       };
       const resolve = new w3d.Web3Domain(settings);
 
-      let provider = '';
+      let provider = "";
       if (chain) {
-        if (chain?.network === 'filecoin-mainnet') {
-          provider = 'fvm';
-         // console.log(provider);
+        if (chain?.network === "filecoin-mainnet") {
+          provider = "fvm";
+          // console.log(provider);
         }
       }
 
       if (address) {
         resolve
-        .getDomainList(address, provider)
-        .then((data: DomainTuple[]) => {
-          // Filter records that end with the specified domain_tld
-          const filteredDomainAddr = data.filter((item) =>
-            item[1].endsWith(domain_tld)
-          );
-          setDomainAddr(filteredDomainAddr);
-        })
-        .catch((err: Error) => {
-          setError(err.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+          .getDomainList(address, provider)
+          .then((data: DomainTuple[]) => {
+            // Filter records that end with the specified domain_tld
+            const filteredDomainAddr = data.filter((item) =>
+              item[1].endsWith(domain_tld)
+            );
+            setDomainAddr(filteredDomainAddr);
+          })
+          .catch((err: Error) => {
+            setError(err.message);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
       }
     }
   };
 
   useEffect(() => {
-
-    fetchDataIfNetworkValid(); 
-
+    fetchDataIfNetworkValid();
   }, [address, chain]);
 
   return (
-      <Flex
-        align="center"
-        justify="center"
-        bg={useColorModeValue("white", "gray.700")}
-        borderRadius="md"
-        color={useColorModeValue("gray.700", "whiteAlpha.900")}
-        shadow="base"
+    <Flex
+      align="center"
+      justify="center"
+      bg={useColorModeValue("white", "gray.700")}
+      borderRadius="md"
+      color={useColorModeValue("gray.700", "whiteAlpha.900")}
+      shadow="base"
+    >
+      <Box
+        textAlign="center"
+        alignContent={"center"}
+        borderRadius="lg"
+        p={{ base: 5, lg: 2 }}
+        bgSize={"lg"}
       >
-        <Box
-          textAlign="center"
-          alignContent={"center"}
-          borderRadius="lg"
-          p={{ base: 5, lg: 2 }}
-          bgSize={"lg"}
-          
+        <Container
+          maxW="container.sm"
+          alignItems={"center"}
+          justifyContent={"center"}
         >
-          <Container
-          maxW='container.sm'
-            alignItems={"center"}
-            justifyContent={"center"}
+          <Stack
+            as={Box}
+            textAlign={"center"}
+            spacing={{ base: 8, md: 14 }}
+            py={{ base: 10, md: 1 }}
           >
-            <Stack
-              as={Box}
-              textAlign={"center"}
-              spacing={{ base: 8, md: 14 }}
-              py={{ base: 10, md: 1 }}
-            >
             {isNetworkValid ? (
               <div>
                 <NextSeo title="My Domain list" />
@@ -109,57 +105,52 @@ export default function DomainList() {
                   My Domain list
                 </Heading>
 
-
                 {isLoading ? (
                   <Spinner
-                    thickness='4px'
-                    speed='0.65s'
-                    emptyColor='gray.200'
-                    color='blue.500'
-                    size='xl'
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
                   />
                 ) : (
                   <>
                     {error ? (
                       <p>Error: {error}</p>
-                    ) : (
-                      domainAddr.length === 0 ? ( // Check if the domainAddr array is empty
+                    ) : domainAddr.length === 0 ? ( // Check if the domainAddr array is empty
                       <p>No Record Found</p> // Display the message when the array is empty
                     ) : (
                       <SimpleGrid
-                        
                         columns={{ sm: 2, md: 4 }}
-                        spacing='8'
-                        p='1'
-                        textAlign='center'
-                        rounded='lg'
+                        spacing="8"
+                        p="1"
+                        textAlign="center"
+                        rounded="lg"
                       >
-
                         {domainAddr.map((item, index) => (
-
-                          <Box  _hover={{ boxShadow: 'lg' }} boxShadow='dark-lg' p='3' rounded='md'  key={index}>
-
-                            <Link href={`/domain/info/${item[1]}`}>{item[1]}</Link>
+                          <Box
+                            _hover={{ boxShadow: "lg" }}
+                            boxShadow="dark-lg"
+                            p="3"
+                            rounded="md"
+                            key={index}
+                          >
+                            <Link href={`/domain/info/${item[1]}`}>
+                              {item[1]}
+                            </Link>
                           </Box>
                         ))}
-
                       </SimpleGrid>
-                    )
                     )}
                   </>
                 )}
-
               </div>
-            ):
-            (<>{NETWORK_ERROR}</>)
-                        }
-
-
-
-            </Stack>
-          </Container>
-        </Box>
-      </Flex>
-    
-    )
+            ) : (
+              <Notice />
+            )}
+          </Stack>
+        </Container>
+      </Box>
+    </Flex>
+  );
 }
