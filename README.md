@@ -1,6 +1,7 @@
-### Hi there 👋, Web3Domain Studio
+### Web3Domain 👋 Studio
 #### Become a Web3Domain provider
-![Become a Web3Domain provider](https://arturssmirnovs.github.io/github-profile-readme-generator/images/banner.png)
+![Become a Web3Domain provider]
+<img src="https://web3domain.org/studio/wp-content/uploads/banner.jpg">
 
 Your own website by selling subdomains. We will integrate the domain into our ecosystem, providing every domain user access to all of the features that Web3Domain offers.
 
