@@ -18,7 +18,7 @@ Your own website by selling subdomains. We will integrate the domain into our ec
 
 It requires [Node.js](https://nodejs.org/) to run.
 
-Fork current repo and make it private so that the configuration and API keys are hidden from public view.
+Download and extract repository and make it private so that the configuration and API keys are hidden from public view.
 
 **Specifiy Environment variable. If local development , crate a file .env.local**
 
