@@ -66,7 +66,8 @@ export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
 ```
 
 **Change Logo**
-Overwrite the file logo.png & favicon.ico under /public/ folder
+
+* Overwrite the file logo.png & favicon.ico under `/public/` folder
 
 **Deploy to your server**
 
