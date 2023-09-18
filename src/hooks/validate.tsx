@@ -48,7 +48,7 @@ export function useURLValidation() {
   }
   else
   {
-    return false;
+    return true;
   }
   };
 
