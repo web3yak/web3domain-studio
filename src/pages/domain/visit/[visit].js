@@ -2,8 +2,43 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from 'react';
 import { useJsonValue } from "../../../hooks/jsonData";
 import { useURLValidation } from '../../../hooks/validate';
+import useDomainInfo from '../../../hooks/domainInfo';
+import {
+    Box,
+    Button,
+    Container,
+    Flex,
+    SkeletonText,
+    Skeleton,
+    CardHeader,
+    Heading,
+    Stack,
+    SkeletonCircle,
+    useColorModeValue,
+    Card,
+    CardBody,
+    CardFooter,
+    Image,
+    Text,
+    Kbd,
+    ButtonGroup,
+    IconButton,
+    useClipboard,
+    useDisclosure,
+  
+  
+  } from "@chakra-ui/react";
+
+  import {
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+  } from '@chakra-ui/react'
+
 
 const UserProfilePage = () => {
+
     const [web3Url, setWeb3Url] = useState("");
     const [web2Url, setWeb2Url] = useState("");
     const [visitUrl, setVisitUrl] = useState('');
@@ -14,31 +49,37 @@ const UserProfilePage = () => {
     const router = useRouter();
     const { visit } = router.query;
     const domain = visit ? String(visit).toLowerCase() : '';
+    const { oldUri } = useDomainInfo(domain);
+    const [isLoading, setIsLoading] = useState(true);
 
-
-    useEffect(() => {
-        // Handle the username as needed
-        console.log("Username:", domain);
-
-        if (domain) {
-            const randomNumber = Math.random();
-            const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&" + randomNumber;
-            console.log(url);
+    const getJson = async (url) => {
+        if (url) {
+            console.log("****** " + url);
             const fetchData = async () => {
                 try {
                     const response = await fetch(url);
                     const json = await response.json();
                     setJsonData(json); // Store the json response in the component's state
-                    // setIsMainLoading(false);
+                    setIsLoading(false);
                     console.log(json);
                 } catch (error) {
                     console.log("error", error);
+                    setIsLoading(false);
                 }
             };
-
-            fetchData();
-
+            await fetchData();
         }
+        else
+        {
+            console.log("Domain not minted");
+            setIsLoading(false);
+        }
+    }
+
+
+    useEffect(() => {
+        // Handle the username as needed  
+        console.log("Username:", domain);
 
     }, [domain]);
 
@@ -77,14 +118,63 @@ const UserProfilePage = () => {
     }, [jsonData]);
 
     useEffect(() => {
-        console.log(webUrl);
+       // console.log(webUrl);
+    
+       if(webUrl)
+       {
         window.location.assign(webUrl);
+       }
     }, [webUrl]);
+
+    useEffect(() => {
+        //console.log(oldUri);
+           getJson(oldUri);
+    }, [oldUri]);
 
     return (
         <div>
-            {/* Render user profile or other content */}
-            <h1>User Profile: {domain}</h1>
+            <Flex
+      align="center"
+      justify="center"
+      bg={useColorModeValue("white", "gray.700")}
+      borderRadius="md"
+      color={useColorModeValue("gray.700", "whiteAlpha.900")}
+      shadow="base"
+    >
+      
+      <Box
+        textAlign="center"
+        alignContent={"center"}
+        borderRadius="lg"
+        p={{ base: 2, lg: 1 }}
+        bgSize={"lg"}
+        maxH={"80vh"}
+      >
+ {isLoading ? (
+              <Box padding='6' boxShadow='lg' bg='white'>
+                <SkeletonCircle size='10' />
+                <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='3' />
+              </Box>
+            ) : (
+<> 
+{webUrl}
+{!oldUri && (
+            <Alert status='error'>
+  <AlertIcon />
+  <AlertTitle>{domain}</AlertTitle>
+  <AlertDescription>Invalid domain name</AlertDescription>
+</Alert>
+)}
+
+
+
+</>
+            )}
+
+       
+
+            </Box>
+            </Flex>
         </div>
     );
 };
