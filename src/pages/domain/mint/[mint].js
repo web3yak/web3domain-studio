@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { generateJson } from '../../../hooks/ipfs';
 import { useDomainValidation } from '../../../hooks/validate';
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
+import Notice from "../../../components/domain/notice";
 
 import {
   useAccount,
@@ -189,6 +190,37 @@ export default function Info() {
         maxH={"80vh"}
       >
 
+<<<<<<< HEAD
+<Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  <BreadcrumbItem>
+    <BreadcrumbLink href='/domain/search'>Domain Search</BreadcrumbLink>
+  </BreadcrumbItem>
+
+  
+  <BreadcrumbItem>
+    <BreadcrumbLink href='#'>{domain}</BreadcrumbLink>
+  </BreadcrumbItem>
+
+</Breadcrumb>
+
+=======
+
+>>>>>>> 83dcff55c073bfd4629ad78f96854e8b01e7bee2
+
+        {isNetworkValid ? (
+        <Container
+          maxW={"3xl"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+<<<<<<< HEAD
+=======
+
+          
 <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
   <BreadcrumbItem>
     <BreadcrumbLink href='/'>Home</BreadcrumbLink>
@@ -206,12 +238,7 @@ export default function Info() {
 </Breadcrumb>
 
 
-        {isNetworkValid ? (
-        <Container
-          maxW={"3xl"}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
+>>>>>>> 83dcff55c073bfd4629ad78f96854e8b01e7bee2
           <Kbd>{domain}</Kbd>
 
         <Card
@@ -317,7 +344,7 @@ export default function Info() {
 
 </Container>
 ):
-(<>{NETWORK_ERROR}</>)
+(<Notice/>)
             }
 </Box></Flex>
       </>

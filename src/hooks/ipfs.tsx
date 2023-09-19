@@ -28,7 +28,7 @@ export async function generateImage(domainName: string, key: string): Promise<st
     const [domain,primary] = domainName.split('.'); // Split domainName into primary and domain
     //const url = `http://localhost/blockchain/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
     const url = `https://w3d.name/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
-    console.log(url);
+    //console.log(url);
     const response = await fetch(url);
     const content = await response.text(); // Get the content as text
 

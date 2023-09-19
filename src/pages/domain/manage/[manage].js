@@ -122,8 +122,6 @@ export default function Manage() {
   const handleURLChange = (event) => {
     const inputURL = event.target.value;
 
-
-
     const isValid = validateURL(inputURL);
     // You can perform further actions based on the URL validity
     if (isValid) {
@@ -139,7 +137,7 @@ export default function Manage() {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log(jsonData);
+     // console.log(jsonData);
 
       await genJson();
 
@@ -151,7 +149,7 @@ export default function Manage() {
 
   async function genJson() {
     //handleSubmit(null); 
-    console.log(jsonDataNew);
+   // console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
       const responseText = await response.text();
@@ -282,7 +280,16 @@ export default function Manage() {
       setNotes(jsonData && getValue("notes"));
 
       //IPFS URL of Web3Domain
-      setWeb2Url(jsonData && 'https://ipfs.io/ipfs/' + getValue("web_url"));
+      const isValidIPFS = validateURL(getValue("web_url"));
+      if(isValidIPFS)
+      {
+        setWeb2Url(jsonData && getValue("web_url"));
+      }
+      else
+      {
+       
+        setWeb2Url(jsonData && 'https://ipfs.io/ipfs/' + getValue("web_url"));
+      }
       //User Website
       setWeb3Url(jsonData && getValue("web3_url"));
 
@@ -450,9 +457,11 @@ export default function Manage() {
                                         handleURLChange(event); // Validate and perform necessary actions
                                       }}
                                     />
-                                    <FormErrorMessage>
-                                      Enter valid website link
-                                    </FormErrorMessage>
+                            {url !== '' && (
+    <FormErrorMessage>
+      Enter valid website link
+    </FormErrorMessage>
+  )}
                                   </FormControl>
                                 </Stack>
                               </TabPanel>
@@ -673,11 +682,11 @@ export default function Manage() {
                           </Tabs>
 
                           <Stack direction="row" spacing={2}>
-                            <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                            <Button size="sm" rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
                               Save
                             </Button>
                             {jsonDataNew != null ? (
-                              <Button rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+                              <Button size="sm"  rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
 
                                 {isLoading ? (
 

@@ -64,7 +64,7 @@ export default function Info() {
   const { getValue } = useJsonValue(jsonData);
   const [error, setError] = useState('');
   const [claimUrl, setClaimUrl] = useState('http://web3domain.org');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isMainLoading, setIsMainLoading] = useState(true);
   const [newUrl, setNewUrl] = useState('');
   const [nftImage, setNftImage] = useState(DOMAIN_IMAGE_URL);
@@ -82,7 +82,7 @@ export default function Info() {
 
     console.log('Saving record..');
 
-    console.log(jsonData);
+   // console.log(jsonData);
 
 // Update the jsonDataNew object with the new "image" value
 const updatedJsonData = {
@@ -102,7 +102,7 @@ const updatedJsonData = {
     setIsLoading(true);
     if (domain !== 'undefined') {
 
-      console.log(jsonData);
+      //console.log(jsonData);
 
       await genJson();
 
@@ -117,7 +117,8 @@ const updatedJsonData = {
     if (imageContent) {
       console.log('Image content:', imageContent);
       setNftImage("https://ipfs.io/ipfs/" + imageContent);
-      console.log(jsonData);
+      //console.log(jsonData);
+      setIsLoading(false);
       setShow(true);
     } else {
       console.log('Failed to generate image content.');
@@ -127,7 +128,7 @@ const updatedJsonData = {
   }
 
   async function genJson() {
-    console.log(jsonDataNew);
+    //console.log(jsonDataNew);
     const response = await generateJson(jsonDataNew, domain);
     if (response.ok) {
       const responseText = await response.text();
@@ -153,6 +154,7 @@ const updatedJsonData = {
 
   const updateImage = async () => {
     console.log("Update the image");
+    setIsLoading(true);
     await genImage(domain);
     
   }
@@ -255,30 +257,42 @@ const updatedJsonData = {
 
                                 <Image
                                 ml={2}
-                                boxSize='200px'
+                                boxSize='300px'
                                 src={nftImage}
                                 alt={jsonData?.name} 
                                 />
                               )}
                               <Stack>
                                 <CardBody>
-                                <Button variant='solid' colorScheme='blue' onClick={() => updateImage()}>
-                                      Update NFT Image
+                                {nftImage == DOMAIN_IMAGE_URL ?  (
+
+
+                                <Button size="sm" variant='solid' colorScheme='blue' onClick={() => updateImage()}>
+                                        {isLoading ? (
+
+                                            <>  <CircularProgress isIndeterminate size="24px" /> Wait... </>
+                                          ) : (
+                                            'Generate NFT Image'
+                                          )}
                                     </Button>
+                                       )
+                                      :
+                                      (<></>)}
                                 </CardBody>
+                             
 
                                 <CardFooter>
                          
                                   {address == ownerAddress ? (
                                     <div>
                                       { show ?  (
-                                      <Button rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
-                                        Save
+                                      <Button size="sm" rightIcon={<FaForward />} colorScheme="teal" type="submit" width="half" mt={4}>
+                                        Replace Image
                                       </Button>
                                    
                                       ): (<></>)}
                                       {jsonDataNew != null ? (
-                                        <Button ml="1" rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
+                                        <Button size="sm" ml="1" rightIcon={<FaForward />} colorScheme="green" width="half" mt={4} onClick={() => handleUpload()} >
 
                                           {isLoading ? (
 
