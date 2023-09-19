@@ -157,7 +157,7 @@ export default function Info() {
           try {
             const responseObject = JSON.parse(responseText);
             const cidValue = responseObject.cid;
-          //  console.log(cidValue);
+          console.log('https://ipfs.io/ipfs/' + cidValue);
             setClaimUrl('https://ipfs.io/ipfs/' + cidValue);
           } catch (error) {
             console.log("Error parsing JSON:", error);

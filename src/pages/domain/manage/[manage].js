@@ -9,6 +9,7 @@ import { useAccount, useNetwork } from "wagmi";
 import { useNetworkValidation, checkContract } from '../../../hooks/useNetworkValidation';
 import Link from "next/link";
 import useDomainInfo from '../../../hooks/domainInfo';
+import useGlobal from '../../../hooks/global';
 import {
   Icon,
   Box,
@@ -86,7 +87,7 @@ export default function Manage() {
   const domain = manage ? String(manage).toLowerCase() : "";
   const isNetworkValid = useNetworkValidation();
   const { ownerAddress } = useDomainInfo(domain);
-
+  const { replaceNullWithEmptyString } = useGlobal();
   const [jsonData, setJsonData] = useState(null); // Initialize jsonData as null
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonData as null
   const { getValue } = useJsonValue(jsonData);
@@ -99,7 +100,7 @@ export default function Manage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [url, setUrl] = useState("");
-  const [twitter, setTwitter] = useState("");
+  const [twitter, setTwitter] = useState(" ");
   const [telegram, setTelegram] = useState("");
   const [youtube, setYoutube] = useState("");
   const [facebook, setFacebook] = useState("");
@@ -224,6 +225,9 @@ export default function Manage() {
         51: { type: "web3_url", value: newUrl },
       },
     };
+
+    replaceNullWithEmptyString(array);
+
     console.log(array);
 
     setJsonDataNew(array);
@@ -445,7 +449,7 @@ export default function Manage() {
                                     </InputGroup>
                                   </FormControl>
 
-                                  <FormControl isInvalid={!validateURL(url)}>
+                                  <FormControl>
                                     <FormLabel>Website Link</FormLabel>
                                     <Input
                                       type="url"

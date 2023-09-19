@@ -127,9 +127,8 @@ export default function Info() {
       web3_url = jsonData.records['51'].value;
     }
 
-    if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '') {
-      // If the '50' property exists in jsonData.records and its value is not empty
-      // Set web_url
+    if (jsonData?.records?.hasOwnProperty('50') && jsonData.records['50'].value !== '' && jsonData.records['50'].value != null) {
+
       // console.log(jsonData);
       if (jsonData.records['50'].value != 'https://ipfs.io/ipfs/null') {
         if(jsonData.records['50'].value.startsWith("https://"))
@@ -291,10 +290,10 @@ export default function Info() {
 
                             {
                               validateURL(webUrl) && webUrl != '' && (
-                                <Button size='sm' variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />} ml="1">
+                                
                                   <Link href={`${webUrl}`} passHref>
-                                    <a target="_blank" rel="noopener noreferrer">Visit</a>
-                                  </Link>                     </Button>
+                                    <a target="_blank" rel="noopener noreferrer"><Button size='sm' variant='solid' colorScheme='green' rightIcon={<FaExternalLinkAlt />} ml="1">Visit</Button></a>
+                                  </Link>                     
                               )}
 
 

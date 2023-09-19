@@ -227,14 +227,14 @@ export default function Info() {
     if (domain) {
       const randomNumber = Math.random();
       const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&" + randomNumber;
-      // console.log(url);
+      console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
           setIsMainLoading(false);
-          // console.log(json);
+          console.log(json);
         } catch (error) {
           console.log("error", error);
         }
@@ -449,8 +449,8 @@ export default function Info() {
                                                 }
                                               />
                                               <FormHelperText>
-                                                IPFS & http URL both are supported.<br />
-                                                {newUrl}
+                                                IPFS & http URL both are supported.
+                                             
                                               </FormHelperText>
                                             </FormControl>
                                           )}
@@ -626,8 +626,7 @@ export default function Info() {
                                     maxW="80vw"  // Set maximum width to 100vw (viewport width)
                                     maxH="80vh"  // Set maximum height to 100vh (viewport height)
                                   >
-                                    <ModalHeader>Preview @{domain}</ModalHeader>
-                                    <ModalCloseButton />
+                          
                                     <ModalBody>
                                       <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
                                     </ModalBody>
