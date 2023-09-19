@@ -190,26 +190,7 @@ export default function Info() {
         maxH={"80vh"}
       >
 
-<<<<<<< HEAD
-<Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-  <BreadcrumbItem>
-    <BreadcrumbLink href='/'>Home</BreadcrumbLink>
-  </BreadcrumbItem>
 
-  <BreadcrumbItem>
-    <BreadcrumbLink href='/domain/search'>Domain Search</BreadcrumbLink>
-  </BreadcrumbItem>
-
-  
-  <BreadcrumbItem>
-    <BreadcrumbLink href='#'>{domain}</BreadcrumbLink>
-  </BreadcrumbItem>
-
-</Breadcrumb>
-
-=======
-
->>>>>>> 83dcff55c073bfd4629ad78f96854e8b01e7bee2
 
         {isNetworkValid ? (
         <Container
@@ -217,8 +198,6 @@ export default function Info() {
           alignItems={"center"}
           justifyContent={"center"}
         >
-<<<<<<< HEAD
-=======
 
           
 <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
@@ -238,7 +217,6 @@ export default function Info() {
 </Breadcrumb>
 
 
->>>>>>> 83dcff55c073bfd4629ad78f96854e8b01e7bee2
           <Kbd>{domain}</Kbd>
 
         <Card
