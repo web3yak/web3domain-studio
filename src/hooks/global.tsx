@@ -13,7 +13,7 @@ function useGlobal() {
     });
   }
 
-  function replaceNullWithEmptyString(obj) {
+  function replaceNullWithEmptyString(obj: any) {
     for (const key in obj) {
       if (obj[key] === null) {
         obj[key] = "";
