@@ -47,52 +47,34 @@ const UserProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getJson = async (url) => {
-    if (url) {
-      console.log("****** " + url);
-      const fetchData = async () => {
-        try {
-          const response = await fetch(url);
-          const json = await response.json();
-          setJsonData(json); // Store the json response in the component's state
-          setIsLoading(false);
-          console.log(json);
-        } catch (error) {
-          console.log("error", error);
-          setIsLoading(false);
-        }
-      };
-      await fetchData();
-    } else {
-      console.log("Domain not minted");
-      setIsLoading(false);
-    }
+
+    console.log("****** " + url);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        setJsonData(json); // Store the json response in the component's state
+        //setIsLoading(false);
+        console.log(json);
+      } catch (error) {
+        console.log("error", error);
+        setIsLoading(false);
+      }
+    };
+    await fetchData();
+
   };
 
-  useEffect(() => {
-    // Handle the username as needed
-    console.log("Username:", domain);
-  }, [domain]);
 
   useEffect(() => {
     var web_url = "";
     var web3_url = "";
 
-    if (
-      jsonData?.records?.hasOwnProperty("51") &&
-      jsonData.records["51"].value !== ""
-    ) {
-      // If the '51' property exists in jsonData.records and its value is not empty
-      // Set web3_url
+    if (jsonData?.records?.hasOwnProperty("51") && jsonData.records["51"].value !== "") {
       web3_url = jsonData.records["51"].value;
     }
 
-    if (
-      jsonData?.records?.hasOwnProperty("50") &&
-      jsonData.records["50"].value !== ""
-    ) {
-      // If the '50' property exists in jsonData.records and its value is not empty
-      // Set web_url
-      // console.log(jsonData);
+    if (jsonData?.records?.hasOwnProperty("50") && jsonData.records["50"].value !== "") {
       if (jsonData.records["50"].value != "https://ipfs.io/ipfs/null") {
         if (jsonData.records["50"].value.startsWith("https://")) {
           web_url = jsonData.records["50"].value;
@@ -104,25 +86,43 @@ const UserProfilePage = () => {
 
     if (web3_url !== "") {
       setWebUrl(web3_url);
-      // console.log(web3_url);
+      console.log(web3_url);
     } else if (web_url !== "") {
       setWebUrl(web_url);
-      // console.log(web_url);
+      console.log(web_url);
     }
+    else {
+      console.log("no web3_url");
+    }
+
+    console.log(jsonData);
+
   }, [jsonData]);
 
   useEffect(() => {
-    // console.log(webUrl);
-
+   
     if (webUrl) {
       // window.location.assign(webUrl);
-      console.log("REady to redirect");
+      console.log("Ready to redirect");
+    }
+    else {
+      console.log("no ready");
     }
   }, [webUrl]);
 
   useEffect(() => {
-    //console.log(oldUri);
-    getJson(oldUri);
+
+    console.log(oldUri);
+
+    if (oldUri) {
+      getJson(oldUri);
+    }
+    else
+    {
+      console.log("oldUri is null");
+      setIsLoading(false); 
+    }
+   
   }, [oldUri]);
 
   return (
@@ -155,14 +155,14 @@ const UserProfilePage = () => {
             </Box>
           ) : (
             <>
-              {webUrl}
-              {!oldUri && (
-                <Alert status="error">
-                  <AlertIcon />
-                  <AlertTitle>{domain}</AlertTitle>
-                  <AlertDescription>Invalid domain name</AlertDescription>
-                </Alert>
-              )}
+
+
+              <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>{domain}</AlertTitle>
+                <AlertDescription>Invalid domain name</AlertDescription>
+              </Alert>
+
             </>
           )}
         </Box>
