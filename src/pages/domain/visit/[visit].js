@@ -37,9 +37,9 @@ import {
 const UserProfilePage = () => {
   const [visitUrl, setVisitUrl] = useState("");
   const [webUrl, setWebUrl] = useState("");
-  const [jsonData, setJsonData] = useState(null);
+  const [jsonData1, setJsonData1] = useState(null);
   const { validateURL } = useURLValidation();
-  const { getValue } = useJsonValue(jsonData);
+  //const { getValue } = useJsonValue(jsonData);
   const router = useRouter();
   const { visit } = router.query;
   const domain = visit ? String(visit).toLowerCase() : "";
@@ -53,9 +53,10 @@ const UserProfilePage = () => {
       try {
         const response = await fetch(url);
         const json = await response.json();
-        setJsonData(json); // Store the json response in the component's state
+       // setJsonData(json); // Store the json response in the component's state
         //setIsLoading(false);
-        console.log(json);
+        processJson(json);
+       // console.log(json);
       } catch (error) {
         console.log("error", error);
         setIsLoading(false);
@@ -65,8 +66,7 @@ const UserProfilePage = () => {
 
   };
 
-
-  useEffect(() => {
+  const processJson = async (jsonData) => {
     var web_url = "";
     var web3_url = "";
 
@@ -96,13 +96,13 @@ const UserProfilePage = () => {
     }
 
     console.log(jsonData);
+  }
 
-  }, [jsonData]);
 
   useEffect(() => {
    
     if (webUrl) {
-      // window.location.assign(webUrl);
+      window.location.assign(webUrl);
       console.log("Ready to redirect");
     }
     else {
@@ -156,14 +156,15 @@ const UserProfilePage = () => {
           ) : (
             <>
 
-
+{oldUri == null ?
               <Alert status="error">
                 <AlertIcon />
                 <AlertTitle>{domain}</AlertTitle>
-                <AlertDescription>Invalid domain name</AlertDescription>
               </Alert>
-
-            </>
+              :
+              <> Please Wait... </>
+}
+        </>
           )}
         </Box>
       </Flex>
