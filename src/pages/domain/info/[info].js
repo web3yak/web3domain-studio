@@ -61,6 +61,7 @@ export default function Info() {
   const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const { onCopyD, valueD, setValueD, hasCopiedD } = useClipboard("");
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -70,6 +71,7 @@ export default function Info() {
     onOpen(); // Open the modal to display the response
 
   }
+
 
   useEffect(() => {
 
@@ -87,6 +89,10 @@ export default function Info() {
 
 
     if (info) {
+
+//copy /@username
+setValueD("something");
+
       const randomNumber = Math.random();
       const url = "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
       // console.log(url);
@@ -260,6 +266,10 @@ export default function Info() {
                               <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
                             </ButtonGroup>
 
+                            <ButtonGroup size='sm' isAttached variant='outline'>
+                              <Button onClick={onCopyD}>/@{info}</Button>
+                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopyD} />
+                            </ButtonGroup>
 
                           </CardBody>
 
