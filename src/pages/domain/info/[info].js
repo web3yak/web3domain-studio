@@ -61,10 +61,14 @@ export default function Info() {
   const [webUrl, setWebUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
-  const { onCopyD, valueD, setValueD, hasCopiedD } = useClipboard("");
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
+
+  //copy /@username
+const primaryDomain = window.location.origin;
+//console.log(primaryDomain);
+const { onCopy: onCopyPrimaryDomain, value: primaryDomainValue } = useClipboard(primaryDomain+"/@"+info);
 
 
   const enlarge = async () => {
@@ -72,9 +76,8 @@ export default function Info() {
 
   }
 
-
   useEffect(() => {
-
+    setValue(primaryDomain);
     setIsLoading(true); // Set isLoading to true whenever the effect runs
     const settings = {
       matic_rpc_url: process.env.NEXT_PUBLIC_MATIC,
@@ -90,8 +93,7 @@ export default function Info() {
 
     if (info) {
 
-//copy /@username
-setValueD("something");
+
 
       const randomNumber = Math.random();
       const url = "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
@@ -267,8 +269,8 @@ setValueD("something");
                             </ButtonGroup>
 
                             <ButtonGroup size='sm' isAttached variant='outline'>
-                              <Button onClick={onCopyD}>/@{info}</Button>
-                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopyD} />
+                              <Button onClick={onCopyPrimaryDomain}>{primaryDomain}/@{info}</Button>
+                              <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopyPrimaryDomain} />
                             </ButtonGroup>
 
                           </CardBody>
