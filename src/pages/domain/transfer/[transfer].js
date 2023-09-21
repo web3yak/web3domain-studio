@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-var w3d = require("@web3yak/web3domain");
 import Link from "next/link";
-import { isValidEthAddress } from '../../../hooks/validate';
+import { isValidEthAddress } from "../../../hooks/validate";
 import { FaEthereum, FaGreaterThan } from "react-icons/fa";
 import {
   usePrepareContractWrite,
@@ -15,7 +14,6 @@ import {
   useNetworkValidation,
   checkContract,
 } from "../../../hooks/useNetworkValidation";
-import { ethers } from "ethers";
 import {
   Box,
   Button,
@@ -35,7 +33,6 @@ import {
   Text,
   useToast,
   Input,
-  
 } from "@chakra-ui/react";
 import {
   Alert,
@@ -44,7 +41,7 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { Divider, Kbd } from "@chakra-ui/react";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 import {
   NETWORK_ERROR,
   DOMAIN_TYPE,
@@ -52,7 +49,7 @@ import {
 } from "../../../configuration/Config";
 
 export default function Info() {
-  const { isConnected, connector, address } = useAccount();
+  const { address } = useAccount();
   const router = useRouter();
   const { transfer } = router.query;
   const domain = transfer ? String(transfer).toLowerCase() : "";
@@ -64,7 +61,7 @@ export default function Info() {
   const isNetworkValid = useNetworkValidation();
   const [to, setTo] = useState("");
   const [eth, setEth] = useState("");
-  const [flag, setFlag] =  useState(false);
+  const [flag, setFlag] = useState(false);
   var CONTRACT_ADDRESS = ""; // No contract found
   if (contractAddress) {
     CONTRACT_ADDRESS = contractAddress;
@@ -74,8 +71,6 @@ export default function Info() {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [reverseButtonClicked, setReverseButtonClicked] = useState(false); // Track whether the reverse button has been clicked
-
 
   const {
     config,
@@ -84,39 +79,33 @@ export default function Info() {
   } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
     abi: abiFile.abi,
-    functionName: 'transferFrom',
+    functionName: "transferFrom",
     args: [address, to, domainId],
-    enabled: {flag}
+    enabled: { flag },
   });
 
   //console.log(address+"-"+"-"+ eth+"-"+domainId);
-  const { data, werror, isError, write } = useContractWrite(config)
+  const { data, werror, isError, write } = useContractWrite(config);
   // console.log(config);
 
   const { isWriteLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
-  })
-
-
+  });
 
   useEffect(() => {
-
     if (domainId) {
       setIsLoading(false);
       // console.log(domainId.toNumber());
     }
   }, [domain, domainId]);
 
-  
   useEffect(() => {
-
     if (to) {
-     // setIsLoading(false);
+      // setIsLoading(false);
       console.log(to);
       write && write();
     }
   }, [to]);
-
 
   useEffect(() => {
     if (isSuccess) {
@@ -124,52 +113,46 @@ export default function Info() {
     }
     if (isPrepareError || isError) {
       setShowErrorAlert(true);
-      const errorMessage = (prepareError || werror)?.message || 'An error occurred';
+      const errorMessage =
+        (prepareError || werror)?.message || "An error occurred";
       setErrorMessage(errorMessage);
     }
   }, [isSuccess, isPrepareError, isError, prepareError, werror]);
 
   useEffect(() => {
-
     function showAlert(title, err) {
-
       toast({
         title: title,
         description: err,
-        status: 'warning',
+        status: "warning",
         duration: 4000,
         isClosable: false,
-      })
+      });
     }
     if (showSuccessAlert) {
-      showAlert("Success", "Successfully synchronized with blockchain");
+      showAlert("Success", "Successfully transferred to wallet address");
       setShowSuccessAlert(false); // Reset the state
     }
     if (showErrorAlert) {
-      if(eth!="")
-      {
-      showAlert("Error", errorMessage);
-      setShowErrorAlert(false); // Reset the state
+      if (eth != "") {
+        showAlert("Error", errorMessage);
+        setShowErrorAlert(false); // Reset the state
       }
     }
   }, [showSuccessAlert, showErrorAlert, errorMessage]);
 
-
   const handleTransfer = async () => {
-    setTo(eth);  
+    setTo(eth);
     console.log(domainId.toNumber());
-    
+
     if (isValidEthAddress(eth)) {
       console.log(to);
       setFlag(true);
-  
-    }
-    else
-    {
+    } else {
       setShowErrorAlert(true);
       setErrorMessage("Invalid Ethereum Address");
     }
-  }
+  };
 
   return (
     <Flex
@@ -251,17 +234,23 @@ export default function Info() {
                                 </Card>
                                 <br />
                                 <Text fontWeight="bold">To</Text>
-                              
+
                                 <Card>
                                   <CardBody>
                                     <Flex>
-                                    
                                       <Box ml="3">
-                                        <Input focusBorderColor='lime' variant='outline' placeholder='Wallet address Eg. 0x.....' size="sm" htmlSize={50} width='auto'
+                                        <Input
+                                          focusBorderColor="lime"
+                                          variant="outline"
+                                          placeholder="Wallet address Eg. 0x....."
+                                          size="sm"
+                                          htmlSize={50}
+                                          width="auto"
                                           value={eth}
                                           onChange={(event) =>
                                             setEth(event.currentTarget.value)
-                                          } />
+                                          }
+                                        />
                                       </Box>
                                     </Flex>
                                   </CardBody>
@@ -269,30 +258,39 @@ export default function Info() {
                               </CardBody>
 
                               <CardFooter>
-                                {domain != addrDomain &&  !isSuccess && (
+                                {domain != addrDomain && !isSuccess && (
                                   <Button
                                     rightIcon={<FaEthereum />}
                                     colorScheme="teal"
                                     mt={4}
                                     size="sm"
                                     disabled={isLoading}
-                                    onClick={() => { handleTransfer();}} // Ensure write function is available before calling
+                                    onClick={() => {
+                                      handleTransfer();
+                                    }} // Ensure write function is available before calling
                                   >
-                                    {isLoading ? 'Transferring ...' : (<>Transfer Domain</>)}
-
+                                    {isLoading ? (
+                                      "Transferring ..."
+                                    ) : (
+                                      <>Transfer Domain</>
+                                    )}
                                   </Button>
                                 )}
 
                                 {isSuccess && (
                                   <div>
                                     &nbsp;
-                                    <Button variant='solid' colorScheme='yellow' size="sm">
-                                      <Link href={`/domain/info/${domain}`}>Check Status</Link>
+                                    <Button
+                                      variant="solid"
+                                      colorScheme="yellow"
+                                      size="sm"
+                                    >
+                                      <Link href={`/domain/info/${domain}`}>
+                                        Check Status
+                                      </Link>
                                     </Button>
-
-                                  </div>)}
-
-
+                                  </div>
+                                )}
                               </CardFooter>
                             </div>
                           ) : (
