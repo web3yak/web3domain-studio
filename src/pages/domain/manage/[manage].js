@@ -394,7 +394,7 @@ export default function Manage() {
                               <Tab>General</Tab>
                               <Tab>Social</Tab>
                               <Tab>Wallet</Tab>
-
+                              <Tab>Notes</Tab>
 
                             </TabList>
                             <TabPanels>
@@ -450,10 +450,13 @@ export default function Manage() {
                                   </FormControl>
 
                                   <FormControl>
-                                    <FormLabel>Website Link</FormLabel>
-                                    <Input
+                                  <InputGroup>
+                                  <InputLeftElement pointerEvents="none">
+                                        <FaLink color="gray.300" />
+                                      </InputLeftElement>
+                                      <Input
                                       type="url"
-                                      placeholder="https://"
+                                      placeholder="Website Link"
                                       size="md"
                                       value={url}
                                       onChange={(event) => {
@@ -461,6 +464,7 @@ export default function Manage() {
                                         handleURLChange(event); // Validate and perform necessary actions
                                       }}
                                     />
+                                    </InputGroup>
                             {url !== '' && (
     <FormErrorMessage>
       Enter valid website link
@@ -680,6 +684,18 @@ export default function Manage() {
                                     </InputGroup>
                                   </FormControl>
                                 </Stack>
+                              </TabPanel>
+
+                              <TabPanel>
+                              <Text mb='8px'>Extra Notes:</Text>
+      <Textarea
+        value={notes}
+        onChange={(event) =>
+          setNotes(event.currentTarget.value)
+        }
+        placeholder='Street Address , Bank Account, Some text information'
+        size='sm'
+      />
                               </TabPanel>
 
                                                  </TabPanels>

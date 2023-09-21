@@ -495,6 +495,7 @@ export default function Info() {
                                           onChange={(event) =>
                                             setImg2(event.currentTarget.value)
                                           }
+                                          isDisabled={true}
                                         />
                                       </InputGroup>
                                     </FormControl>
@@ -512,6 +513,7 @@ export default function Info() {
                                           onChange={(event) =>
                                             setImg3(event.currentTarget.value)
                                           }
+                                          isDisabled={true}
                                         />
                                       </InputGroup>
                                     </FormControl>
