@@ -267,7 +267,7 @@ export default function Info() {
 
                             {address == ownerAddress && info.endsWith('.' + DOMAIN_TLD) ? (
 
-                              <Stack direction="row" spacing={1}>
+                              <Stack direction='row' spacing='1'>
                                 <Button size='sm' variant='solid' colorScheme='blue'>
                                   <Link href={`/domain/reverse/${info}`}>Address</Link>
                                 </Button>
@@ -276,7 +276,10 @@ export default function Info() {
                                   <Link href={`/domain/manage/${info}`}>Record</Link>
                                 </Button>
 
-
+                                <Button size='sm' variant='solid' colorScheme='pink'>
+                                  <Link href={`/domain/transfer/${info}`}>Transfer</Link>
+                                </Button>
+<br/>
                                 <Button size='sm' variant='solid' colorScheme='teal'>
                                   <Link href={`/domain/host/${info}`}>Host</Link>
                                 </Button>

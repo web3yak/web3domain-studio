@@ -55,3 +55,14 @@ export function useURLValidation() {
   return { validateURL };
 }
 
+export function isValidEthAddress(address:string) {
+  if (!/^(0x)?[0-9a-fA-F]{40}$/.test(address)) {
+    // Doesn't match Ethereum address pattern
+    return false;
+  }
+
+  // Additional validation can be performed here if needed
+
+  return true;
+}
+
