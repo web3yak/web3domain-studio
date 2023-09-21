@@ -267,11 +267,14 @@ const { onCopy: onCopyPrimaryDomain, value: primaryDomainValue } = useClipboard(
                               <Button onClick={onCopy}>{domainAddr}</Button>
                               <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
                             </ButtonGroup>
-
+                            {
+                              validateURL(webUrl) && webUrl != '' && (
+                                
                             <ButtonGroup size='sm' isAttached variant='outline'>
                               <Button onClick={onCopyPrimaryDomain}>{primaryDomain}/@{info}</Button>
                               <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopyPrimaryDomain} />
                             </ButtonGroup>
+                              )}
 
                           </CardBody>
 
