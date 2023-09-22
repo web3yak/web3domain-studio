@@ -266,7 +266,7 @@ const { onCopy: onCopyPrimaryDomain, value: primaryDomainValue } = useClipboard(
                             <ButtonGroup size='sm' isAttached variant='outline'>
                               <Button onClick={onCopy}>{domainAddr}</Button>
                               <IconButton aria-label='Copy' icon={<FaCopy />} onClick={onCopy} />
-                            </ButtonGroup>
+                            </ButtonGroup><br/>
                             {
                               validateURL(webUrl) && webUrl != '' && (
                                 

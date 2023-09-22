@@ -1,5 +1,5 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { polygon, filecoin, polygonMumbai } from '@wagmi/chains'
+import { polygon} from '@wagmi/chains'
 
 export const SITE_NAME = 'Web3Domain Studio'
 export const SITE_DESCRIPTION = 'Web3 Domain Provider'
