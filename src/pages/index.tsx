@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import React from "react";
 
 import Search from "../components/domain/Search";
+import PrivateNotice from "../components/message/PrivateNotice";
+
 // Import debounce from lodash
 import {
   Box,
@@ -11,6 +13,7 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+
 
 const Home: NextPage = () => {
   return (
@@ -37,6 +40,7 @@ const Home: NextPage = () => {
             spacing={{ base: 8, md: 14 }}
             py={{ base: 20, md: 16 }}
           >
+            <PrivateNotice/>
             <div>
               <Heading as="h2" fontSize="2xl" my={1}>
                 Web3 Domain Search

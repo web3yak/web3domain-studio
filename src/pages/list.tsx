@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
 import { useAccount, useNetwork } from "wagmi";
+import localforage from 'localforage';
 import {
   Box,
   Container,
@@ -28,6 +29,12 @@ export default function DomainList() {
   const [isLoading, setIsLoading] = useState(true);
   const domain_tld = "." + DOMAIN_TLD;
   const isNetworkValid = useNetworkValidation();
+
+  const setMembershipStatus = (key: string, status: string) => {
+    localforage.setItem(key, status);
+  };
+
+
   const fetchDataIfNetworkValid = () => {
     if (isNetworkValid) {
       setIsLoading(true);
@@ -70,6 +77,18 @@ export default function DomainList() {
   useEffect(() => {
     fetchDataIfNetworkValid();
   }, [address, chain]);
+
+  useEffect(() => {
+    if (domainAddr.length != 0  && address) {
+      // Set membership status
+     // Use the function to set membership status
+     let addr = address?.toString();
+     setMembershipStatus(addr, "GOLD");
+     console.log("Value is set "+addr);
+    };
+  }, [domainAddr, address]);
+
+
 
   return (
     <Flex
