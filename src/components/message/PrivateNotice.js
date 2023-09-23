@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useAccount, useNetwork } from "wagmi";
-import localforage from 'localforage';
+import { isValidMember } from "../../hooks/validate";
 
 
 export default function privateNotice() {
   const { address } = useAccount();
-  // Get membership status
-const getMembershipStatus = async (walletAddress) => {
-  return await localforage.getItem(walletAddress);
-};
+  const [status, setStatus] = useState("none");
 
+  useEffect(() => {
 
-async function getStatus() {
-  const membershipStatus = await getMembershipStatus("0xbed79816b54E75eD54BF217333342C8d271b3b6f");
-  return membershipStatus;
-  }
-  
-
+    if(address)
+    {
+      
+      async function getStatus()
+      {
+        let test = await isValidMember(address);
+        console.log(test);
+        setStatus(test);
+      
+      }
 getStatus();
+
+    }
+
+
+  }, [address,status]);
+
+
+
 
   return (
     <div>
       hello
 
-      {getStatus() == 'GOLD' &&
+      {status == 'GOLD' &&
       (
-        <>Member</>
+        <> Member</>
       )
       }
     </div>
