@@ -30,15 +30,13 @@ import {
   Lorem,
 } from "@chakra-ui/react";
 
-import jsonData from '../../PrivateNotice.json';
+import jData from './PrivateNotice.json';
 
 export default function privateNotice() {
   const { address } = useAccount();
   const [status, setStatus] = useState("none");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [jsonData, setJsonData] = useState("");
   const [noticeData, setNoticeData] = useState([]);
-  console.log(jsonData);
 
   useEffect(() => {
     if (address) {
@@ -53,21 +51,38 @@ export default function privateNotice() {
 
   useEffect(() => {
     // Fetch and set the JSON data (you can use an API request or import it as in this example)
-    console.log(jsonData); // Add this line for debugging
-    setNoticeData(jsonData);
-  }, []); 
+    console.log(jData); // Add this line for debugging
+    setNoticeData(jData);
+  }, [noticeData]); 
+
+
   return (
     <div>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Bulletin board</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Bulletin board</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            
-  ggg
+          {status == "GOLD" ?(
+          <ul>
+        {noticeData.map((notice) => (
+          <li key={notice.ID}>
+            ID is {notice.ID}, Date is {notice.Date}, Title is {notice.Title}, Message is {notice.Message}
+          </li>
+        ))}
+      </ul>
+          )
+          :
+          (
+            <>You are not a member</>
+          )
+
+        }
+
+
 
           </ModalBody>
 
@@ -75,12 +90,17 @@ export default function privateNotice() {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            {status != "GOLD" && (
+             <Link href="/list">
+             <Button colorScheme="teal" variant="solid">
+               Check Domain
+             </Button>
+             </Link>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      {status == "GOLD" && <> Member</>}
     </div>
   );
 }
