@@ -1,30 +1,30 @@
-// pages/api/update-notice.js
+// pages/api/message/delete-notice.js
 import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
-    console.log("Delete it");
   if (req.method === 'DELETE') {
     try {
-      // Read the existing JSON data
+        const { id } = req.query;
+      const entryID = id;
+      console.log('Requested to delete entry with ID:', entryID);
+
       const filePath = path.join(process.cwd(), '/src/components/message/', 'PrivateNotice.json');
       const existingData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      console.log('Existing data:', existingData);
 
-      // Get the entry ID to delete from the URL parameter
-      const entryID = req.query.id;
-
-      // Find the index of the entry with the matching ID
       const indexToRemove = existingData.findIndex((entry) => entry.ID === Number(entryID));
+      console.log('Index to remove:', indexToRemove);
 
       if (indexToRemove !== -1) {
-        // Remove the entry from the existing data
         existingData.splice(indexToRemove, 1);
 
-        // Write the updated data back to the file
         fs.writeFileSync(filePath, JSON.stringify(existingData, null, 2), 'utf-8');
+        console.log('Data updated successfully');
 
         res.status(200).json({ message: 'Entry deleted successfully' });
       } else {
+        console.error('Entry not found');
         res.status(404).json({ error: 'Entry not found' });
       }
     } catch (error) {

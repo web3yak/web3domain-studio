@@ -80,9 +80,11 @@ export default function privateNotice() {
   const deleteEntry = async (entryID) => {
     try {
       // Send an HTTP DELETE request to the API route
-      const response = await fetch(`/api/message/delete-notice/${entryID}`, {
+      const response = await fetch(`/api/message/delete-notice/?id=${entryID}`, {
         method: 'DELETE',
       });
+
+      console.log(response);
   
       if (response.ok) {
         console.log(`Entry with ID ${entryID} deleted successfully`);
