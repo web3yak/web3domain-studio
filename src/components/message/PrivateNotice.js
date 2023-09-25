@@ -28,7 +28,11 @@ import {
   useBreakpointValue,
   Button,
   Lorem,
+  Input ,
+  Textarea
 } from "@chakra-ui/react";
+
+import { DeleteIcon } from '@chakra-ui/icons'
 
 import jData from "./PrivateNotice.json";
 
@@ -38,17 +42,58 @@ export default function privateNotice() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [noticeData, setNoticeData] = useState([]);
   const [modify, setModify] = useState(false);
+  const [title, setTitle] = useState("");
+  const [notes, setNotes] = useState("");
 
   const edit = () => {
     console.log("Modify");
     setModify(true);
   };
 
-  const update = () => {
+  const update = async () => {
     console.log("Update");
+    try {
+      // Send an HTTP POST request to the API route
+      const response = await fetch('/api/message/update-notice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          notes,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Data updated successfully');
+        setModify(false); // Set modify to false when the update is successful
+      } else {
+        console.error('Failed to update data');
+      }
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
 
-    setModify(false);
-    // setModify(true);
+
+  const deleteEntry = async (entryID) => {
+    try {
+      // Send an HTTP DELETE request to the API route
+      const response = await fetch(`/api/message/delete-notice/${entryID}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        console.log(`Entry with ID ${entryID} deleted successfully`);
+        // Refresh the data by calling the useEffect
+        setNoticeData([...noticeData.filter((entry) => entry.ID !== entryID)]);
+      } else {
+        console.error(`Failed to delete entry with ID ${entryID}`);
+      }
+    } catch (error) {
+      console.error(`Error deleting entry with ID ${entryID}:`, error);
+    }
   };
 
   const closeModal = () => {
@@ -101,11 +146,38 @@ export default function privateNotice() {
                       <li key={notice.ID}>
                         ID is {notice.ID}, Date is {notice.Date}, Title is{" "}
                         {notice.Title}, Message is {notice.Message}
+                        <Link
+                  onClick={() => deleteEntry(notice.ID)}
+                  color="red"
+                  cursor="pointer"
+                ><DeleteIcon/></Link>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <>Modify It </>
+                  <>
+                  <Text mb='8px'>Title:</Text>
+                  <Input
+                                      type="text"
+                                      placeholder="Headline or Topic"
+                                      size="md"
+                                      value={title}
+                                      onChange={(event) =>
+                                        setTitle(event.currentTarget.value)
+                                      }
+                                    />
+
+                  <Text mb='8px'>Message:</Text>
+                  <Textarea
+        value={notes}
+        onChange={(event) =>
+          setNotes(event.currentTarget.value)
+        }
+        placeholder='Private messages, Stock tips, Giveaway Link'
+        size='sm'
+      />
+                  
+                  </>
                 )}
               </>
             ) : (
