@@ -1,0 +1,27 @@
+[
+    {
+      "ID": 1,
+      "Date": "2023-09-28",
+      "Title": "Important Announcement",
+      "Message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac augue libero."
+    },
+    {
+      "ID": 2,
+      "Date": "2023-09-27",
+      "Title": "Reminder",
+      "Message": "Duis ac justo eu urna semper laoreet a eget erat."
+    },
+    {
+      "ID": 3,
+      "Date": "2023-09-26",
+      "Title": "Update",
+      "Message": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
+    },
+    {
+      "ID": 4,
+      "Date": "2023-09-25",
+      "Title": "Greetings",
+      "Message": "Vivamus at laoreet diam, vel pharetra justo."
+    }
+  ]
+  
