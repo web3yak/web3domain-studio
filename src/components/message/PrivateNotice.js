@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAccount, useNetwork } from "wagmi";
 import { isValidMember } from "../../hooks/validate";
+import { ADMIN_WALLET } from "../../configuration/Config";
+import localforage from 'localforage';
 import {
   Modal,
   ModalOverlay,
@@ -44,6 +46,10 @@ export default function privateNotice() {
   const [modify, setModify] = useState(false);
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
+
+  const setMembershipStatus = (key, status) => {
+    localforage.setItem(key, status);
+  };
 
   const edit = () => {
     console.log("Modify");
@@ -109,6 +115,14 @@ export default function privateNotice() {
       async function getStatus() {
         let test = await isValidMember(address);
         console.log(test);
+        //console.log(address);
+        //console.log(ADMIN_WALLET);
+        if(address == ADMIN_WALLET)
+        {
+          let addr = address?.toString();
+          setMembershipStatus(addr, "ADMIN");
+        }
+        
         setStatus(test);
       }
       getStatus();
@@ -136,11 +150,11 @@ export default function privateNotice() {
         <ModalContent>
           <ModalHeader>
             Bulletin board{" "}
-            {!modify ? <Button onClick={() => edit()}>Edit</Button> : null}
+            {!modify && status == "ADMIN" ? <Button onClick={() => edit()}>Edit</Button> : null}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {status == "GOLD" ? (
+            {status == "GOLD" || status == "ADMIN" ? (
               <>
                 {!modify ? (
                   <ul>
@@ -148,11 +162,13 @@ export default function privateNotice() {
                       <li key={notice.ID}>
                         ID is {notice.ID}, Date is {notice.Date}, Title is{" "}
                         {notice.Title}, Message is {notice.Message}
+                        {status == "ADMIN" ?  (
                         <Link
                   onClick={() => deleteEntry(notice.ID)}
                   color="red"
                   cursor="pointer"
                 ><DeleteIcon/></Link>
+              ):null}
                       </li>
                     ))}
                   </ul>
