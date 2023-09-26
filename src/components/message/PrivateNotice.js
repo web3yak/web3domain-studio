@@ -38,7 +38,7 @@ import { DeleteIcon } from '@chakra-ui/icons'
 
 import jData from "./PrivateNotice.json";
 
-export default function privateNotice() {
+export default function PrivateNotice() {
   const { address } = useAccount();
   const [status, setStatus] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();

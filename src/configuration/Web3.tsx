@@ -5,9 +5,11 @@ import { publicProvider } from 'wagmi/providers/public'
 import { ReactNode } from 'react'
 //import { infuraProvider } from 'wagmi/providers/infura'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { NETWORKS, INFURA_KEY, SITE_NAME, ALCHEMY_KEY } from '../configuration/Config'
+import { NETWORKS, SITE_NAME } from '../configuration/Config'
 import React from 'react'
 
+let INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY || "";
+let ALCHEMY_KEY = process.env.NEXT_PUBLIC_ALCHEMY_KEY || "";
 
 interface Props {
   children: ReactNode

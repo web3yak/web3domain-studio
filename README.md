@@ -18,20 +18,27 @@ Your own website by selling subdomains. We will integrate the domain into our ec
 
 It requires [Node.js](https://nodejs.org/) to run.
 
-Download and extract repository and make it private so that the configuration and API keys are hidden from public view.
+Fork repository and make required changes before deployment
 
-**Specifiy Environment variable. If local development , crate a file .env.local**
+**Specify Environment variable. If local development , crate a file .env.local Make variable blank if not required but do not delete or remove any key**
 
 ```sh
 NEXT_PUBLIC_MATIC = "https://polygon-mainnet.g.alchemy.com/v2/......j4zryx"
 NEXT_PUBLIC_ETH =  "https://eth-mainnet.g.alchemy.com/v2/......0bmp297MG7BjOKl"
 NEXT_PUBLIC_FILECOIN = "https://api.node.glif.io/rpc/v1"
+NEXT_PUBLIC_INFURA_KEY= 3ff237d4c.......71251407
+NEXT_PUBLIC_ALCHEMY_KEY= wdUDrk...........fO1InE7
 ```
 
 **Modify Web3Domain studio configuration file**
 >Edit the file src\configuration\Config.tsx
 >Change all the values as to your requirement. 
->Obtain INFURA or ALCHEMY api key.
+>Make variable blank if not required. But do not delete any keys. 
+
+**Modify Web3.tsx configuration file**
+>Switch between Alchemy or Infura provider.
+>Comment out the unused import 
+>Use or replace alchemyProvider / infuraProvider as required. Default is Alchemy 
 
 ```sh
 import { ThemingProps } from '@chakra-ui/react'
