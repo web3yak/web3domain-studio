@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         // Check if the API token is provided in the request header
   const apiToken = req.headers['api-token'];
 
-  if (!apiToken || apiToken !== 'YOUR_SECRET_API_TOKEN') {
+  if (!apiToken || apiToken !== process.env.NEXT_PUBLIC_PASSWORD) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

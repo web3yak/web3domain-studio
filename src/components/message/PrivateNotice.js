@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAccount} from "wagmi";
+import { useAccount } from "wagmi";
 import { isValidMember } from "../../hooks/validate";
 import { ADMIN_WALLET, NOTICE_TITLE } from "../../configuration/Config";
 import localforage from 'localforage';
@@ -14,24 +14,21 @@ import {
 } from "@chakra-ui/react";
 
 import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from '@chakra-ui/react'
+
+import {
   Text,
-  Flex,
-  useColorModeValue,
-  Spacer,
   Box,
-  Collapse,
-  Icon,
   Link,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Stack,
   useDisclosure,
-  useBreakpointValue,
   Button,
-  Lorem,
-  Input ,
-  Textarea
+  Input,
+  Textarea,
 } from "@chakra-ui/react";
 
 import { DeleteIcon } from '@chakra-ui/icons'
@@ -52,7 +49,7 @@ export default function PrivateNotice() {
   };
 
   const edit = () => {
-    console.log("Modify");
+   // console.log("Modify");
     setModify(true);
   };
 
@@ -64,14 +61,14 @@ export default function PrivateNotice() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'api-token': 'YOUR_SECRET_API_TOKEN',
+          'api-token': process.env.NEXT_PUBLIC_PASSWORD,
         },
         body: JSON.stringify({
           title,
           notes,
         }),
       });
-  
+
       if (response.ok) {
         console.log('Data updated successfully');
         setModify(false); // Set modify to false when the update is successful
@@ -90,12 +87,12 @@ export default function PrivateNotice() {
       const response = await fetch(`/api/message/delete-notice/?id=${entryID}`, {
         method: 'DELETE',
         headers: {
-          'api-token': 'YOUR_SECRET_API_TOKEN',
+          'api-token': process.env.NEXT_PUBLIC_PASSWORD,
         },
       });
 
-      console.log(response);
-  
+      //console.log(response);
+
       if (response.ok) {
         console.log(`Entry with ID ${entryID} deleted successfully`);
         // Refresh the data by calling the useEffect
@@ -109,7 +106,7 @@ export default function PrivateNotice() {
   };
 
   const closeModal = () => {
-    console.log("Close the modal");
+   // console.log("Close the modal");
     setModify(false); // Set modify to false when the modal is closed
     onClose(); // Close the modal
   };
@@ -118,15 +115,14 @@ export default function PrivateNotice() {
     if (address) {
       async function getStatus() {
         let test = await isValidMember(address);
-        console.log(test);
+        //console.log(test);
         //console.log(address);
         //console.log(ADMIN_WALLET);
-        if(address == ADMIN_WALLET)
-        {
+        if (address == ADMIN_WALLET) {
           let addr = address?.toString();
           setMembershipStatus(addr, "ADMIN");
         }
-        
+
         setStatus(test);
       }
       getStatus();
@@ -135,7 +131,7 @@ export default function PrivateNotice() {
 
   useEffect(() => {
     // Fetch and set the JSON data (you can use an API request or import it as in this example)
-    console.log(jData); // Add this line for debugging
+  //  console.log(jData); // Add this line for debugging
     setNoticeData(jData);
   }, [noticeData]);
 
@@ -153,7 +149,7 @@ export default function PrivateNotice() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-          {NOTICE_TITLE} &nbsp;
+            {NOTICE_TITLE} &nbsp;
             {!modify && status == "ADMIN" ? <Button onClick={() => edit()}>Edit</Button> : null}
           </ModalHeader>
           <ModalCloseButton />
@@ -161,44 +157,62 @@ export default function PrivateNotice() {
             {status == "GOLD" || status == "ADMIN" ? (
               <>
                 {!modify ? (
-                  <ul>
-                    {noticeData.map((notice) => (
-                      <li key={notice.ID}>
-                        ID is {notice.ID}, Date is {notice.Date}, Title is{" "}
-                        {notice.Title}, Message is {notice.Message}
-                        {status == "ADMIN" ?  (
-                        <Link
+                  <>
+                    <Accordion>
+
+
+
+                      {noticeData.map((notice) => (
+
+
+                        <AccordionItem key={notice.ID}>
+                          <h2>
+                            <AccordionButton>
+                              <Box as="span" flex='1' textAlign='left'>
+                              <Text as='b'> {notice.Title}</Text>
+                              </Box>
+                              <AccordionIcon />
+                            </AccordionButton>
+                          </h2>
+                          <AccordionPanel pb={4}>
+                          {notice.Message}
+                          {status == "ADMIN" ? (
+                          <Link
                   onClick={() => deleteEntry(notice.ID)}
                   color="red"
                   cursor="pointer"
-                ><DeleteIcon/></Link>
-              ):null}
-                      </li>
-                    ))}
-                  </ul>
+                  ml="2"
+                ><DeleteIcon/></Link> ):null}
+                          </AccordionPanel>
+                        </AccordionItem>
+
+
+                      ))}
+                    </Accordion>
+                  </>
                 ) : (
                   <>
-                  <Text mb='8px'>Title:</Text>
-                  <Input
-                                      type="text"
-                                      placeholder="Headline or Topic"
-                                      size="md"
-                                      value={title}
-                                      onChange={(event) =>
-                                        setTitle(event.currentTarget.value)
-                                      }
-                                    />
+                    <Text mb='8px'>Title:</Text>
+                    <Input
+                      type="text"
+                      placeholder="Headline or Topic"
+                      size="md"
+                      value={title}
+                      onChange={(event) =>
+                        setTitle(event.currentTarget.value)
+                      }
+                    />
 
-                  <Text mb='8px'>Message:</Text>
-                  <Textarea
-        value={notes}
-        onChange={(event) =>
-          setNotes(event.currentTarget.value)
-        }
-        placeholder='Private messages, Stock tips, Giveaway Link'
-        size='sm'
-      />
-                  
+                    <Text mb='8px'>Message:</Text>
+                    <Textarea
+                      value={notes}
+                      onChange={(event) =>
+                        setNotes(event.currentTarget.value)
+                      }
+                      placeholder='Private messages, Stock tips, Giveaway Link'
+                      size='sm'
+                    />
+
                   </>
                 )}
               </>
@@ -214,10 +228,10 @@ export default function PrivateNotice() {
               Close
             </Button>
 
-            {status != "GOLD" || status != "ADMIN" && (
+            {!(status === "GOLD" || status === "ADMIN") && (
               <Link href="/list">
                 <Button colorScheme="teal" variant="solid">
-                  Check Domain
+                  Check Domain {status}
                 </Button>
               </Link>
             )}

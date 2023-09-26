@@ -28,6 +28,7 @@ NEXT_PUBLIC_ETH =  "https://eth-mainnet.g.alchemy.com/v2/......0bmp297MG7BjOKl"
 NEXT_PUBLIC_FILECOIN = "https://api.node.glif.io/rpc/v1"
 NEXT_PUBLIC_INFURA_KEY= 3ff237d4c.......71251407
 NEXT_PUBLIC_ALCHEMY_KEY= wdUDrk...........fO1InE7
+NEXT_PUBLIC_PASSWORD= Usa //Password for admin functions. Do not revel to anyone. 
 ```
 
 **Modify Web3Domain studio configuration file**
