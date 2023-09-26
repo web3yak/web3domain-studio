@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount} from "wagmi";
 import { isValidMember } from "../../hooks/validate";
-import { ADMIN_WALLET } from "../../configuration/Config";
+import { ADMIN_WALLET, NOTICE_TITLE } from "../../configuration/Config";
 import localforage from 'localforage';
 import {
   Modal,
@@ -64,6 +64,7 @@ export default function privateNotice() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'api-token': 'YOUR_SECRET_API_TOKEN',
         },
         body: JSON.stringify({
           title,
@@ -88,6 +89,9 @@ export default function privateNotice() {
       // Send an HTTP DELETE request to the API route
       const response = await fetch(`/api/message/delete-notice/?id=${entryID}`, {
         method: 'DELETE',
+        headers: {
+          'api-token': 'YOUR_SECRET_API_TOKEN',
+        },
       });
 
       console.log(response);
@@ -143,13 +147,13 @@ export default function privateNotice() {
 
   return (
     <div>
-      <Button onClick={onOpen}>Bulletin board</Button>
+      <Button onClick={onOpen}>{NOTICE_TITLE}</Button>
 
       <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            Bulletin board{" "}
+          {NOTICE_TITLE} &nbsp;
             {!modify && status == "ADMIN" ? <Button onClick={() => edit()}>Edit</Button> : null}
           </ModalHeader>
           <ModalCloseButton />
@@ -210,7 +214,7 @@ export default function privateNotice() {
               Close
             </Button>
 
-            {status != "GOLD" && (
+            {status != "GOLD" || status != "ADMIN" && (
               <Link href="/list">
                 <Button colorScheme="teal" variant="solid">
                   Check Domain
