@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { isValidMember } from "../../hooks/validate";
-import { ADMIN_WALLET, NOTICE_TITLE } from "../../configuration/Config";
+import { ADMIN_WALLET, NOTICE_TITLE, NOTICE_NON_MEMBER } from "../../configuration/Config";
 import localforage from 'localforage';
 import {
   Modal,
@@ -36,7 +36,7 @@ import { DeleteIcon } from '@chakra-ui/icons'
 import jData from "./PrivateNotice.json";
 
 export default function PrivateNotice() {
-  const { address } = useAccount();
+  const { address,  isConnected } = useAccount();
   const [status, setStatus] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [noticeData, setNoticeData] = useState([]);
@@ -137,7 +137,7 @@ export default function PrivateNotice() {
 
   useEffect(() => {
     // Fetch and set the JSON data (you can use an API request or import it as in this example)
-    console.log(modify); // Add this line for debugging
+   // console.log(modify); // Add this line for debugging
     // setNoticeData(jData);
   }, [modify]);
 
@@ -154,7 +154,7 @@ export default function PrivateNotice() {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {status == "GOLD" || status == "ADMIN" ? (
+            {(status == "GOLD" || status == "ADMIN") && isConnected ? (
               <>
                 {!modify ? (
                   <>
@@ -217,7 +217,7 @@ export default function PrivateNotice() {
                 )}
               </>
             ) : (
-              <>You are not a member</>
+              <>{NOTICE_NON_MEMBER}</>
             )}
           </ModalBody>
 

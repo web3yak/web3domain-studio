@@ -29,4 +29,4 @@ export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
 export const ADMIN_WALLET = "0x8D714B10B719c65B878F2Ed1436A964E11fA3271" //ETH wallet address 
 
 export const NOTICE_TITLE = "Bulletin board"
-
+export const NOTICE_NON_MEMBER = "Only the .yak domain holder can view bulletin board."

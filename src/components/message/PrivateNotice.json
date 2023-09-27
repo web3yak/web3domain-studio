@@ -4,11 +4,5 @@
     "Date": "2023-09-28",
     "Title": "Important Announcement",
     "Message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac augue libero."
-  },
-  {
-    "ID": 2,
-    "Date": "2023-09-27",
-    "Title": "Reminder",
-    "Message": "Duis ac justo eu urna semper laoreet a eget erat."
   }
 ]
