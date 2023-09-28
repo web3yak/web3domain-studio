@@ -45,9 +45,9 @@ const Home: NextPage = () => {
               <Heading as="h2" fontSize="2xl" my={1}>
               {DOMAIN_TITLE}
               </Heading>
-              <p>
+            
                 <Search />
-              </p>
+             
             </div>
           </Stack>
         </Container>

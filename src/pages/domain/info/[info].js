@@ -219,9 +219,9 @@ const { onCopy: onCopyPrimaryDomain, value: primaryDomainValue } = useClipboard(
             ) : (
               <>
                 {error ? (
-                  <p>Error: {error}</p>
+                  <>Error: {error}</>
                 ) : (
-                  <p>
+                  <>
 
                     {domainAddr !== null ?
 
@@ -340,7 +340,7 @@ const { onCopy: onCopyPrimaryDomain, value: primaryDomainValue } = useClipboard(
 
                     }
 
-                  </p>
+                  </>
 
 
 

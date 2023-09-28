@@ -77,7 +77,7 @@ const Search = () => {
   };
 
   return (
-    <p>
+    <>
 
                 <Input
                   value={value}
@@ -115,7 +115,7 @@ const Search = () => {
 
                   </Box>
                 )}
-              </p>
+              </>
   );
 };
 

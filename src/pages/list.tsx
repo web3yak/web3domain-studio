@@ -135,9 +135,9 @@ export default function DomainList() {
                 ) : (
                   <>
                     {error ? (
-                      <p>Error: {error}</p>
+                      <>Error: {error}</>
                     ) : domainAddr.length === 0 ? ( // Check if the domainAddr array is empty
-                      <p>No Record Found</p> // Display the message when the array is empty
+                      <>No Record Found</> // Display the message when the array is empty
                     ) : (
                       <SimpleGrid
                         columns={{ sm: 2, md: 4 }}

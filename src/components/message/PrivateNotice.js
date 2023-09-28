@@ -150,7 +150,7 @@ export default function PrivateNotice() {
         <ModalContent>
           <ModalHeader>
             {NOTICE_TITLE} &nbsp;
-            {!modify && status == "ADMIN" ? <Button onClick={() => edit()}>Edit</Button> : null}
+            {(!modify && status == "ADMIN") && isConnected ? <Button onClick={() => edit()}>Edit</Button> : null}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
