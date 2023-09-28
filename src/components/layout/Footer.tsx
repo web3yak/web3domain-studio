@@ -53,9 +53,11 @@ export function Footer(props: Props) {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Text as="samp" hideBelow='md'>{SITE_DESCRIPTION}</Text>
+        <Text as="samp" hideBelow="md">
+          {SITE_DESCRIPTION}
+        </Text>
         <Link
-          hideBelow='md'
+          hideBelow="md"
           href={"/"}
           textAlign={useBreakpointValue({ base: "center", md: "left" })}
           fontFamily={"heading"}
@@ -69,17 +71,16 @@ export function Footer(props: Props) {
           <Logo />
         </Link>
         <Stack direction={"row"} spacing={6}>
+          {SOCIAL_TWITTER && SOCIAL_TWITTER !== undefined && (
+            <SocialButton
+              label={"Twitter"}
+              href={`https://twitter.com/${SOCIAL_TWITTER}`}
+            >
+              <FaTwitter />
+            </SocialButton>
+          )}
 
-        {SOCIAL_TWITTER !== '' && SOCIAL_TWITTER !== undefined && (
-          <SocialButton
-            label={"Twitter"}
-            href={`https://twitter.com/${SOCIAL_TWITTER}`}
-          >
-            <FaTwitter />
-          </SocialButton>
-        )}
-
-          {SOCIAL_MEDIUM !== '' && SOCIAL_MEDIUM !== undefined && (
+          {SOCIAL_MEDIUM && SOCIAL_MEDIUM !== undefined && (
             <SocialButton
               label={"Medium"}
               href={`https://medium.com/${SOCIAL_MEDIUM}`}
@@ -88,35 +89,35 @@ export function Footer(props: Props) {
             </SocialButton>
           )}
 
-{SOCIAL_GITHUB !== '' && SOCIAL_GITHUB !== undefined &&  (
-          <SocialButton
-            label={"Github"}
-            href={`https://github.com/${SOCIAL_GITHUB}`}
-          >
-            <FaGithub />
-          </SocialButton>
-)}
+          {SOCIAL_GITHUB && SOCIAL_GITHUB !== undefined && (
+            <SocialButton
+              label={"Github"}
+              href={`https://github.com/${SOCIAL_GITHUB}`}
+            >
+              <FaGithub />
+            </SocialButton>
+          )}
 
-{SOCIAL_DISCORD !== '' && SOCIAL_DISCORD !== undefined && (
-          <SocialButton
-            label={"Discord"}
-            href={`https://discord.com/channels/${SOCIAL_DISCORD}`}
-          >
-            <FaDiscord />
-          </SocialButton>
-)}
+          {SOCIAL_DISCORD && SOCIAL_DISCORD !== undefined && (
+            <SocialButton
+              label={"Discord"}
+              href={`https://discord.com/channels/${SOCIAL_DISCORD}`}
+            >
+              <FaDiscord />
+            </SocialButton>
+          )}
 
-{SOCIAL_LINKEDIN !== '' && SOCIAL_LINKEDIN !== undefined &&  (
-          <SocialButton
-            label={"LinkedIn"}
-            href={`https://www.linkedin.com/in/${SOCIAL_LINKEDIN}`}
-          >
-            <FaLinkedin />
-          </SocialButton>
-)}
+          {SOCIAL_LINKEDIN && SOCIAL_LINKEDIN !== undefined && (
+            <SocialButton
+              label={"LinkedIn"}
+              href={`https://www.linkedin.com/in/${SOCIAL_LINKEDIN}`}
+            >
+              <FaLinkedin />
+            </SocialButton>
+          )}
         </Stack>
       </Container>
-      <Box position="absolute" bottom={2} right={2} hideBelow='md'>
+      <Box position="absolute" bottom={2} right={2} hideBelow="md">
         <NetworkStatus />
       </Box>
     </Box>
