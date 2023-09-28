@@ -15,7 +15,6 @@ export const SOCIAL_GITHUB = 'web3yak'
 export const SOCIAL_LINKEDIN = ''
 export const SOCIAL_DISCORD = ''
 
-
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
 export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
 
