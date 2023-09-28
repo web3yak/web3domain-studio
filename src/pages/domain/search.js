@@ -1,6 +1,7 @@
 import React from "react";
 
 import Search from "../../components/domain/Search";
+import {DOMAIN_TITLE} from "../../configuration/Config";
 import {
   Box,
   Container,
@@ -41,7 +42,7 @@ export default function SearchPage() {
             >
               <div>
                 <Heading as="h2" fontSize="2xl" my={1}>
-                  Web3 Domain Search
+                  {DOMAIN_TITLE}
                 </Heading>
                 <p>
                   <Search />

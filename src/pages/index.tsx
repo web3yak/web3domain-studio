@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-
+import {DOMAIN_TITLE} from "../configuration/Config";
 import Search from "../components/domain/Search";
 import PrivateNotice from "../components/message/PrivateNotice";
 
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
             <PrivateNotice/>
             <div>
               <Heading as="h2" fontSize="2xl" my={1}>
-                Web3 Domain Search
+              {DOMAIN_TITLE}
               </Heading>
               <p>
                 <Search />

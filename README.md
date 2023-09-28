@@ -41,9 +41,14 @@ NEXT_PUBLIC_PASSWORD= Usa //Password for admin functions. Do not revel to anyone
 >Comment out the unused import 
 >Use or replace alchemyProvider / infuraProvider as required. Default is Alchemy 
 
+**Update header menu links**
+>Modify the file /src/components/layout/Header.tsx
+>Change Label , SubLabel , Link as required.
+
+
 ```sh
 import { ThemingProps } from '@chakra-ui/react'
-import { polygon, filecoin, polygonMumbai } from '@wagmi/chains'
+import { polygon} from '@wagmi/chains'
 
 export const SITE_NAME = 'Web3Domain Studio'
 export const SITE_DESCRIPTION = 'Web3 Domain Provider'
@@ -53,14 +58,13 @@ export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
 export const THEME_CONFIG = { initialColorMode: THEME_INITIAL_COLOR }
 
-export const SOCIAL_MEDIUM = '@web3yak'
+export const SOCIAL_MEDIUM = '' //Leave it blank if no values
 export const SOCIAL_TWITTER = 'web3yak'
 export const SOCIAL_GITHUB = 'web3yak'
-export const SOCIAL_LINKEDIN = 'web3yak'
-export const SOCIAL_DISCORD = 'web3yak'
+export const SOCIAL_LINKEDIN = ''
+export const SOCIAL_DISCORD = ''
 
-export const INFURA_KEY = '3ff237d......480b271251407' // https://app.infura.io/dashboard
-export const ALCHEMY_KEY = 'wdUDrk........CQWfO1InE7'; // https://dashboard.alchemy.com/
+
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
 export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
 
@@ -70,6 +74,14 @@ export const DOMAIN_IMAGE_URL = 'https://w3d.name/api/nft/yak.jpg' //Image path 
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
 export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'
 export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
+export const DOMAIN_TITLE = "Web3 Domain Search" //Title above the search input field. 
+export const DOMAIN_PLACEHOLDER = "Search for a name" //Placeholder for search input field 
+
+export const ADMIN_WALLET = "0x8D714B10B719c65B878F2Ed1436A964E11fA3271" //ETH wallet address 
+
+export const NOTICE_TITLE = "Bulletin board"
+export const NOTICE_NON_MEMBER = "Only the .yak domain holder can view bulletin board."
+
 
 ```
 

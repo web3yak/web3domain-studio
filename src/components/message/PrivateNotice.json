@@ -1,8 +1,8 @@
 [
   {
-    "ID": 1,
-    "Date": "2023-09-28",
-    "Title": "Important Announcement",
-    "Message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac augue libero."
+    "ID": 23,
+    "Date": "Thu, 28 Sep 2023 02:41:07 GMT",
+    "Title": "Announcement ",
+    "Message": "We will continuously update this app.\nIf you found any issues or developed any features, share with us so that we can integrate it. "
   }
 ]

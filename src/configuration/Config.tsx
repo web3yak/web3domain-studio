@@ -9,11 +9,11 @@ export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
 export const THEME_CONFIG = { initialColorMode: THEME_INITIAL_COLOR }
 
-export const SOCIAL_MEDIUM = '@web3yak'
+export const SOCIAL_MEDIUM = '' //Leave it blank if no values
 export const SOCIAL_TWITTER = 'web3yak'
 export const SOCIAL_GITHUB = 'web3yak'
-export const SOCIAL_LINKEDIN = 'web3yak'
-export const SOCIAL_DISCORD = 'web3yak'
+export const SOCIAL_LINKEDIN = ''
+export const SOCIAL_DISCORD = ''
 
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
@@ -25,6 +25,8 @@ export const DOMAIN_IMAGE_URL = 'https://w3d.name/api/nft/yak.jpg' //Image path 
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
 export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'
 export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
+export const DOMAIN_TITLE = "Web3 Domain Search" //Title above the search input field. 
+export const DOMAIN_PLACEHOLDER = "Search for a name" //Placeholder for search input field 
 
 export const ADMIN_WALLET = "0x8D714B10B719c65B878F2Ed1436A964E11fA3271" //ETH wallet address 
 
