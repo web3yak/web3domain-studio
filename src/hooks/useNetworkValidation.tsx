@@ -22,11 +22,11 @@ function useNetworkValidation() {
 }
 
 function checkContract() {
-  if (DOMAIN_NETWORK_CHAIN === 137) {
+  if (DOMAIN_NETWORK_CHAIN === 137 as number) {
     return "0x7D853F9A29b3c317773A461ed87F54cdDa44B0e0";
-  } else if (DOMAIN_NETWORK_CHAIN === 80001) {
+  } else if (DOMAIN_NETWORK_CHAIN === 80001 as number) {
     return "0xf89F5492094b5169C82dfE1cD9C7Ce1C070ca902";
-  } else if (DOMAIN_NETWORK_CHAIN === 314) {
+  } else if (DOMAIN_NETWORK_CHAIN === 314 as number) {
     return "0x57E34eaDd86A52bA2A13c2f530dBA37bC919F010";
   } else {
     return null; // Return null or handle other cases as needed
