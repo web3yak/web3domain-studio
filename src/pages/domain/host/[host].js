@@ -371,7 +371,7 @@ export default function Info() {
                     {error ? (
                       <p>Error: {error}</p>
                     ) : (
-                      <p>
+                      <>
 
                         {address == ownerAddress ?
                           <form onSubmit={handleSubmit}>
@@ -411,7 +411,7 @@ export default function Info() {
                                               value={visitUrl}
                                               placeholder='No website defined!'
                                               size='sm'
-                                              disabled="true"
+                                              disabled={true}
                                             />
                                             {web3Url != null && (
                                               <InputRightElement width='1rem' >
@@ -689,7 +689,7 @@ export default function Info() {
 
                         }
 
-                      </p>
+                      </>
 
 
 
