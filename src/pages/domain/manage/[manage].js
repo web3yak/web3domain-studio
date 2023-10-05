@@ -1,15 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-var w3d = require("@web3yak/web3domain");
 import { useURLValidation } from "../../../hooks/validate";
 import { useJsonValue } from "../../../hooks/jsonData";
 import { generateJson, generatePreview } from "../../../hooks/ipfs";
 import TokenURI from "../../../components/TokenURI"; // Adjust the path to the actual location
-import { useAccount, useNetwork } from "wagmi";
-import {
-  useNetworkValidation,
-  checkContract,
-} from "../../../hooks/useNetworkValidation";
+import { useAccount } from "wagmi";
+import { useNetworkValidation } from "../../../hooks/useNetworkValidation";
 import Link from "next/link";
 import useDomainInfo from "../../../hooks/domainInfo";
 import useGlobal from "../../../hooks/global";
@@ -41,12 +37,6 @@ import {
   CircularProgress,
   Divider,
   Kbd,
-  FormHelperText,
-  Switch,
-  useBoolean,
-  InputRightElement,
-  Grid,
-  GridItem,
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import {
@@ -82,7 +72,7 @@ import {
 } from "../../../configuration/Config";
 
 export default function Manage() {
-  const { isConnected, connector, address } = useAccount();
+  const { address } = useAccount();
   const router = useRouter();
   const { manage } = router.query;
   const domain = manage ? String(manage).toLowerCase() : "";
@@ -116,8 +106,6 @@ export default function Manage() {
 
   const [web3Url, setWeb3Url] = useState("");
   const [web2Url, setWeb2Url] = useState("");
-  const [webUrl, setWebUrl] = useState("");
-  const [newUrl, setNewUrl] = useState("");
   const [flag, setFlag] = useState(false);
 
   const { validateURL } = useURLValidation();
@@ -168,36 +156,34 @@ export default function Manage() {
   const getLayout = async () => {
     console.log("cid of layout  " + domain);
     console.log(jsonDataNew);
-    if(jsonDataNew)
-    {
-    const response = await generatePreview(jsonDataNew, domain, "true");
-    if (response.ok) {
-      const responseText = await response.text();
-      try {
-        const responseObject = JSON.parse(responseText);
-        const cidValue = responseObject.cid;
-        const cidUrl = "https://ipfs.io/ipfs/" + cidValue;
-        console.log(cidUrl);
-        setWeb2Url(cidUrl);
+    if (jsonDataNew) {
+      const response = await generatePreview(jsonDataNew, domain, "true");
+      if (response.ok) {
+        const responseText = await response.text();
+        try {
+          const responseObject = JSON.parse(responseText);
+          const cidValue = responseObject.cid;
+          const cidUrl = "https://ipfs.io/ipfs/" + cidValue;
+          console.log(cidUrl);
+          setWeb2Url(cidUrl);
 
-        const updatedJsonData = {
-          ...jsonDataNew,
-          records: {
-            ...jsonDataNew.records,
+          const updatedJsonData = {
+            ...jsonDataNew,
+            records: {
+              ...jsonDataNew.records,
 
-            50: { type: "web_url", value: cidUrl },
-          },
-        };
-        console.log(web2Url);
-        console.log(updatedJsonData);
-        setJsonDataNew(updatedJsonData);
-        
-      } catch (error) {
-        console.log("Error parsing JSON of layout:", error);
+              50: { type: "web_url", value: cidUrl },
+            },
+          };
+          console.log(web2Url);
+          console.log(updatedJsonData);
+          setJsonDataNew(updatedJsonData);
+        } catch (error) {
+          console.log("Error parsing JSON of layout:", error);
+        }
       }
     }
-  }
-  setFlag(false);
+    setFlag(false);
   };
 
   const handleSubmit = (event) => {
@@ -337,9 +323,8 @@ export default function Manage() {
 
   useEffect(() => {
     async function get_cid_of_layout() {
-      if(flag)
-      {
-      await getLayout();
+      if (flag) {
+        await getLayout();
       }
     }
     get_cid_of_layout();
@@ -717,18 +702,18 @@ export default function Manage() {
                             width="half"
                             mt={4}
                           >
-                             {flag ? (
-                                <>
-                                  {" "}
-                                  <CircularProgress
-                                    isIndeterminate
-                                    size="24px"
-                                  />{" "}
-                                  Saving {" "}
-                                </>
-                              ) : (
-                                "Save"
-                              )}
+                            {flag ? (
+                              <>
+                                {" "}
+                                <CircularProgress
+                                  isIndeterminate
+                                  size="24px"
+                                />{" "}
+                                Saving{" "}
+                              </>
+                            ) : (
+                              "Save"
+                            )}
                           </Button>
                           {jsonDataNew != null && !flag ? (
                             <Button
