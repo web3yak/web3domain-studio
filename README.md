@@ -36,16 +36,6 @@ NEXT_PUBLIC_PASSWORD=keep_any_secure_password_for_admin
 >Change all the values as to your requirement. 
 >Make variable blank if not required. But do not delete any keys. 
 
-**Modify Web3.tsx configuration file**
->Switch between Alchemy or Infura provider.
->Comment out the unused import 
->Use or replace alchemyProvider / infuraProvider as required. Default is Alchemy 
-
-**Update header menu links**
->Modify the file /src/components/layout/Header.tsx
->Change Label , SubLabel , Link as required.
-
-
 ```sh
 import { ThemingProps } from '@chakra-ui/react'
 import { polygon} from '@wagmi/chains'
@@ -66,7 +56,7 @@ export const SOCIAL_DISCORD = ''
 
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
-export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
+export const NETWORK_ERROR = "Unsupported Blockchain Network or Domain Name !" //Change network name as required
 
 export const DOMAIN_TLD = 'yak' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '0.1' //price should be equal to contract or higher 
@@ -84,6 +74,17 @@ export const NOTICE_NON_MEMBER = "Only the .yak domain holder can view bulletin 
 
 
 ```
+
+**Modify or update rpc provider**
+>Modify file src\configuration\Web3.tsx
+>Switch between Alchemy or Infura provider.
+>Comment out the unused import 
+>Use or replace alchemyProvider / infuraProvider as required. Default is Alchemy 
+
+**Update header menu links**
+>Modify the file /src/components/layout/Header.tsx
+>Change Label , SubLabel , Link as required.
+
 
 **Change Logo**
 

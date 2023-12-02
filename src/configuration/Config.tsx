@@ -16,7 +16,7 @@ export const SOCIAL_LINKEDIN = ''
 export const SOCIAL_DISCORD = ''
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
-export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
+export const NETWORK_ERROR = "Unsupported Blockchain Network or Domain Name !" //Change network name as required
 
 export const DOMAIN_TLD = 'yak' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '0.1' //price should be equal to contract or higher 
