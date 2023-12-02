@@ -4,23 +4,23 @@
 [![N|Solid](https://web3domain.org/studio/wp-content/uploads/banner.jpg)](https://web3domain.org/studio/)
 
 
-Your own website by selling subdomains. We will integrate the domain into our ecosystem, providing every domain user access to all of the features that Web3Domain offers.
+Empower your own website by selling subdomains. Integrate your domain into our ecosystem, offering every domain user access to all the features that Web3Domain provides.
 
 ## Features
 
-* It is best option to earn for membership by letting user to obtain subdomain of your web3 primary domain.
-* You earn as soon as domain minted.
-* You can set the price, image, description for your subdomain yourself.
-* You can also restrict not to be minted by public. Only you can mint it and transfer. Hence you can save commission fees too.
-* All Web3Domains are NFTs. Which you can sell at opensea.io
+- Optimal opportunity to earn through memberships by allowing users to obtain subdomains of your Web3 primary domain.
+- Earn immediately upon domain minting.
+- Set the price, image, and description for your subdomain at your discretion.
+- Optionally restrict minting to yourself, saving on commission fees.
+- All Web3Domains are NFTs, sellable on opensea.io.
 
 ## Installation
 
-It requires [Node.js](https://nodejs.org/) to run.
+This project requires [Node.js](https://nodejs.org/) to run.
 
-Fork repository and make required changes before deployment
+### Fork the Repository and Make Changes before Deployment
 
-**Specify Environment variable. If local development , crate a file .env.local Make variable blank if not required but do not delete or remove any key**
+**Specify environment variables. If for local development, create a file `.env.local`. Leave variables blank if not required but do not delete or remove any keys.**
 
 ```sh
 NEXT_PUBLIC_MATIC=get_rpc_url_for_polygon_and_do_not_remove_me_if_not_required
@@ -31,10 +31,9 @@ NEXT_PUBLIC_ALCHEMY_KEY=get_key_from_alchemy_or_leave_it_as_it_is
 NEXT_PUBLIC_PASSWORD=keep_any_secure_password_for_admin
 ```
 
-**Modify Web3Domain studio configuration file**
->Edit the file src\configuration\Config.tsx
->Change all the values as to your requirement. 
->Make variable blank if not required. But do not delete any keys. 
+**Modify the Web3Domain Studio configuration file**
+>Edit the file src\configuration\Config.tsx.
+>Change values to suit your requirements. Leave variables blank if not needed, but don't delete any keys.
 
 ```sh
 import { ThemingProps } from '@chakra-ui/react'
@@ -75,25 +74,25 @@ export const NOTICE_NON_MEMBER = "Only the .yak domain holder can view bulletin 
 
 ```
 
-**Modify or update rpc provider**
->Modify file src\configuration\Web3.tsx
+**Modify or Update RPC Provider**
+>Modify the file src\configuration\Web3.tsx.
 >Switch between Alchemy or Infura provider.
->Comment out the unused import 
->Use or replace alchemyProvider / infuraProvider as required. Default is Alchemy 
+>Comment out the unused import.
+>Use or replace alchemyProvider / infuraProvider as needed. Default is Alchemy. 
 
-**Update header menu links**
+**Update Header Menu Links**
 >Modify the file /src/components/layout/Header.tsx
->Change Label , SubLabel , Link as required.
+>Change labels, sublabels, and links as needed.
 
 
 **Change Logo**
 
-* Overwrite the file logo.png & favicon.ico under `/public/` folder
+* Overwrite the files `logo.png` and `favicon.ico` under the `/public/` folder.
 
 **Deploy to your server**
 
 ```
-npm i
+npm install
 ```
 
 ## License
