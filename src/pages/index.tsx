@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import {DOMAIN_TITLE} from "../configuration/Config";
 import Search from "../components/domain/Search";
+import { Image } from '@chakra-ui/react'
 import PrivateNotice from "../components/message/PrivateNotice";
 
 // Import debounce from lodash
@@ -34,15 +35,20 @@ const Home: NextPage = () => {
         maxH={"80vh"}
       >
         <Container maxW={"5xl"} alignItems={"center"} justifyContent={"center"}>
+        <Image src='https://web3domain.org/studio/wp-content/uploads/2023/06/a6.jpg' alt='banner' />
           <Stack
             as={Box}
             textAlign={"center"}
-            spacing={{ base: 8, md: 14 }}
-            py={{ base: 20, md: 16 }}
+            spacing={{ base: 8, md: 10 }}
+            py={{ base: 20, md: 2 }}
           >
+            
             <PrivateNotice/>
             <div>
-              <Heading as="h2" fontSize="2xl" my={1}>
+
+
+
+            <Heading as='h3' size='md' fontSize='20px'>
               {DOMAIN_TITLE}
               </Heading>
             
