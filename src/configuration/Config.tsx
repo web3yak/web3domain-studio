@@ -16,12 +16,12 @@ export const SOCIAL_LINKEDIN = ''
 export const SOCIAL_DISCORD = ''
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
-export const NETWORK_ERROR = "Unsuppoted Blockchain Network or Domain Name !" //Change network name as required
+export const NETWORK_ERROR = "Unsupported Blockchain Network or Domain Name !" //Change network name as required
 
 export const DOMAIN_TLD = 'yak' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '0.1' //price should be equal to contract or higher 
 export const DOMAIN_IMAGE_URL = 'https://w3d.name/api/nft/yak.jpg' //Image path starts with ipfs:// or https://
-export const DOMAIN_NETWORK_CHAIN = 314 //137 for polygon, 314 for filecoin, 80001 form mumbai
+export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
 export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'
 export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
 export const DOMAIN_TITLE = "Web3 Domain Search" //Title above the search input field. 
