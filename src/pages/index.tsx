@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-import {DOMAIN_TITLE} from "../configuration/Config";
+import {DOMAIN_TITLE,DOMAIN_BANNER} from "../configuration/Config";
 import Search from "../components/domain/Search";
 import { Image } from '@chakra-ui/react'
 import PrivateNotice from "../components/message/PrivateNotice";
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         maxH={"80vh"}
       >
         <Container maxW={"5xl"} alignItems={"center"} justifyContent={"center"}>
-        <Image src='https://web3domain.org/studio/wp-content/uploads/2023/06/a6.jpg' alt='banner' />
+        <Image src={DOMAIN_BANNER} alt='banner' />
           <Stack
             as={Box}
             textAlign={"center"}
