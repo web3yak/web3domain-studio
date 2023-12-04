@@ -32,4 +32,4 @@ export const ADMIN_WALLET = "0x8D714B10B719c65B878F2Ed1436A964E11fA3271" //ETH w
 export const NOTICE_TITLE = "Bulletin board"
 export const NOTICE_NON_MEMBER = "Only the .yak domain holder can view bulletin board."
 
-export const DOMAIN_BANNER = "https://web3domain.org/studio/wp-content/uploads/2023/06/a6.jpg"; //290x80 size
+export const DOMAIN_BANNER = "https://web3domain.org/studio/wp-content/uploads/2023/06/a6.jpg" //290x80 size
