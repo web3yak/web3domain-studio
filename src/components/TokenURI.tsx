@@ -42,7 +42,7 @@ var CONTRACT_ADDRESS = ''; // No contract found
   const toast = useToast();
 
   const randomNumber = Math.random();
-  const url = "https://w3d.name/api/v1/index.php?domain=" + domainName + "&" + randomNumber+"&update=yes";
+  const url = "https://web3domain.org/api/v1/index.php?domain=" + domainName + "&" + randomNumber+"&update=yes";
  
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);

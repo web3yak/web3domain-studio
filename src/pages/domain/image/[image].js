@@ -166,7 +166,7 @@ const updatedJsonData = {
 
     if (domain) {
       const randomNumber = Math.random();
-      const url = "https://w3d.name/api/v1/index.php?domain=" + domain + "&" + randomNumber;
+      const url = "https://web3domain.org/api/v1/index.php?domain=" + domain + "&" + randomNumber;
       // console.log(url);
       const fetchData = async () => {
         try {

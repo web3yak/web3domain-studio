@@ -216,7 +216,7 @@ export default function Info() {
     if (domain) {
       const randomNumber = Math.random();
       const url =
-        "https://w3d.name/api/v1/index.php?domain=" +
+        "https://web3domain.org/api/v1/index.php?domain=" +
         domain +
         "&" +
         randomNumber;

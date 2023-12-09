@@ -251,7 +251,7 @@ export default function Manage() {
     const randomNumber = Math.random(); // Generate a random number
     if (domain) {
       const url =
-        "https://w3d.name/api/v1/index.php?domain=" +
+        "https://web3domain.org/api/v1/index.php?domain=" +
         domain +
         "&update=yes&" +
         randomNumber;

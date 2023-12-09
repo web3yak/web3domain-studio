@@ -8,7 +8,7 @@ export async function generateJson(rawjson: any[], name: string): Promise<object
     formData.append('data', JSON.stringify(rawjson)); // Append JSON data
     formData.append('name', name); // Append name string
 
-    const url = `https://w3d.name/api/v1/json.php`;
+    const url = `https://web3domain.org/api/v1/json.php`;
     const response = await fetch(url, {
       method: 'POST',
       body: formData, // Use the FormData object
@@ -27,7 +27,7 @@ export async function generateImage(domainName: string, key: string): Promise<st
   try {
     const [domain,primary] = domainName.split('.'); // Split domainName into primary and domain
     //const url = `http://localhost/blockchain/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
-    const url = `https://w3d.name/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
+    const url = `https://web3domain.org/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
     //console.log(url);
     const response = await fetch(url);
     const content = await response.text(); // Get the content as text
@@ -44,10 +44,10 @@ export async function generatePreview(rawjson: any[], name: string,generate: str
     const formData = new FormData();
     formData.append('data', JSON.stringify(rawjson)); // Append JSON data
     formData.append('name', name); // Append name string
-    formData.append('template',"https://w3d.name/api/template/theme1/index.php");
+    formData.append('template',"https://web3domain.org/api/template/theme1/index.php");
     formData.append('generate',generate);
 
-    const url = `https://w3d.name/api/template/start.php`;
+    const url = `https://web3domain.org/api/template/start.php`;
     const response = await fetch(url, {
       method: 'POST',
       body: formData, // Use the FormData object

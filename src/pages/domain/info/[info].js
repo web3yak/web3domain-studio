@@ -83,7 +83,7 @@ export default function Info() {
     if (info) {
       const randomNumber = Math.random();
       const url =
-        "https://w3d.name/api/v1/index.php?domain=" + info + "&" + randomNumber;
+        "https://web3domain.org/api/v1/index.php?domain=" + info + "&" + randomNumber;
       // console.log(url);
       const fetchData = async () => {
         try {
