@@ -10,9 +10,9 @@ export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
 export const THEME_CONFIG = { initialColorMode: THEME_INITIAL_COLOR }
 
 export const SOCIAL_MEDIUM = '' //Leave it blank if no values
-export const SOCIAL_TWITTER = 'web3yak'
-export const SOCIAL_GITHUB = 'web3yak'
-export const SOCIAL_LINKEDIN = ''
+export const SOCIAL_TWITTER = 'hi0xchat'
+export const SOCIAL_GITHUB = 'hi0x'
+export const SOCIAL_LINKEDIN = 'hi0x'
 export const SOCIAL_DISCORD = ''
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
