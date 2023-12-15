@@ -311,7 +311,7 @@ export default function Info() {
                     <AlertDescription maxWidth="sm">
                       You can now manage your domain.
                       <Divider />
-                      {DOMAIN_NETWORK_CHAIN == 137 ? ( == 137 ? (
+                       {DOMAIN_NETWORK_CHAIN == 137 ? (
                         <Link
                           href={`https://polygonscan.com/tx/${data?.hash}`}
                           passHref
