@@ -3,7 +3,7 @@ import { polygon} from '@wagmi/chains'
 
 export const SITE_NAME = '0x Name Service'
 export const SITE_DESCRIPTION = 'Hi0x © 2023'
-export const SITE_URL = 'https://id.hi0x.net'
+export const SITE_URL = 'https://0xns.pro'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
@@ -22,7 +22,7 @@ export const DOMAIN_TLD = '0x' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '1' //price should be equal to contract or higher 
 export const DOMAIN_IMAGE_URL = 'https://ipfs.io/ipfs/QmWfLXhfseaSkLrGm14my1TyrKRZ1H8W4DXtvpN9yWxYo9' //Image path starts with ipfs:// or https://
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
-export const DOMAIN_DESCRIPTION = 'Decentralized websites, business cards, personal ID'
+export const DOMAIN_DESCRIPTION = 'Decentralized websites, business cards, personal ID, Register a new domain: https://0xns.pro'
 export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
 export const DOMAIN_TITLE = "Web3 Domain Search" //Title above the search input field. 
 export const DOMAIN_PLACEHOLDER = "Search for Domain" //Placeholder for search input field 
