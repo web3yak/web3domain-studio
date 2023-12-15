@@ -19,7 +19,7 @@ export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
 export const NETWORK_ERROR = "Change network to polygon !" //Change network name as required
 
 export const DOMAIN_TLD = '0x' //primary domain name without dot (.)
-export const DOMAIN_PRICE_ETH = '0.01' //price should be equal to contract or higher 
+export const DOMAIN_PRICE_ETH = '1' //price should be equal to contract or higher 
 export const DOMAIN_IMAGE_URL = 'https://ipfs.io/ipfs/QmWfLXhfseaSkLrGm14my1TyrKRZ1H8W4DXtvpN9yWxYo9' //Image path starts with ipfs:// or https://
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
 export const DOMAIN_DESCRIPTION = 'Decentralized websites, business cards, personal ID'
