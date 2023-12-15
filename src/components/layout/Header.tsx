@@ -256,12 +256,17 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/",
     children: [
       {
-        label: 'chat',
+        label: 'Messenger ',
         subLabel: '',
-        href: 'https://hi0x.net/chat/',
+        href: 'https://hi0x.net/chat',
       },
       {
-        label: 'Docs',
+        label: 'telegram',
+        subLabel: '',
+        href: 'https://t.me/hi0xchat',
+      },
+      {
+        label: 'Documentation',
         subLabel: '',
         href: 'https://docs.hi0x.net/0x-name-service',
       },
