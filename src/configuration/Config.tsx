@@ -16,16 +16,16 @@ export const SOCIAL_LINKEDIN = ''
 export const SOCIAL_DISCORD = ''
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
-export const NETWORK_ERROR = "Unsupported Blockchain Network or Domain Name !" //Change network name as required
+export const NETWORK_ERROR = "Change network to polygon !" //Change network name as required
 
 export const DOMAIN_TLD = '0x' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '0.01' //price should be equal to contract or higher 
-export const DOMAIN_IMAGE_URL = 'https://ipfs.filebase.io/ipfs/QmXUXbw6WPTNwVWLVqCEBq7Aa8FHjVvN7MPe6bCasyZDZn' //Image path starts with ipfs:// or https://
+export const DOMAIN_IMAGE_URL = 'https://ipfs.io/ipfs/QmWfLXhfseaSkLrGm14my1TyrKRZ1H8W4DXtvpN9yWxYo9' //Image path starts with ipfs:// or https://
 export const DOMAIN_NETWORK_CHAIN = 137 //137 for polygon, 314 for filecoin, 80001 form mumbai
-export const DOMAIN_DESCRIPTION = 'My Domain description goes here....'
+export const DOMAIN_DESCRIPTION = 'Decentralized websites, business cards, personal ID'
 export const DOMAIN_TYPE = "W3D" //W3D for polygon, FVM for Filecoin net
 export const DOMAIN_TITLE = "Web3 Domain Search" //Title above the search input field. 
-export const DOMAIN_PLACEHOLDER = "Search for a name" //Placeholder for search input field 
+export const DOMAIN_PLACEHOLDER = "Search for Domain" //Placeholder for search input field 
 
 export const ADMIN_WALLET = "0x6ec0Ce3333A7A2a37e38c656B46752F2a9fC8e19" //ETH wallet address 
 
