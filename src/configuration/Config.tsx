@@ -1,9 +1,9 @@
 import { ThemingProps } from '@chakra-ui/react'
 import { polygon} from '@wagmi/chains'
 
-export const SITE_NAME = 'Web3Domain Studio'
-export const SITE_DESCRIPTION = 'Web3 Domain Provider'
-export const SITE_URL = 'https://web3domain.org'
+export const SITE_NAME = '0x Name Service'
+export const SITE_DESCRIPTION = 'Hi0x © 2023'
+export const SITE_URL = 'https://id.hi0x.net'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
@@ -32,4 +32,4 @@ export const ADMIN_WALLET = "0x6ec0Ce3333A7A2a37e38c656B46752F2a9fC8e19" //ETH w
 export const NOTICE_TITLE = "Bulletin board"
 export const NOTICE_NON_MEMBER = "Only the .0x domain holder can view bulletin board."
 
-export const DOMAIN_BANNER = "https://web3domain.org/studio/wp-content/uploads/2023/06/a6.jpg" //290x80 size
+export const DOMAIN_BANNER = "" //290x80 size
