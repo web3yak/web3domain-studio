@@ -116,6 +116,7 @@ const updatedJsonData = {
     const imageContent = await generateImage(domainName, key);
     if (imageContent) {
       console.log('Image content:', imageContent);
+      //https://bafkreiak3kms5q6jn6xjowri3rpwn7agb5zqnenvb4auo3vrwbhedqhbw4.ipfs.nftstorage.link/
       setNftImage("https://ipfs.io/ipfs/" + imageContent);
       //console.log(jsonData);
       setIsLoading(false);
