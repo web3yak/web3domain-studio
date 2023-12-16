@@ -34,6 +34,14 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 
+const transformIpfsUrl = (url) => {
+  if (url && url.startsWith("ipfs://")) {
+    return url.replace("ipfs://", "https://ipfs.io/ipfs/");
+  } else {
+    return url;
+  }
+}
+
 const UserProfilePage = () => {
   const [visitUrl, setVisitUrl] = useState("");
   const [webUrl, setWebUrl] = useState("");
@@ -48,10 +56,13 @@ const UserProfilePage = () => {
 
   const getJson = async (url) => {
 
-    console.log("****** " + url);
+    //console.log("****** " + url);
+    console.log("........"+transformIpfsUrl(url));
+
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+        var web2_url=transformIpfsUrl(url);
+        const response = await fetch(web2_url);
         const json = await response.json();
        // setJsonData(json); // Store the json response in the component's state
         //setIsLoading(false);
