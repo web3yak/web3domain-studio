@@ -16,7 +16,7 @@ export const SOCIAL_LINKEDIN = ''
 export const SOCIAL_DISCORD = ''
 
 export const NETWORKS = [polygon]; //polygon, filecoin, polygonMumbai
-export const NETWORK_ERROR = "Change network to polygon !" //Change network name as required
+export const NETWORK_ERROR = "Connect your wallet and Change network to polygon !" //Change network name as required
 
 export const DOMAIN_TLD = '0x' //primary domain name without dot (.)
 export const DOMAIN_PRICE_ETH = '1' //price should be equal to contract or higher 
