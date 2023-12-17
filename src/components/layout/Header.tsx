@@ -261,7 +261,7 @@ const NAV_ITEMS: Array<NavItem> = [
         href: 'https://hi0x.net/chat',
       },
       {
-        label: 'telegram',
+        label: 'Telegram',
         subLabel: 'Join our Telegram group',
         href: 'https://t.me/hi0xchat',
       },
