@@ -7,6 +7,7 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
+  Image,
 } from "@chakra-ui/react";
 import {
   FaDiscord,
@@ -68,7 +69,13 @@ export function Footer(props: Props) {
             bg: useColorModeValue("green.200", "green.900"),
           }}
         >
-          <Logo />
+             <Image
+          width={8}
+          height={8}
+          alt={"Login Image"}
+          objectFit={"cover"}
+          src={"/logo.png"}
+        />
         </Link>
         <Stack direction={"row"} spacing={6}>
           {SOCIAL_TWITTER && SOCIAL_TWITTER !== undefined && (

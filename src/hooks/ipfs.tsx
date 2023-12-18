@@ -23,11 +23,12 @@ export async function generateJson(rawjson: any[], name: string): Promise<object
   }
 }
 
-export async function generateImage(domainName: string, key: string): Promise<string | null> {
+export async function generateImage(domainName: string, key: string, scan_url: string): Promise<string | null> {
   try {
     const [domain,primary] = domainName.split('.'); // Split domainName into primary and domain
     //const url = `http://localhost/blockchain/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
-    const url = `https://web3domain.org/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}`;
+    const url = `https://web3domain.org/api/studio_nft.php?domain=${domain}&primary=${primary}&key=${key}&url=${scan_url}`;
+    //http://localhost/blockchain/api/studio_nft.php?domain=hi&primary=0x&key=9&url=0xns.pro
     //console.log(url);
     const response = await fetch(url);
     const content = await response.text(); // Get the content as text

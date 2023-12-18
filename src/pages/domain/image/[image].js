@@ -49,7 +49,7 @@ import {
 } from '@chakra-ui/react'
 import { FaCopy, FaExternalLinkAlt, FaForward } from "react-icons/fa";
 import { useAccount, useNetwork } from "wagmi";
-import { DOMAIN_TLD, NETWORK_ERROR, DOMAIN_IMAGE_URL } from '../../../configuration/Config'
+import { DOMAIN_TLD, NETWORK_ERROR, DOMAIN_IMAGE_URL, SITE_URL } from '../../../configuration/Config'
 
 
 export default function Info() {
@@ -113,7 +113,7 @@ const updatedJsonData = {
 
     const key = '100';
 
-    const imageContent = await generateImage(domainName, key);
+    const imageContent = await generateImage(domainName, key, SITE_URL);
     if (imageContent) {
       console.log('Image content:', imageContent);
       //https://bafkreiak3kms5q6jn6xjowri3rpwn7agb5zqnenvb4auo3vrwbhedqhbw4.ipfs.nftstorage.link/
