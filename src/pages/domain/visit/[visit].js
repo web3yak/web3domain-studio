@@ -49,17 +49,17 @@ const UserProfilePage = () => {
   const getJson = async (url) => {
 
     //console.log("****** " + url);
-    console.log("........"+transformIpfsUrl(url));
+    console.log("........" + transformIpfsUrl(url));
 
     const fetchData = async () => {
       try {
-        var web2_url=transformIpfsUrl(url);
+        var web2_url = transformIpfsUrl(url);
         const response = await fetch(web2_url);
         const json = await response.json();
-       // setJsonData(json); // Store the json response in the component's state
+        // setJsonData(json); // Store the json response in the component's state
         //setIsLoading(false);
         processJson(json);
-       // console.log(json);
+        // console.log(json);
       } catch (error) {
         console.log("error", error);
         setIsLoading(false);
@@ -104,7 +104,7 @@ const UserProfilePage = () => {
 
 
   useEffect(() => {
-   
+
     if (webUrl) {
       window.location.assign(webUrl);
       console.log("Ready to redirect");
@@ -121,12 +121,11 @@ const UserProfilePage = () => {
     if (oldUri) {
       getJson(oldUri);
     }
-    else
-    {
+    else {
       console.log("oldUri is null");
-      setIsLoading(false); 
+      setIsLoading(false);
     }
-   
+
   }, [oldUri]);
 
   return (
@@ -160,31 +159,31 @@ const UserProfilePage = () => {
           ) : (
             <>
 
-{oldUri == null ?
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>{domain}</AlertTitle>
-              </Alert>
-              :
-              <>  {isRedirect ? (
-                <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-              )
-              :
-              (
+              {oldUri == null ?
                 <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>{domain} : Invalid Link</AlertTitle>
-              </Alert>
-              )
-}</>
-}
-        </>
+                  <AlertIcon />
+                  <AlertTitle>{domain}</AlertTitle>
+                </Alert>
+                :
+                <>  {isRedirect ? (
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                  />
+                )
+                  :
+                  (
+                    <Alert status="error">
+                      <AlertIcon />
+                      <AlertTitle>{domain} : Invalid Link</AlertTitle>
+                    </Alert>
+                  )
+                }</>
+              }
+            </>
           )}
         </Box>
       </Flex>
