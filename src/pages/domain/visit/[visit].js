@@ -15,16 +15,7 @@ import {
   Stack,
   SkeletonCircle,
   useColorModeValue,
-  Card,
-  CardBody,
-  CardFooter,
-  Image,
-  Text,
-  Kbd,
-  ButtonGroup,
-  IconButton,
-  useClipboard,
-  useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 
 import {
@@ -53,6 +44,7 @@ const UserProfilePage = () => {
   const domain = visit ? String(visit).toLowerCase() : "";
   const { oldUri } = useDomainInfo(domain);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRedirect, setIsRedirect] = useState(true);
 
   const getJson = async (url) => {
 
@@ -104,6 +96,7 @@ const UserProfilePage = () => {
     }
     else {
       console.log("no web3_url");
+      setIsRedirect(false);
     }
 
     console.log(jsonData);
@@ -173,7 +166,23 @@ const UserProfilePage = () => {
                 <AlertTitle>{domain}</AlertTitle>
               </Alert>
               :
-              <> Please Wait... </>
+              <>  {isRedirect ? (
+                <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+              )
+              :
+              (
+                <Alert status="error">
+                <AlertIcon />
+                <AlertTitle>{domain} : Invalid Link</AlertTitle>
+              </Alert>
+              )
+}</>
 }
         </>
           )}
