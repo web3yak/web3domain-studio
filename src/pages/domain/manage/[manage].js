@@ -246,6 +246,34 @@ export default function Manage() {
     setFlag(true);
   };
 
+  const handleInsertToDatabase = async () => {
+    // Assuming you have fetched the data and stored it in the state variables
+    const movieData = {
+      title: manage,
+      metacritic: "xxx",
+      plot: "101",
+    };
+
+    try {
+      // Make a POST request to the updateMovie API route
+      const response = await fetch("/api/updateMovie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      if (response.ok) {
+        console.log("Record inserted successfully!");
+      } else {
+        console.error("Failed to insert record:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error inserting record:", error);
+    }
+  };
+
   useEffect(() => {
     setIsMainLoading(true);
     const randomNumber = Math.random(); // Generate a random number
@@ -692,7 +720,7 @@ export default function Manage() {
                             </TabPanel>
                           </TabPanels>
                         </Tabs>
-
+                        <button onClick={handleInsertToDatabase}>Insert Record</button>
                         <Stack direction="row" spacing={2}>
                           <Button
                             size="sm"
