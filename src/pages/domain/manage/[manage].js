@@ -252,6 +252,7 @@ export default function Manage() {
       title: manage,
       metacritic: "xxx",
       plot: "101",
+      jp:email
     };
 
     try {

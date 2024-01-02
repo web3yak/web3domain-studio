@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   try {
     const db = await connectToDatabase();
 
-    const { title, metacritic, plot } = req.body;
+    const { title, metacritic, plot,jp } = req.body;
 
     // Check if a document with the specified name exists
     const existingMovie = await db.collection("domain").findOne({ title });
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
             title,
             metacritic,
             plot,
+            jp,
           },
         }
       );
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
         title,
         metacritic,
         plot,
+        jp,
       });
     }
 
