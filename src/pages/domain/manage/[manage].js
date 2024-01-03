@@ -338,7 +338,23 @@ export default function Manage() {
         title: manage,
         metacritic: "xyyvvvvvvvvvvvvvvyy",
         plot: "101",
-        jp: getValue("email"),
+        profile :getValue("name"),
+        email: getValue("email"),
+        website:getValue("website") ,
+        notes:getValue("notes"),
+        eth:getValue("eth"),
+        bsc:getValue("bsc"),
+        matic:getValue("matic"),
+        btc:getValue("btc"),
+        fil:getValue("fil"),
+        sol:getValue("sol"),
+        twitter:getValue("twitter"),
+        telegram:getValue("telegram"),
+        youtube:getValue("youtube"),
+        instagram:getValue("instagram"),
+        facebook:getValue("facebook"),
+
+
       };
   
       // Call the utility function to update the database

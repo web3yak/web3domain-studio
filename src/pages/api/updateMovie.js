@@ -14,7 +14,25 @@ export default async function handler(req, res) {
       throw new Error('Failed to connect to the database');
     }
 
-    const { title, metacritic, plot,jp } = req.body;
+    const { title,
+      metacritic,
+      plot,
+      profile,
+      email,
+      website,
+      notes,
+      eth,
+      bsc,
+      matic,
+      btc,
+      fil,
+      sol,
+      twitter,
+      telegram,
+      youtube,
+      instagram,
+      facebook
+    } = req.body;
 
     // Check if a document with the specified name exists
     const existingMovie = await db.collection("domain").findOne({ title });
@@ -28,7 +46,21 @@ export default async function handler(req, res) {
             title,
             metacritic,
             plot,
-            jp,
+            profile,
+            email,
+            website,
+            notes,
+            eth,
+            bsc,
+            matic,
+            btc,
+            fil,
+            sol,
+            twitter,
+            telegram,
+            youtube,
+            instagram,
+            facebook
           },
         }
       );
@@ -38,7 +70,21 @@ export default async function handler(req, res) {
         title,
         metacritic,
         plot,
-        jp,
+        profile,
+        email,
+        website,
+        notes,
+        eth,
+        bsc,
+        matic,
+        btc,
+        fil,
+        sol,
+        twitter,
+        telegram,
+        youtube,
+        instagram,
+        facebook
       });
     }
 
