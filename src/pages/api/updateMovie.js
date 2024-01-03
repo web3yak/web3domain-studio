@@ -8,6 +8,11 @@ export default async function handler(req, res) {
 
   try {
     const db = await connectToDatabase();
+    //console.log('Connected to MongoDB:', db);
+
+    if (!db) {
+      throw new Error('Failed to connect to the database');
+    }
 
     const { title, metacritic, plot,jp } = req.body;
 

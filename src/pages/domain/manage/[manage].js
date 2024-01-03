@@ -9,6 +9,7 @@ import { useNetworkValidation } from "../../../hooks/useNetworkValidation";
 import Link from "next/link";
 import useDomainInfo from "../../../hooks/domainInfo";
 import useGlobal from "../../../hooks/global";
+import updateDatabase from '../../../Reusables/db';
 import {
   Icon,
   Box,
@@ -247,32 +248,17 @@ export default function Manage() {
   };
 
   const handleInsertToDatabase = async () => {
-    // Assuming you have fetched the data and stored it in the state variables
-    const movieData = {
+
+
+    const mm = {
       title: manage,
-      metacritic: "xxx",
+      metacritic: "xyy111111111111111111vvvyy",
       plot: "101",
-      jp:email
+      jp: '',
     };
 
-    try {
-      // Make a POST request to the updateMovie API route
-      const response = await fetch("/api/updateMovie", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
-
-      if (response.ok) {
-        console.log("Record inserted successfully!");
-      } else {
-        console.error("Failed to insert record:", await response.text());
-      }
-    } catch (error) {
-      console.error("Error inserting record:", error);
-    }
+    // Call the utility function to update the database
+    updateDatabase(mm);
   };
 
   useEffect(() => {
@@ -347,6 +333,18 @@ export default function Manage() {
           }
         }
       }
+
+      const mm = {
+        title: manage,
+        metacritic: "xyyvvvvvvvvvvvvvvyy",
+        plot: "101",
+        jp: getValue("email"),
+      };
+  
+      // Call the utility function to update the database
+      updateDatabase(mm);
+
+
     }
   }, [jsonData]);
 
@@ -358,6 +356,8 @@ export default function Manage() {
     }
     get_cid_of_layout();
   }, [flag]);
+
+
 
   return (
     <Flex
