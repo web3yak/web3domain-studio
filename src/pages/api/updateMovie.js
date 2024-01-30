@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     const { title,
       metacritic,
       plot,
+      img,
       profile,
       email,
       website,
@@ -31,7 +32,8 @@ export default async function handler(req, res) {
       telegram,
       youtube,
       instagram,
-      facebook
+      facebook,
+      page
     } = req.body;
 
     // Check if a document with the specified name exists
@@ -46,6 +48,7 @@ export default async function handler(req, res) {
             title,
             metacritic,
             plot,
+            img,
             profile,
             email,
             website,
@@ -60,7 +63,8 @@ export default async function handler(req, res) {
             telegram,
             youtube,
             instagram,
-            facebook
+            facebook,
+            page
           },
         }
       );
@@ -70,6 +74,7 @@ export default async function handler(req, res) {
         title,
         metacritic,
         plot,
+        img,
         profile,
         email,
         website,
@@ -84,7 +89,8 @@ export default async function handler(req, res) {
         telegram,
         youtube,
         instagram,
-        facebook
+        facebook,
+        page
       });
     }
 

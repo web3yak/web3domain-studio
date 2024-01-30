@@ -34,7 +34,7 @@ export function CheckDomain(props: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isEnv, setEnv] = useState(true);
   const [error, setError] = useState('');
-  const url = "https://web3domain.org/api/v1/index.php?domain=" + props.domain;
+  //const url = "https://web3domain.org/api/v1/index.php?domain=" + props.domain;
   //console.log(url);
   function showAlert(err:any) {
     toast({

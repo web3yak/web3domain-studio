@@ -5,6 +5,7 @@ import Link from "next/link";
 import useDomainInfo from "../../../hooks/domainInfo";
 import { useURLValidation } from "../../../hooks/validate";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+//import updateDatabase from '../../../Reusables/db';
 import {
   Box,
   Button,
@@ -83,8 +84,11 @@ export default function Info() {
     if (info) {
       const randomNumber = Math.random();
       const url =
-        "https://web3domain.org/api/v1/index.php?domain=" + info + "&" + randomNumber;
-      // console.log(url);
+        "https://web3domain.org/api/v2/index.php?domain=" +
+        info +
+        "&" +
+        randomNumber;
+      console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
@@ -116,37 +120,31 @@ export default function Info() {
   useEffect(() => {
     var web_url = "";
     var web3_url = "";
+    if (jsonData!=null) {
+      if (jsonData.web3 !== "") {
+        // If the '51' property exists in jsonData.records and its value is not empty
+        // Set web3_url
+        web3_url = jsonData.web3;
+      }
 
-    if (
-      jsonData?.records?.hasOwnProperty("51") &&
-      jsonData.records["51"].value !== ""
-    ) {
-      // If the '51' property exists in jsonData.records and its value is not empty
-      // Set web3_url
-      web3_url = jsonData.records["51"].value;
-    }
-
-    if (
-      jsonData?.records?.hasOwnProperty("50") &&
-      jsonData.records["50"].value !== "" &&
-      jsonData.records["50"].value != null
-    ) {
-      // console.log(jsonData);
-      if (jsonData.records["50"].value != "https://ipfs.io/ipfs/null") {
-        if (jsonData.records["50"].value.startsWith("https://")) {
-          web_url = jsonData.records["50"].value;
-        } else {
-          web_url = "https://ipfs.io/ipfs/" + jsonData.records["50"].value;
+      if (jsonData.web2 !== "" && jsonData.web2 != null) {
+        // console.log(jsonData);
+        if (jsonData.web2 != "https://ipfs.io/ipfs/null") {
+          if (jsonData.web2.startsWith("https://")) {
+            web_url = jsonData.web2;
+          } else {
+            web_url = "https://ipfs.io/ipfs/" + jsonData.web2;
+          }
         }
       }
-    }
 
-    if (web3_url !== "") {
-      setWebUrl(web3_url);
-      // console.log(web3_url);
-    } else if (web_url !== "") {
-      setWebUrl(web_url);
-      // console.log(web_url);
+      if (web3_url !== "") {
+        setWebUrl(web3_url);
+        // console.log(web3_url);
+      } else if (web_url !== "") {
+        setWebUrl(web_url);
+        // console.log(web_url);
+      }
     }
   }, [jsonData]);
 
@@ -219,21 +217,21 @@ export default function Info() {
                           ml={2}
                           boxSize="150px"
                           src={
-                            jsonData?.image &&
-                            jsonData.image.startsWith("ipfs://")
-                              ? jsonData.image.replace(
+                            jsonData?.img &&
+                            jsonData.img.startsWith("ipfs://")
+                              ? `https://${jsonData.img.replace(
                                   "ipfs://",
-                                  "https://ipfs.io/ipfs/"
-                                )
-                              : jsonData?.image
+                                  ""
+                                )}.ipfs.nftstorage.link/`
+                              : jsonData?.img
                           }
-                          alt={jsonData?.name}
+                          alt={jsonData?.img}
                           onClick={() => enlarge()}
                         />
 
                         <Stack>
                           <CardBody>
-                            <Heading size="md">{jsonData?.name}</Heading>
+                            <Heading size="md">{jsonData?.domain}</Heading>
 
                             <Modal isOpen={isOpen} onClose={onClose}>
                               <ModalOverlay />
@@ -243,13 +241,13 @@ export default function Info() {
                                   <Image
                                     ml={2}
                                     src={
-                                      jsonData?.image &&
-                                      jsonData.image.startsWith("ipfs://")
-                                        ? jsonData.image.replace(
+                                      jsonData?.img &&
+                                      jsonData.img.startsWith("ipfs://")
+                                        ? `https://${jsonData.img.replace(
                                             "ipfs://",
-                                            "https://ipfs.io/ipfs/"
-                                          )
-                                        : jsonData?.image
+                                            ""
+                                          )}.ipfs.nftstorage.link/`
+                                        : jsonData?.img
                                     }
                                     alt={jsonData?.name}
                                   />

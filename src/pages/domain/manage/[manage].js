@@ -9,7 +9,7 @@ import { useNetworkValidation } from "../../../hooks/useNetworkValidation";
 import Link from "next/link";
 import useDomainInfo from "../../../hooks/domainInfo";
 import useGlobal from "../../../hooks/global";
-import updateDatabase from '../../../Reusables/db';
+//import updateDatabase from '../../../Reusables/db';
 import {
   Icon,
   Box,
@@ -247,6 +247,7 @@ export default function Manage() {
     setFlag(true);
   };
 
+  /*
   const handleInsertToDatabase = async () => {
 
 
@@ -260,6 +261,7 @@ export default function Manage() {
     // Call the utility function to update the database
     updateDatabase(mm);
   };
+*/
 
   useEffect(() => {
     setIsMainLoading(true);
@@ -334,10 +336,12 @@ export default function Manage() {
         }
       }
 
+      /*
       const mm = {
         title: manage,
-        metacritic: "xyyvvvvvvvvvvvvvvyy",
+        metacritic: "xyyvzzzzzzvvvvvvyy",
         plot: "101",
+        img: img,
         profile :getValue("name"),
         email: getValue("email"),
         website:getValue("website") ,
@@ -353,13 +357,11 @@ export default function Manage() {
         youtube:getValue("youtube"),
         instagram:getValue("instagram"),
         facebook:getValue("facebook"),
-
-
       };
   
       // Call the utility function to update the database
       updateDatabase(mm);
-
+*/
 
     }
   }, [jsonData]);
@@ -737,7 +739,7 @@ export default function Manage() {
                             </TabPanel>
                           </TabPanels>
                         </Tabs>
-                        <button onClick={handleInsertToDatabase}>Insert Record</button>
+                       
                         <Stack direction="row" spacing={2}>
                           <Button
                             size="sm"
