@@ -12,6 +12,7 @@ export function Head(props: Props) {
       <title>{props.title ?? SITE_NAME}</title>
       <meta name="description" content={props.description ?? SITE_DESCRIPTION} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="author" content="Web3Domain.org v1.1" />
     </NextHead>
     )
 }

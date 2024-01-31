@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import {DOMAIN_TITLE,DOMAIN_BANNER} from "../configuration/Config";
 import Search from "../components/domain/Search";
-import { Image } from '@chakra-ui/react'
+import { Image,Center } from '@chakra-ui/react'
 import PrivateNotice from "../components/message/PrivateNotice";
 
 // Import debounce from lodash
@@ -35,7 +35,8 @@ const Home: NextPage = () => {
         maxH={"80vh"}
       >
         <Container maxW={"5xl"} alignItems={"center"} justifyContent={"center"}>
-        <Image src={DOMAIN_BANNER} alt='banner' />
+        <Center>
+        <Image src={DOMAIN_BANNER} alt='Banner' /></Center>
           <Stack
             as={Box}
             textAlign={"center"}

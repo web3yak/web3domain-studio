@@ -25,7 +25,7 @@ export function NetworkStatus() {
 
       {explorerUrl && (
         <LinkComponent href={explorerUrl}>
-          <Text fontSize="2xs"># {block.data} 1.0</Text>
+          <Text fontSize="2xs"># {block.data}</Text>
         </LinkComponent>
       )}
       {!explorerUrl && <Text fontSize="2xs"># {block.data}</Text>}

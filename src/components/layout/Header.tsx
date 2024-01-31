@@ -82,7 +82,7 @@ export function Header(props: Props) {
           }}
           showBalance={{
             smallScreen: false,
-            largeScreen: true,
+            largeScreen: false,
           }}
         />
         <ThemeSwitcher />
