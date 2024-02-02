@@ -80,14 +80,8 @@ export default function Info() {
   const [claimTransferTo, setClaimTransferTo] = useState(
     "0x8D714B10B719c65B878F2Ed1436A964E11fA3271"
   );
-  const [claimUrl, setClaimUrl] = useState("http://yahoo.com");
-
-  const claim_id = "8888888";
-  const claim_name = domain;
-  const claim_url = "http://yahoo.com";
-  const claim_transfer_to = "0x8D714B10B719c65B878F2Ed1436A964E11fA3271";
-  const amount = DOMAIN_PRICE_ETH;
-
+  const [claimUrl, setClaimUrl] = useState("https://web3domain.org/api/temp_json.php?domain="+domain+"&image="+DOMAIN_IMAGE_URL);
+//console.log(claimUrl);
   const handleValidation = (domaintest) => {
     validateDomain(domaintest); // Call the validation function here
   };
@@ -154,7 +148,7 @@ export default function Info() {
             { trait_type: "length", value: 8 },
           ],
         };
-        // console.log(array);
+        //console.log(array);
         //console.log('fetch data running...');
         const response = await generateJson(array, domain);
         if (response.ok) {

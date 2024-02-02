@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useJsonValue } from "../../../hooks/jsonData";
 import { useURLValidation } from "../../../hooks/validate";
 import useDomainInfo from "../../../hooks/domainInfo";
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -16,6 +17,7 @@ import {
   SkeletonCircle,
   useColorModeValue,
   Spinner,
+  Link 
 } from "@chakra-ui/react";
 
 import {
@@ -95,8 +97,9 @@ const UserProfilePage = () => {
       console.log(web_url);
     }
     else {
-      console.log("no web3_url");
+      console.log("no web3_url. Route to info page.");
       setIsRedirect(false);
+      router.replace(`/domain/info/${domain}`);
     }
 
     console.log(jsonData);
@@ -106,8 +109,8 @@ const UserProfilePage = () => {
   useEffect(() => {
 
     if (webUrl) {
-      window.location.assign(webUrl);
-      console.log("Ready to redirect");
+     window.location.assign(webUrl);
+      console.log("Ready to redirect: " + webUrl );
     }
     else {
       console.log("no ready");
@@ -166,13 +169,17 @@ const UserProfilePage = () => {
                 </Alert>
                 :
                 <>  {isRedirect ? (
+                  <>
                   <Spinner
                     thickness="4px"
                     speed="0.65s"
                     emptyColor="gray.200"
                     color="blue.500"
                     size="xl"
-                  />
+                  /><br/>
+                  <Link href={webUrl} isExternal>
+  Opening... <ExternalLinkIcon mx='2px' />
+</Link></>
                 )
                   :
                   (

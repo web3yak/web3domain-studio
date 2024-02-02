@@ -3,7 +3,7 @@ import { polygon} from '@wagmi/chains'
 
 export const SITE_NAME = 'Web3Domain Studio'
 export const SITE_DESCRIPTION = 'Web3 Domain Provider'
-export const SITE_URL = 'https://web3domain.org'
+export const SITE_URL = 'https://www.web3domain.org'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'

@@ -88,7 +88,7 @@ export default function Info() {
         info +
         "&" +
         randomNumber;
-      console.log(url);
+      //console.log(url);
       const fetchData = async () => {
         try {
           const response = await fetch(url);
