@@ -17,7 +17,7 @@ import {
   SkeletonCircle,
   useColorModeValue,
   Spinner,
-  Link 
+  Link
 } from "@chakra-ui/react";
 
 import {
@@ -109,8 +109,8 @@ const UserProfilePage = () => {
   useEffect(() => {
 
     if (webUrl) {
-     window.location.assign(webUrl);
-      console.log("Ready to redirect: " + webUrl );
+      window.location.assign(webUrl);
+      console.log("Ready to redirect: " + webUrl);
     }
     else {
       console.log("no ready");
@@ -130,6 +130,17 @@ const UserProfilePage = () => {
     }
 
   }, [oldUri]);
+
+  useEffect(() => {
+    if (isRedirect) {
+      const timer = setTimeout(() => {
+        router.replace(`/domain/info/${domain}`);
+      }, 15000);
+
+      // Cleanup the timer on component unmount or when isRedirect changes
+      return () => clearTimeout(timer);
+    }
+  }, [isRedirect, router, domain]);
 
   return (
     <div>
@@ -170,16 +181,16 @@ const UserProfilePage = () => {
                 :
                 <>  {isRedirect ? (
                   <>
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
-                    size="xl"
-                  /><br/>
-                  <Link href={webUrl} isExternal>
-  Opening... <ExternalLinkIcon mx='2px' />
-</Link></>
+                    <Spinner
+                      thickness="4px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.500"
+                      size="xl"
+                    /><br />
+                    <Link href={webUrl} isExternal>
+                      Opening... <ExternalLinkIcon mx='2px' />
+                    </Link></>
                 )
                   :
                   (
