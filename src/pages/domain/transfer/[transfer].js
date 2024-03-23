@@ -84,7 +84,7 @@ export default function Info() {
     enabled: { flag },
   });
 
-  //console.log(address+"-"+"-"+ eth+"-"+domainId);
+  //console.log(address+" - "+" - "+ eth+" - "+domainId);
   const { data, werror, isError, write } = useContractWrite(config);
   // console.log(config);
 
@@ -142,16 +142,25 @@ export default function Info() {
   }, [showSuccessAlert, showErrorAlert, errorMessage]);
 
   const handleTransfer = async () => {
+    console.log("Handle transfer called with eth:", eth);
+    setFlag(false);
     setTo(eth);
     console.log(domainId.toNumber());
 
     if (isValidEthAddress(eth)) {
-      console.log(to);
+      console.log("Valid Ethereum address detected:", eth);
       setFlag(true);
     } else {
+      console.log("Invalid Ethereum address detected:", eth);
       setShowErrorAlert(true);
+      setFlag(false);
       setErrorMessage("Invalid Ethereum Address");
     }
+
+    
+    write && write();
+
+
   };
 
   return (
@@ -206,7 +215,7 @@ export default function Info() {
                   {error ? (
                     <p>Error: {error}</p>
                   ) : (
-                    <p>
+                    <>
                       <Card
                         direction={{ base: "column", sm: "row" }}
                         overflow="hidden"
@@ -278,7 +287,7 @@ export default function Info() {
                                 )}
 
                                 {isSuccess && (
-                                  <div>
+                                  <>
                                     &nbsp;
                                     <Button
                                       variant="solid"
@@ -289,7 +298,7 @@ export default function Info() {
                                         Check Status
                                       </Link>
                                     </Button>
-                                  </div>
+                                  </>
                                 )}
                               </CardFooter>
                             </div>
@@ -301,7 +310,7 @@ export default function Info() {
                           )}
                         </Stack>
                       </Card>
-                    </p>
+                    </>
                   )}
                 </>
               )}

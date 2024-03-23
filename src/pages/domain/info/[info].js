@@ -31,7 +31,7 @@ import {
 } from "@chakra-ui/react";
 import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useAccount } from "wagmi";
-import { DOMAIN_TLD, DOMAIN_DESCRIPTION } from "../../../configuration/Config";
+import { DOMAIN_TLD, DOMAIN_DESCRIPTION, DOMAIN_IMAGE_URL } from "../../../configuration/Config";
 import {
   Modal,
   ModalOverlay,
@@ -223,7 +223,7 @@ export default function Info() {
                                   "ipfs://",
                                   ""
                                 )}.ipfs.nftstorage.link/`
-                              : jsonData?.img
+                              : jsonData?.img || DOMAIN_IMAGE_URL
                           }
                           alt={jsonData?.img}
                           onClick={() => enlarge()}
@@ -247,7 +247,7 @@ export default function Info() {
                                             "ipfs://",
                                             ""
                                           )}.ipfs.nftstorage.link/`
-                                        : jsonData?.img
+                                        : jsonData?.img || DOMAIN_IMAGE_URL
                                     }
                                     alt={jsonData?.name}
                                   />
