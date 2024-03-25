@@ -71,9 +71,10 @@ export default function Info() {
   const [jsonDataNew, setJsonDataNew] = useState(null); // Initialize jsonDataNew as null
   const [show, setShow] = useState(false);
 
-  let firstImg=jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
+ // let firstImg=jsonData?.image && jsonData.image.startsWith("ipfs://") ? jsonData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : jsonData?.image;
   
-
+  let firstImg = jsonData?.image && jsonData.image.startsWith("ipfs://") ? `https://${jsonData.image.replace("ipfs://","")}.ipfs.nftstorage.link/` : jsonData?.image;
+//console.log(jsonData);
 
   const handleSubmit = (event) => {
     if (event) {
@@ -176,7 +177,7 @@ const updatedJsonData = {
           const json = await response.json();
           setJsonData(json); // Store the json response in the component's state
           setIsMainLoading(false);
-          // console.log(json);
+           console.log(json);
         } catch (error) {
           console.log("error", error);
         }
